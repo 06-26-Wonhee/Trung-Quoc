@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoa Ngữ Học Viện - Học, Ôn Tập & Kiểm Tra Tiếng Trung Toàn Diện</title>
+  <meta name="description" content="Trang web học, ôn tập và kiểm tra tiếng Trung HSK 1 - HSK 2 hoàn chỉnh với Web Speech API và bài tập đa dạng.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo-brand" id="brand-logo" onclick="window.app.switchTab('home')">
+        <div class="logo-icon-seal">汉</div>
+        <div class="logo-text">
+          <h1>Hoa Ngữ Học Viện</h1>
+          <p>Học & Ôn Tập Tiếng Trung HSK 1 - 2</p>
+        </div>
+      </div>
+
+      <!-- Main Navigation Menu -->
+      <nav class="main-nav" id="main-nav-menu">
+        <button class="nav-tab-btn active" data-tab="home">
+          <span>🏠</span>
+          <span>Trang chủ</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="vocab">
+          <span>📚</span>
+          <span>Học từ vựng</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="practice">
+          <span>🎯</span>
+          <span>Luyện tập</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="test">
+          <span>📝</span>
+          <span>Kiểm tra</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="custom">
+          <span>➕</span>
+          <span>Thêm từ & Dữ liệu</span>
+        </button>
+      </nav>
+
+      <!-- Global Audio & Speech Settings -->
+      <div class="header-settings">
+        <button id="btn-toggle-sound" class="btn btn-sm btn-outline" title="Bật/Tắt âm thanh hiệu ứng">
+          <span>🔊 Âm thanh: BẬT</span>
+        </button>
+        <select id="select-speech-rate" class="btn btn-sm btn-outline" title="Tốc độ phát âm tiếng Trung">
+          <option value="0.75">🐢 0.75x</option>
+          <option value="0.9" selected>🗣️ 0.9x (Chuẩn)</option>
+          <option value="1.0">⚡ 1.0x</option>
+        </select>
+        <button class="btn-mobile-toggle" id="btn-mobile-menu" aria-label="Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container">
+
+    <!-- ======================================================================
+         TAB 1: TRANG CHỦ (HOMEPAGE & DASHBOARD)
+         ====================================================================== -->
+    <section id="tab-home" class="tab-section active">
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <div class="hero-content">
+          <div class="hero-tag">✨ Nền tảng học tiếng Trung trực tiếp trên trình duyệt</div>
+          <h2>Chinh phục <span>Hán Ngữ HSK 1 & HSK 2</span> Dễ dàng, Hiệu quả</h2>
+          <p>
+            Hệ thống học từ vựng chuẩn ngữ âm với Web Speech API, kết hợp 8 dạng bài tập tương tác chuyên sâu: từ vựng, đọc hiểu, điền đoạn văn, nhìn hình phán đoán, viết hán tự và hội thoại thực tế.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" data-goto-tab="vocab">
+              <span>📚 Bắt đầu học từ vựng</span>
+            </button>
+            <button class="btn btn-outline btn-lg" data-goto-tab="practice" data-practice-type="vocab-quiz">
+              <span>🎯 Luyện tập ngay</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Stats Card -->
+        <div class="hero-stats-card">
+          <div class="stat-row">
+            <div class="stat-label">
+              <span>📖</span>
+              <span>Tổng kho từ vựng:</span>
+            </div>
+            <div class="stat-value stat-total-words">0</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">
+              <span>🌱</span>
+              <span>Từ vựng HSK 1:</span>
+            </div>
+            <div class="stat-value stat-hsk1-words">0</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">
+              <span>🌿</span>
+              <span>Từ vựng HSK 2:</span>
+            </div>
+            <div class="stat-value stat-hsk2-words">0</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">
+              <span>⭐</span>
+              <span>Từ vựng yêu thích đã lưu:</span>
+            </div>
+            <div class="stat-value stat-fav-words">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Modules Showcase -->
+      <div class="section-heading">
+        <div>
+          <h3>Các chế độ học & luyện tập nổi bật</h3>
+          <p>Chọn một hình thức để bắt đầu rèn luyện ngay bây giờ</p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card" data-goto-tab="vocab">
+          <div class="feature-icon-badge">🗂️</div>
+          <h4>Học từ vựng & Flashcards</h4>
+          <p>Xem danh sách từ HSK 1 - 2 có chữ Hán, Pinyin, nghĩa và phát âm giọng đọc chuẩn bản xứ.</p>
+          <span class="feature-link">Vào học ngay ➔</span>
+        </div>
+
+        <div class="feature-card" data-goto-tab="practice" data-practice-type="vocab-quiz">
+          <div class="feature-icon-badge">🎲</div>
+          <h4>Trắc nghiệm từ vựng</h4>
+          <p>Câu hỏi trắc nghiệm ngẫu nhiên kiểm tra Hán tự, Pinyin và nghĩa tiếng Việt với chấm điểm tức thì.</p>
+          <span class="feature-link">Bắt đầu thi ➔</span>
+        </div>
+
+        <div class="feature-card" data-goto-tab="practice" data-practice-type="image-tf">
+          <div class="feature-icon-badge">🖼️</div>
+          <h4>Nhìn hình đoán Đúng/Sai</h4>
+          <p>Quan sát hình ảnh minh họa sống động và phán đoán xem câu miêu tả bằng tiếng Trung Đúng hay Sai.</p>
+          <span class="feature-link">Luyện tập ➔</span>
+        </div>
+
+        <div class="feature-card" data-goto-tab="practice" data-practice-type="reading-comp">
+          <div class="feature-icon-badge">📖</div>
+          <h4>Đọc hiểu & Trả lời câu hỏi</h4>
+          <p>Đọc đoạn văn ngắn, luyện phản xạ đọc chữ Hán và chọn câu trả lời chính xác nhất.</p>
+          <span class="feature-link">Thử sức ➔</span>
+        </div>
+
+        <div class="feature-card" data-goto-tab="practice" data-practice-type="cloze-test">
+          <div class="feature-icon-badge">🧩</div>
+          <h4>Điền từ vào đoạn văn</h4>
+          <p>Chọn các từ thích hợp từ ngân hàng từ vựng để điền vào các chỗ trống trong đoạn văn.</p>
+          <span class="feature-link">Điền từ ➔</span>
+        </div>
+
+        <div class="feature-card" data-goto-tab="practice" data-practice-type="pinyin-to-hanzi">
+          <div class="feature-icon-badge">✍️</div>
+          <h4>Nhìn phiên âm viết Hán tự</h4>
+          <p>Nhìn Pinyin và nghĩa tiếng Việt, gõ hoặc dùng bàn phím ảo ghép chữ Hán tương ứng.</p>
+          <span class="feature-link">Viết chữ ➔</span>
+        </div>
+
+        <div class="feature-card" data-goto-tab="practice" data-practice-type="sentence-order">
+          <div class="feature-icon-badge">🔀</div>
+          <h4>Sắp xếp từ thành câu</h4>
+          <p>Ghép các khối từ bị xáo trộn thành câu hoàn chỉnh đúng ngữ pháp tiếng Trung.</p>
+          <span class="feature-link">Ghép câu ➔</span>
+        </div>
+
+        <div class="feature-card" data-goto-tab="practice" data-practice-type="dialogue-turn">
+          <div class="feature-icon-badge">💬</div>
+          <h4>Hội thoại 2 lượt trả lời</h4>
+          <p>Mô phỏng hội thoại giao tiếp thực tế với nhân vật ảo qua 2 vòng phản hồi logic.</p>
+          <span class="feature-link">Giao tiếp ➔</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TAB 2: HỌC TỪ VỰNG (VOCABULARY EXPLORER & FLASHCARDS)
+         ====================================================================== -->
+    <section id="tab-vocab" class="tab-section">
+      <!-- Toolbar: Search, Filters & View Mode -->
+      <div class="vocab-toolbar">
+        <div class="toolbar-top">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="vocab-search-input" class="search-input" placeholder="Tìm theo chữ Hán, Pinyin hoặc nghĩa tiếng Việt...">
+            <button id="btn-clear-search" class="clear-search-btn" title="Xóa tìm kiếm">✕</button>
+          </div>
+
+          <div class="view-mode-toggle">
+            <button class="view-btn active" id="btn-view-grid">
+              <span>📋 Danh sách thẻ</span>
+            </button>
+            <button class="view-btn" id="btn-view-flashcard">
+              <span>🗂️ Thẻ Flashcard 3D</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-pills-bar">
+          <div class="pills-group">
+            <button class="filter-pill active" data-filter="ALL">Tất cả từ vựng</button>
+            <button class="filter-pill" data-filter="HSK 1">Cấp độ HSK 1</button>
+            <button class="filter-pill" data-filter="HSK 2">Cấp độ HSK 2</button>
+            <button class="filter-pill" data-filter="FAVORITES">⭐ Đã lưu yêu thích</button>
+          </div>
+          <span class="badge badge-accent" id="vocab-results-count">0 từ vựng</span>
+        </div>
+      </div>
+
+      <!-- View 1: Grid Cards -->
+      <div id="vocab-grid-container" class="vocab-grid"></div>
+
+      <!-- View 2: 3D Flashcard Deck Mode (Hidden by default) -->
+      <div id="vocab-flashcard-container" class="hidden"></div>
+    </section>
+
+    <!-- ======================================================================
+         TAB 3: LUYỆN TẬP ĐA DẠNG (PRACTICE HUB)
+         ====================================================================== -->
+    <section id="tab-practice" class="tab-section">
+      <div class="practice-hub-layout">
+        <!-- Sub-Navigation for all 8 practice types -->
+        <aside class="practice-sidebar">
+          <div class="sidebar-title">Danh mục bài tập</div>
+          <button class="practice-nav-item active" data-type="vocab-quiz">
+            <span class="item-icon">🎲</span>
+            <span>Trắc nghiệm từ vựng</span>
+          </button>
+          <button class="practice-nav-item" data-type="image-tf">
+            <span class="item-icon">🖼️</span>
+            <span>Nhìn hình đoán Đúng/Sai</span>
+          </button>
+          <button class="practice-nav-item" data-type="reading-comp">
+            <span class="item-icon">📖</span>
+            <span>Đọc hiểu trả lời câu hỏi</span>
+          </button>
+          <button class="practice-nav-item" data-type="cloze-test">
+            <span class="item-icon">🧩</span>
+            <span>Điền từ vào đoạn văn</span>
+          </button>
+          <button class="practice-nav-item" data-type="pinyin-to-hanzi">
+            <span class="item-icon">✍️</span>
+            <span>Nhìn phiên âm viết Hán tự</span>
+          </button>
+          <button class="practice-nav-item" data-type="sentence-order">
+            <span class="item-icon">🔀</span>
+            <span>Sắp xếp từ thành câu</span>
+          </button>
+          <button class="practice-nav-item" data-type="translation">
+            <span class="item-icon">🌐</span>
+            <span>Dịch câu Việt sang Trung</span>
+          </button>
+          <button class="practice-nav-item" data-type="dialogue-turn">
+            <span class="item-icon">💬</span>
+            <span>Hội thoại 2 lượt trả lời</span>
+          </button>
+        </aside>
+
+        <!-- Exercise Render Container -->
+        <main class="practice-exercise-container" id="practice-exercise-container"></main>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TAB 4: KIỂM TRA TỪ MỚI & THI THỬ HSK (MOCK EXAM)
+         ====================================================================== -->
+    <section id="tab-test" class="tab-section">
+      <div id="test-arena-container"></div>
+    </section>
+
+    <!-- ======================================================================
+         TAB 5: THÊM TỪ VỰNG & QUẢN LÝ DỮ LIỆU
+         ====================================================================== -->
+    <section id="tab-custom" class="tab-section">
+      <div class="section-heading">
+        <div>
+          <h3>Quản lý kho từ vựng cá nhân</h3>
+          <p>Thêm từ vựng mới tùy chỉnh hoặc sao lưu / khôi phục dữ liệu học tập</p>
+        </div>
+      </div>
+
+      <div class="custom-manager-grid">
+        <!-- Add Word Form -->
+        <div class="form-card">
+          <h3>➕ Thêm từ vựng mới</h3>
+          <p class="form-subtitle">Từ mới thêm sẽ được lưu vào trình duyệt (LocalStorage) và xuất hiện trong danh mục học & bài tập.</p>
+
+          <form id="add-word-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="input-hanzi">Chữ Hán (汉字) *</label>
+                <input type="text" id="input-hanzi" class="form-control chinese-text" placeholder="Ví dụ: 电脑" required>
+              </div>
+              <div class="form-group">
+                <label for="input-pinyin">Phiên âm Pinyin *</label>
+                <input type="text" id="input-pinyin" class="form-control" placeholder="Ví dụ: diànnǎo" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="input-meaning">Nghĩa tiếng Việt *</label>
+                <input type="text" id="input-meaning" class="form-control" placeholder="Ví dụ: Máy vi tính" required>
+              </div>
+              <div class="form-group">
+                <label for="select-level">Cấp độ HSK</label>
+                <select id="select-level" class="form-control">
+                  <option value="HSK 1">HSK 1</option>
+                  <option value="HSK 2">HSK 2</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="input-type">Từ loại</label>
+              <input type="text" id="input-type" class="form-control" placeholder="Ví dụ: Danh từ, Động từ...">
+            </div>
+
+            <div class="form-group">
+              <label for="input-ex-hanzi">Câu ví dụ bằng chữ Hán</label>
+              <input type="text" id="input-ex-hanzi" class="form-control chinese-text" placeholder="Ví dụ: 我买了一台新电脑。">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="input-ex-pinyin">Pinyin của ví dụ</label>
+                <input type="text" id="input-ex-pinyin" class="form-control" placeholder="Ví dụ: Wǒ mǎi le yì tái xīn diànnǎo.">
+              </div>
+              <div class="form-group">
+                <label for="input-ex-meaning">Dịch nghĩa câu ví dụ</label>
+                <input type="text" id="input-ex-meaning" class="form-control" placeholder="Ví dụ: Tôi đã mua một chiếc máy tính mới.">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+              <span>Lưu từ vựng này</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Data Backup & Reset -->
+        <div class="data-card">
+          <h3>💾 Sao lưu & Đồng bộ dữ liệu</h3>
+          <p class="form-subtitle">Dữ liệu học tập được lưu cục bộ trên trình duyệt của bạn.</p>
+
+          <div class="data-actions-list">
+            <div class="data-action-item">
+              <strong>Xuất tệp dữ liệu từ vựng (JSON)</strong>
+              <p>Tải toàn bộ danh sách từ vựng hiện tại về máy tính để sao lưu hoặc chuyển sang máy khác.</p>
+              <button id="btn-export-vocab" class="btn btn-outline">
+                <span>📥 Tải về tệp sao lưu (JSON)</span>
+              </button>
+            </div>
+
+            <div class="data-action-item">
+              <strong>Nhập dữ liệu từ tệp (JSON)</strong>
+              <p>Khôi phục danh sách từ vựng đã sao lưu từ tệp JSON trước đó.</p>
+              <label class="btn btn-outline" style="cursor: pointer; display: inline-flex;">
+                <span>📤 Chọn tệp JSON để nhập...</span>
+                <input type="file" id="input-import-vocab" accept=".json" style="display: none;">
+              </label>
+            </div>
+
+            <div class="data-action-item" style="border-top: 1px solid var(--border-color); padding-top: 18px;">
+              <strong>Khôi phục dữ liệu gốc mẫu</strong>
+              <p>Đưa toàn bộ kho từ vựng về lại bộ mẫu HSK 1 và HSK 2 chuẩn ban đầu.</p>
+              <button id="btn-reset-defaults" class="btn btn-danger btn-sm">
+                <span>⚠️ Khôi phục dữ liệu mẫu ban đầu</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal: Word Detail View -->
+  <div id="word-detail-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="btn-close-modal">✕</button>
+      <div style="display: flex; justify-content: center; gap: 8px;">
+        <span class="badge badge-primary" id="modal-word-level">HSK 1</span>
+        <span class="badge badge-accent" id="modal-word-type">Từ vựng</span>
+      </div>
+      <div class="modal-hanzi chinese-text" id="modal-word-hanzi">你</div>
+      <div class="modal-pinyin" id="modal-word-pinyin">nǐ</div>
+      <div class="modal-meaning" id="modal-word-meaning">Bạn, anh, chị</div>
+
+      <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+        <button class="btn btn-sm btn-icon btn-listen" id="modal-btn-speak-word">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+          <span>Phát âm từ</span>
+        </button>
+      </div>
+
+      <div class="modal-example-box">
+        <div style="font-weight: 700; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">CÂU VÍ DỤ:</div>
+        <div class="chinese-text" style="font-size: 1.15rem; font-weight: 600;" id="modal-ex-hanzi"></div>
+        <div style="color: var(--primary); font-size: 0.9rem;" id="modal-ex-pinyin"></div>
+        <div style="color: var(--text-sub); font-size: 0.9rem; margin-top: 4px;" id="modal-ex-meaning"></div>
+        <button class="btn btn-sm btn-outline" style="margin-top: 10px;" id="modal-btn-speak-ex">
+          <span>🔊 Nghe câu ví dụ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>Hoa Ngữ Học Viện &bull; Xây dựng bằng HTML, CSS, JavaScript thuần &bull; Tích hợp Web Speech API</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/exercises.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
