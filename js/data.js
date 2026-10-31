@@ -1,17 +1,39 @@
 /**
- * Chinese Learning App - Comprehensive Dataset
- * Contains HSK 1 & HSK 2 Vocabulary and all 7+ Exercise Module datasets.
+ * Chinese Learning App - Master Comprehensive Dataset
+ * Covers HSK 1 to HSK 6 Vocabulary, Categorized by Topics,
+ * Pre-built Vocabulary Decks, and Level-Specific Exercises (HSK 1 - HSK 6).
  */
 
-// 1. DEFAULT HSK 1 & HSK 2 VOCABULARY LIST (120+ High Quality Words)
+// STANDARDIZED CATEGORIES / TOPICS
+const CATEGORIES_LIST = [
+  { id: 'greetings', name: 'Chào hỏi & Giao tiếp', icon: '👋' },
+  { id: 'family', name: 'Gia đình & Con người', icon: '👨‍👩‍👧' },
+  { id: 'food', name: 'Đồ ăn & Thức uống', icon: '🍜' },
+  { id: 'time', name: 'Thời gian & Ngày tháng', icon: '⏰' },
+  { id: 'school', name: 'Trường học & Giáo dục', icon: '🎓' },
+  { id: 'work', name: 'Công việc & Nghề nghiệp', icon: '💼' },
+  { id: 'travel', name: 'Giao thông & Du lịch', icon: '✈️' },
+  { id: 'shopping', name: 'Mua sắm & Tiền tệ', icon: '🛍️' },
+  { id: 'health', name: 'Sức khỏe & Y tế', icon: '🏥' },
+  { id: 'sports', name: 'Thể thao & Giải trí', icon: '⚽' },
+  { id: 'emotions', name: 'Cảm xúc & Tính cách', icon: '😊' },
+  { id: 'places', name: 'Địa điểm & Phương hướng', icon: '📍' },
+  { id: 'society', name: 'Xã hội & Đời sống', icon: '🏙️' },
+  { id: 'business', name: 'Kinh tế & Thương mại', icon: '📈' },
+  { id: 'science', name: 'Khoa học & Công nghệ', icon: '🔬' },
+  { id: 'idioms', name: 'Thành ngữ & Triết lý', icon: '📜' }
+];
+
+// 1. MASTER VOCABULARY LIST (HSK 1 TO HSK 6)
 const DEFAULT_HSK_WORDS = [
-  // --- HSK 1 ---
+  // ==================== HSK 1 ====================
   {
     id: 'hsk1-01',
     hanzi: '你',
     pinyin: 'nǐ',
-    meaning: 'Bạn, anh, chị (ngôi thứ 2 số ít)',
+    meaning: 'Bạn, anh, chị (ngôi thứ 2)',
     level: 'HSK 1',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Đại từ',
     example: {
       hanzi: '你好！很高兴认识你。',
@@ -23,8 +45,9 @@ const DEFAULT_HSK_WORDS = [
     id: 'hsk1-02',
     hanzi: '我',
     pinyin: 'wǒ',
-    meaning: 'Tôi, ta, mình (ngôi thứ 1 số ít)',
+    meaning: 'Tôi, ta, mình (ngôi thứ 1)',
     level: 'HSK 1',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Đại từ',
     example: {
       hanzi: '我是越南人。',
@@ -38,6 +61,7 @@ const DEFAULT_HSK_WORDS = [
     pinyin: 'tā',
     meaning: 'Anh ấy, ông ấy, cậu ấy',
     level: 'HSK 1',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Đại từ',
     example: {
       hanzi: '他是我的汉语老师。',
@@ -51,6 +75,7 @@ const DEFAULT_HSK_WORDS = [
     pinyin: 'tā',
     meaning: 'Cô ấy, bà ấy, chị ấy',
     level: 'HSK 1',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Đại từ',
     example: {
       hanzi: '她很喜欢看书。',
@@ -64,6 +89,7 @@ const DEFAULT_HSK_WORDS = [
     pinyin: 'wǒmen',
     meaning: 'Chúng tôi, chúng ta',
     level: 'HSK 1',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Đại từ',
     example: {
       hanzi: '我们一起去吃饭吧。',
@@ -73,49 +99,11 @@ const DEFAULT_HSK_WORDS = [
   },
   {
     id: 'hsk1-06',
-    hanzi: '好',
-    pinyin: 'hǎo',
-    meaning: 'Tốt, khỏe, ngon, đẹp',
-    level: 'HSK 1',
-    type: 'Tính từ',
-    example: {
-      hanzi: '今天天气很好。',
-      pinyin: 'Jīntiān tiānqì hěn hǎo.',
-      meaning: 'Hôm nay thời tiết rất đẹp.'
-    }
-  },
-  {
-    id: 'hsk1-07',
-    hanzi: '是',
-    pinyin: 'shì',
-    meaning: 'Là, phải, đúng',
-    level: 'HSK 1',
-    type: 'Động từ',
-    example: {
-      hanzi: '他是中国医生。',
-      pinyin: 'Tā shì Zhōngguó yīshēng.',
-      meaning: 'Anh ấy là bác sĩ người Trung Quốc.'
-    }
-  },
-  {
-    id: 'hsk1-08',
-    hanzi: '不',
-    pinyin: 'bù',
-    meaning: 'Không, chẳng (phủ định)',
-    level: 'HSK 1',
-    type: 'Phó từ',
-    example: {
-      hanzi: '我不是老师，我是学生。',
-      pinyin: 'Wǒ bú shì lǎoshī, wǒ shì xuésheng.',
-      meaning: 'Tôi không phải giáo viên, tôi là học sinh.'
-    }
-  },
-  {
-    id: 'hsk1-09',
     hanzi: '谢谢',
     pinyin: 'xièxie',
     meaning: 'Cảm ơn',
     level: 'HSK 1',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Động từ',
     example: {
       hanzi: '谢谢你的帮助！',
@@ -124,11 +112,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-10',
+    id: 'hsk1-07',
     hanzi: '不客气',
     pinyin: 'bú kèqi',
     meaning: 'Đừng khách sáo, không có gì',
     level: 'HSK 1',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Cụm từ',
     example: {
       hanzi: '不客气，请坐。',
@@ -137,11 +126,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-11',
+    id: 'hsk1-08',
     hanzi: '再见',
     pinyin: 'zàijiàn',
     meaning: 'Tạm biệt, hẹn gặp lại',
     level: 'HSK 1',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Động từ',
     example: {
       hanzi: '明天见，再见！',
@@ -150,11 +140,40 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-12',
+    id: 'hsk1-09',
+    hanzi: '爸爸',
+    pinyin: 'bàba',
+    meaning: 'Bố, cha',
+    level: 'HSK 1',
+    category: 'Gia đình & Con người',
+    type: 'Danh từ',
+    example: {
+      hanzi: '我爸爸今年五十岁。',
+      pinyin: 'Wǒ bàba jīnnián wǔshí suì.',
+      meaning: 'Bố tôi năm nay 50 tuổi.'
+    }
+  },
+  {
+    id: 'hsk1-10',
+    hanzi: '妈妈',
+    pinyin: 'māma',
+    meaning: 'Mẹ, má',
+    level: 'HSK 1',
+    category: 'Gia đình & Con người',
+    type: 'Danh từ',
+    example: {
+      hanzi: '妈妈做的菜非常好吃。',
+      pinyin: 'Māma zuò de cài fēicháng hǎochī.',
+      meaning: 'Món mẹ nấu rất là ngon.'
+    }
+  },
+  {
+    id: 'hsk1-11',
     hanzi: '吃',
     pinyin: 'chī',
     meaning: 'Ăn',
     level: 'HSK 1',
+    category: 'Đồ ăn & Thức uống',
     type: 'Động từ',
     example: {
       hanzi: '你想吃什么？',
@@ -163,11 +182,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-13',
+    id: 'hsk1-12',
     hanzi: '喝',
     pinyin: 'hē',
     meaning: 'Uống',
     level: 'HSK 1',
+    category: 'Đồ ăn & Thức uống',
     type: 'Động từ',
     example: {
       hanzi: '我想喝一杯中国茶。',
@@ -176,11 +196,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-14',
+    id: 'hsk1-13',
     hanzi: '水',
     pinyin: 'shuǐ',
     meaning: 'Nước',
     level: 'HSK 1',
+    category: 'Đồ ăn & Thức uống',
     type: 'Danh từ',
     example: {
       hanzi: '多喝水对身体好。',
@@ -189,24 +210,26 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-15',
+    id: 'hsk1-14',
     hanzi: '茶',
     pinyin: 'chá',
     meaning: 'Trà, chè',
     level: 'HSK 1',
+    category: 'Đồ ăn & Thức uống',
     type: 'Danh từ',
     example: {
-      hanzi: '爸爸每天早上喝茶。',
-      pinyin: 'Bàba měitiān zǎoshang hē chá.',
-      meaning: 'Bố mỗi sáng đều uống trà.'
+      hanzi: '中国人很喜欢喝茶。',
+      pinyin: 'Zhōngguó rén hěn xǐhuan hē chá.',
+      meaning: 'Người Trung Quốc rất thích uống trà.'
     }
   },
   {
-    id: 'hsk1-16',
+    id: 'hsk1-15',
     hanzi: '米饭',
     pinyin: 'mǐfàn',
     meaning: 'Cơm',
     level: 'HSK 1',
+    category: 'Đồ ăn & Thức uống',
     type: 'Danh từ',
     example: {
       hanzi: '中午我们吃米饭。',
@@ -215,11 +238,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-17',
+    id: 'hsk1-16',
     hanzi: '苹果',
     pinyin: 'píngguǒ',
     meaning: 'Quả táo',
     level: 'HSK 1',
+    category: 'Đồ ăn & Thức uống',
     type: 'Danh từ',
     example: {
       hanzi: '这个红苹果很甜。',
@@ -228,128 +252,82 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-18',
-    hanzi: '看',
-    pinyin: 'kàn',
-    meaning: 'Nhìn, xem, đọc',
+    id: 'hsk1-17',
+    hanzi: '今天',
+    pinyin: 'jīntiān',
+    meaning: 'Hôm nay',
     level: 'HSK 1',
-    type: 'Động từ',
+    category: 'Thời gian & Ngày tháng',
+    type: 'Danh từ',
     example: {
-      hanzi: '你看，那个人是谁？',
-      pinyin: 'Nǐ kàn, nà ge rén shì shéi?',
-      meaning: 'Bạn nhìn xem, người kia là ai?'
+      hanzi: '今天星期五。',
+      pinyin: 'Jīntiān xīngqīwǔ.',
+      meaning: 'Hôm nay là thứ Sáu.'
+    }
+  },
+  {
+    id: 'hsk1-18',
+    hanzi: '明天',
+    pinyin: 'míngtiān',
+    meaning: 'Ngày mai',
+    level: 'HSK 1',
+    category: 'Thời gian & Ngày tháng',
+    type: 'Danh từ',
+    example: {
+      hanzi: '明天你有空吗？',
+      pinyin: 'Míngtiān nǐ yǒu kòng ma?',
+      meaning: 'Ngày mai bạn có rảnh không?'
     }
   },
   {
     id: 'hsk1-19',
-    hanzi: '听',
-    pinyin: 'tīng',
-    meaning: 'Nghe',
-    level: 'HSK 1',
-    type: 'Động từ',
-    example: {
-      hanzi: '我喜欢听中文歌。',
-      pinyin: 'Wǒ xǐhuan tīng Zhōngwén gē.',
-      meaning: 'Tôi thích nghe bài hát tiếng Trung.'
-    }
-  },
-  {
-    id: 'hsk1-20',
-    hanzi: '说',
-    pinyin: 'shuō',
-    meaning: 'Nói',
-    level: 'HSK 1',
-    type: 'Động từ',
-    example: {
-      hanzi: '你会说汉语吗？',
-      pinyin: 'Nǐ huì shuō Hànyǔ ma?',
-      meaning: 'Bạn biết nói tiếng Trung không?'
-    }
-  },
-  {
-    id: 'hsk1-21',
-    hanzi: '读',
-    pinyin: 'dú',
-    meaning: 'Đọc (to), học',
-    level: 'HSK 1',
-    type: 'Động từ',
-    example: {
-      hanzi: '请跟我读这个生词。',
-      pinyin: 'Qǐng gēn wǒ dú zhè ge shēngcí.',
-      meaning: 'Mời các bạn đọc từ mới này theo tôi.'
-    }
-  },
-  {
-    id: 'hsk1-22',
-    hanzi: '写',
-    pinyin: 'xiě',
-    meaning: 'Viết',
-    level: 'HSK 1',
-    type: 'Động từ',
-    example: {
-      hanzi: '这个汉字怎么写？',
-      pinyin: 'Zhè ge hànzì zěnme xiě?',
-      meaning: 'Chữ Hán này viết như thế nào?'
-    }
-  },
-  {
-    id: 'hsk1-23',
-    hanzi: '汉语',
-    pinyin: 'Hànyǔ',
-    meaning: 'Tiếng Hán, tiếng Trung',
-    level: 'HSK 1',
-    type: 'Danh từ',
-    example: {
-      hanzi: '汉语不太难。',
-      pinyin: 'Hànyǔ bú tài nán.',
-      meaning: 'Tiếng Hán không khó lắm.'
-    }
-  },
-  {
-    id: 'hsk1-24',
-    hanzi: '字',
-    pinyin: 'zì',
-    meaning: 'Chữ, chữ viết',
-    level: 'HSK 1',
-    type: 'Danh từ',
-    example: {
-      hanzi: '中国字很漂亮。',
-      pinyin: 'Zhōngguó zì hěn piàoliang.',
-      meaning: 'Chữ Trung Quốc rất đẹp.'
-    }
-  },
-  {
-    id: 'hsk1-25',
-    hanzi: '家',
-    pinyin: 'jiā',
-    meaning: 'Nhà, gia đình',
-    level: 'HSK 1',
-    type: 'Danh từ',
-    example: {
-      hanzi: '我家有四口人。',
-      pinyin: 'Wǒ jiā yǒu sì kǒu rén.',
-      meaning: 'Nhà tôi có 4 người.'
-    }
-  },
-  {
-    id: 'hsk1-26',
     hanzi: '学校',
     pinyin: 'xuéxiào',
     meaning: 'Trường học',
     level: 'HSK 1',
+    category: 'Trường học & Giáo dục',
     type: 'Danh từ',
     example: {
       hanzi: '我们的学校很大。',
       pinyin: 'Wǒmen de xuéxiào hěn dà.',
-      meaning: 'Trường học của chúng tôi rất to lớn.'
+      meaning: 'Trường học của chúng tôi rất lớn.'
     }
   },
   {
-    id: 'hsk1-27',
+    id: 'hsk1-20',
+    hanzi: '老师',
+    pinyin: 'lǎoshī',
+    meaning: 'Thầy / cô giáo',
+    level: 'HSK 1',
+    category: 'Trường học & Giáo dục',
+    type: 'Danh từ',
+    example: {
+      hanzi: '李老师教我们汉语。',
+      pinyin: 'Lǐ lǎoshī jiāo wǒmen Hànyǔ.',
+      meaning: 'Cô giáo Lý dạy chúng tôi tiếng Hán.'
+    }
+  },
+  {
+    id: 'hsk1-21',
+    hanzi: '学生',
+    pinyin: 'xuésheng',
+    meaning: 'Học sinh, sinh viên',
+    level: 'HSK 1',
+    category: 'Trường học & Giáo dục',
+    type: 'Danh từ',
+    example: {
+      hanzi: '教室里有很多学生。',
+      pinyin: 'Jiàoshì lǐ yǒu hěn duō xuésheng.',
+      meaning: 'Trong lớp học có rất nhiều học sinh.'
+    }
+  },
+  {
+    id: 'hsk1-22',
     hanzi: '商店',
     pinyin: 'shāngdiàn',
-    meaning: 'Cửa hàng',
+    meaning: 'Cửa hàng, tiệm buôn',
     level: 'HSK 1',
+    category: 'Mua sắm & Tiền tệ',
     type: 'Danh từ',
     example: {
       hanzi: '我去商店买笔。',
@@ -358,232 +336,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-28',
-    hanzi: '医院',
-    pinyin: 'yīyuàn',
-    meaning: 'Bệnh viện',
-    level: 'HSK 1',
-    type: 'Danh từ',
-    example: {
-      hanzi: '他在医院工作。',
-      pinyin: 'Tā zài yīyuàn gōngzuò.',
-      meaning: 'Anh ấy làm việc ở bệnh viện.'
-    }
-  },
-  {
-    id: 'hsk1-29',
-    hanzi: '中国',
-    pinyin: 'Zhōngguó',
-    meaning: 'Trung Quốc',
-    level: 'HSK 1',
-    type: 'Danh từ riêng',
-    example: {
-      hanzi: '我想去中国旅游。',
-      pinyin: 'Wǒ xiǎng qù Zhōngguó lǚyóu.',
-      meaning: 'Tôi muốn đi du lịch Trung Quốc.'
-    }
-  },
-  {
-    id: 'hsk1-30',
-    hanzi: '北京',
-    pinyin: 'Běijīng',
-    meaning: 'Bắc Kinh',
-    level: 'HSK 1',
-    type: 'Danh từ riêng',
-    example: {
-      hanzi: '北京是中国的首都。',
-      pinyin: 'Běijīng shì Zhōngguó de shǒudū.',
-      meaning: 'Bắc Kinh là thủ đô của Trung Quốc.'
-    }
-  },
-  {
-    id: 'hsk1-31',
-    hanzi: '今天',
-    pinyin: 'jīntiān',
-    meaning: 'Hôm nay',
-    level: 'HSK 1',
-    type: 'Danh từ chỉ thời gian',
-    example: {
-      hanzi: '今天星期五。',
-      pinyin: 'Jīntiān xīngqīwǔ.',
-      meaning: 'Hôm nay là thứ Sáu.'
-    }
-  },
-  {
-    id: 'hsk1-32',
-    hanzi: '明天',
-    pinyin: 'míngtiān',
-    meaning: 'Ngày mai',
-    level: 'HSK 1',
-    type: 'Danh từ chỉ thời gian',
-    example: {
-      hanzi: '明天你有空吗？',
-      pinyin: 'Míngtiān nǐ yǒu kòng ma?',
-      meaning: 'Ngày mai bạn có rảnh không?'
-    }
-  },
-  {
-    id: 'hsk1-33',
-    hanzi: '昨天',
-    pinyin: 'zuótiān',
-    meaning: 'Hôm qua',
-    level: 'HSK 1',
-    type: 'Danh từ chỉ thời gian',
-    example: {
-      hanzi: '昨天我去图书馆了。',
-      pinyin: 'Zuótiān wǒ qù túshūguǎn le.',
-      meaning: 'Hôm qua tôi đã đi thư viện.'
-    }
-  },
-  {
-    id: 'hsk1-34',
-    hanzi: '现在',
-    pinyin: 'xiànzài',
-    meaning: 'Bây giờ, hiện tại',
-    level: 'HSK 1',
-    type: 'Danh từ chỉ thời gian',
-    example: {
-      hanzi: '现在几点了？',
-      pinyin: 'Xiànzài jǐ diǎn le?',
-      meaning: 'Bây giờ mấy giờ rồi?'
-    }
-  },
-  {
-    id: 'hsk1-35',
-    hanzi: '年',
-    pinyin: 'nián',
-    meaning: 'Năm',
-    level: 'HSK 1',
-    type: 'Danh từ',
-    example: {
-      hanzi: '我学汉语一年了。',
-      pinyin: 'Wǒ xué Hànyǔ yì nián le.',
-      meaning: 'Tôi học tiếng Trung được một năm rồi.'
-    }
-  },
-  {
-    id: 'hsk1-36',
-    hanzi: '月',
-    pinyin: 'yuè',
-    meaning: 'Tháng, mặt trăng',
-    level: 'HSK 1',
-    type: 'Danh từ',
-    example: {
-      hanzi: '八月很热。',
-      pinyin: 'Bā yuè hěn rè.',
-      meaning: 'Tháng 8 rất nóng.'
-    }
-  },
-  {
-    id: 'hsk1-37',
-    hanzi: '号',
-    pinyin: 'hào',
-    meaning: 'Ngày (trong tháng), số',
-    level: 'HSK 1',
-    type: 'Danh từ',
-    example: {
-      hanzi: '今天是十月十五号。',
-      pinyin: 'Jīntiān shì shí yuè shíwǔ hào.',
-      meaning: 'Hôm nay là ngày 15 tháng 10.'
-    }
-  },
-  {
-    id: 'hsk1-38',
-    hanzi: '星期',
-    pinyin: 'xīngqī',
-    meaning: 'Tuần, thứ',
-    level: 'HSK 1',
-    type: 'Danh từ',
-    example: {
-      hanzi: '这个星期我很忙。',
-      pinyin: 'Zhè ge xīngqī wǒ hěn máng.',
-      meaning: 'Tuần này tôi rất bận.'
-    }
-  },
-  {
-    id: 'hsk1-39',
-    hanzi: '点',
-    pinyin: 'diǎn',
-    meaning: 'Giờ, điểm, giọt',
-    level: 'HSK 1',
-    type: 'Lượng từ',
-    example: {
-      hanzi: '现在是早上八点。',
-      pinyin: 'Xiànzài shì zǎoshang bā diǎn.',
-      meaning: 'Bây giờ là 8 giờ sáng.'
-    }
-  },
-  {
-    id: 'hsk1-40',
-    hanzi: '喜欢',
-    pinyin: 'xǐhuan',
-    meaning: 'Thích, yêu thích',
-    level: 'HSK 1',
-    type: 'Động từ',
-    example: {
-      hanzi: '我喜欢学中文。',
-      pinyin: 'Wǒ xǐhuan xué Zhōngwén.',
-      meaning: 'Tôi thích học tiếng Trung.'
-    }
-  },
-  {
-    id: 'hsk1-41',
-    hanzi: '想',
-    pinyin: 'xiǎng',
-    meaning: 'Muốn, nghĩ, nhớ',
-    level: 'HSK 1',
-    type: 'Động từ',
-    example: {
-      hanzi: '我想买新手机。',
-      pinyin: 'Wǒ xiǎng mǎi xīn shǒujī.',
-      meaning: 'Tôi muốn mua điện thoại mới.'
-    }
-  },
-  {
-    id: 'hsk1-42',
-    hanzi: '爱',
-    pinyin: 'ài',
-    meaning: 'Yêu, mến',
-    level: 'HSK 1',
-    type: 'Động từ',
-    example: {
-      hanzi: '我爱我的爸爸妈妈。',
-      pinyin: 'Wǒ ài wǒ de bàba māma.',
-      meaning: 'Tôi yêu bố mẹ của tôi.'
-    }
-  },
-  {
-    id: 'hsk1-43',
-    hanzi: '会',
-    pinyin: 'huì',
-    meaning: 'Biết (qua học tập), sẽ',
-    level: 'HSK 1',
-    type: 'Trợ động từ',
-    example: {
-      hanzi: '你会做中国菜吗？',
-      pinyin: 'Nǐ huì zuò Zhōngguó cài ma?',
-      meaning: 'Bạn biết nấu món ăn Trung Quốc không?'
-    }
-  },
-  {
-    id: 'hsk1-44',
-    hanzi: '买',
-    pinyin: 'mǎi',
-    meaning: 'Mua',
-    level: 'HSK 1',
-    type: 'Động từ',
-    example: {
-      hanzi: '你买苹果了吗？',
-      pinyin: 'Nǐ mǎi píngguǒ le ma?',
-      meaning: 'Bạn mua táo chưa?'
-    }
-  },
-  {
-    id: 'hsk1-45',
+    id: 'hsk1-23',
     hanzi: '钱',
     pinyin: 'qián',
     meaning: 'Tiền',
     level: 'HSK 1',
+    category: 'Mua sắm & Tiền tệ',
     type: 'Danh từ',
     example: {
       hanzi: '这个多少钱？',
@@ -592,208 +350,42 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk1-46',
-    hanzi: '块',
-    pinyin: 'kuài',
-    meaning: 'Đồng, tệ (đơn vị tiền tệ)',
+    id: 'hsk1-24',
+    hanzi: '医院',
+    pinyin: 'yīyuàn',
+    meaning: 'Bệnh viện',
     level: 'HSK 1',
-    type: 'Lượng từ',
+    category: 'Sức khỏe & Y tế',
+    type: 'Danh từ',
     example: {
-      hanzi: '一本书二十块钱。',
-      pinyin: 'Yì běn shū èrshí kuài qián.',
-      meaning: 'Một quyển sách hai mươi tệ.'
+      hanzi: '他在医院工作。',
+      pinyin: 'Tā zài yīyuàn gōngzuò.',
+      meaning: 'Anh ấy làm việc ở bệnh viện.'
     }
   },
   {
-    id: 'hsk1-47',
-    hanzi: '大',
-    pinyin: 'dà',
-    meaning: 'To, lớn',
-    level: 'HSK 1',
-    type: 'Tính từ',
-    example: {
-      hanzi: '这个西瓜很大。',
-      pinyin: 'Zhè ge xīguā hěn dà.',
-      meaning: 'Quả dưa hấu này rất to.'
-    }
-  },
-  {
-    id: 'hsk1-48',
-    hanzi: '小',
-    pinyin: 'xiǎo',
-    meaning: 'Nhỏ, bé',
-    level: 'HSK 1',
-    type: 'Tính từ',
-    example: {
-      hanzi: '那只小猫很可爱。',
-      pinyin: 'Nà zhī xiǎomāo hěn kě\'ài.',
-      meaning: 'Chú mèo con kia rất đáng yêu.'
-    }
-  },
-  {
-    id: 'hsk1-49',
-    hanzi: '多',
-    pinyin: 'duō',
-    meaning: 'Nhiều',
-    level: 'HSK 1',
-    type: 'Tính từ',
-    example: {
-      hanzi: '今天学校的人很多。',
-      pinyin: 'Jīntiān xuéxiào de rén hěn duō.',
-      meaning: 'Hôm nay trường học có rất đông người.'
-    }
-  },
-  {
-    id: 'hsk1-50',
-    hanzi: '少',
-    pinyin: 'shǎo',
-    meaning: 'Ít',
-    level: 'HSK 1',
-    type: 'Tính từ',
-    example: {
-      hanzi: '杯子里的水很少。',
-      pinyin: 'Bēizi lǐ de shuǐ hěn shǎo.',
-      meaning: 'Nước trong cốc rất ít.'
-    }
-  },
-  {
-    id: 'hsk1-51',
-    hanzi: '冷',
-    pinyin: 'lěng',
-    meaning: 'Lạnh',
-    level: 'HSK 1',
-    type: 'Tính từ',
-    example: {
-      hanzi: '今天太冷了，穿大衣吧。',
-      pinyin: 'Jīntiān tài lěng le, chuān dàyī ba.',
-      meaning: 'Hôm nay lạnh quá, mặc áo khoác vào đi.'
-    }
-  },
-  {
-    id: 'hsk1-52',
-    hanzi: '热',
-    pinyin: 'rè',
-    meaning: 'Nóng',
-    level: 'HSK 1',
-    type: 'Tính từ',
-    example: {
-      hanzi: '北京的夏天很热。',
-      pinyin: 'Běijīng de xiàtiān hěn rè.',
-      meaning: 'Mùa hè ở Bắc Kinh rất nóng.'
-    }
-  },
-  {
-    id: 'hsk1-53',
+    id: 'hsk1-25',
     hanzi: '高兴',
     pinyin: 'gāoxìng',
     meaning: 'Vui vẻ, phấn khởi',
     level: 'HSK 1',
+    category: 'Cảm xúc & Tính cách',
     type: 'Tính từ',
     example: {
       hanzi: '今天我非常高兴。',
       pinyin: 'Jīntiān wǒ fēicháng gāoxìng.',
-      meaning: 'Hôm nay tôi vô cùng vui mừng.'
-    }
-  },
-  {
-    id: 'hsk1-54',
-    hanzi: '漂亮',
-    pinyin: 'piàoliang',
-    meaning: 'Xinh đẹp, đẹp đẽ',
-    level: 'HSK 1',
-    type: 'Tính từ',
-    example: {
-      hanzi: '这件衣服真漂亮！',
-      pinyin: 'Zhè jiàn yīfu zhēn piàoliang!',
-      meaning: 'Chiếc áo này thật là đẹp!'
-    }
-  },
-  {
-    id: 'hsk1-55',
-    hanzi: '怎么',
-    pinyin: 'zěnme',
-    meaning: 'Như thế nào, sao, làm sao',
-    level: 'HSK 1',
-    type: 'Đại từ',
-    example: {
-      hanzi: '去车站怎么走？',
-      pinyin: 'Qù chēzhàn zěnme zǒu?',
-      meaning: 'Đi đến bến xe đi như thế nào?'
-    }
-  },
-  {
-    id: 'hsk1-56',
-    hanzi: '怎么样',
-    pinyin: 'zěnmeyàng',
-    meaning: 'Thế nào, ra sao',
-    level: 'HSK 1',
-    type: 'Đại từ',
-    example: {
-      hanzi: '这本书怎么样？',
-      pinyin: 'Zhè běn shū zěnmeyàng?',
-      meaning: 'Quyển sách này thế nào?'
-    }
-  },
-  {
-    id: 'hsk1-57',
-    hanzi: '什么',
-    pinyin: 'shénme',
-    meaning: 'Cái gì, gì',
-    level: 'HSK 1',
-    type: 'Đại từ',
-    example: {
-      hanzi: '你叫什么名字？',
-      pinyin: 'Nǐ jiào shénme míngzi?',
-      meaning: 'Bạn tên là gì?'
-    }
-  },
-  {
-    id: 'hsk1-58',
-    hanzi: '谁',
-    pinyin: 'shéi',
-    meaning: 'Ai',
-    level: 'HSK 1',
-    type: 'Đại từ',
-    example: {
-      hanzi: '谁是你的同屋？',
-      pinyin: 'Shéi shì nǐ de tóngwū?',
-      meaning: 'Ai là bạn cùng phòng của bạn?'
-    }
-  },
-  {
-    id: 'hsk1-59',
-    hanzi: '哪儿',
-    pinyin: 'nǎr',
-    meaning: 'Ở đâu, chỗ nào',
-    level: 'HSK 1',
-    type: 'Đại từ',
-    example: {
-      hanzi: '洗手间在哪儿？',
-      pinyin: 'Xǐshǒujiān zài nǎr?',
-      meaning: 'Nhà vệ sinh ở đâu?'
-    }
-  },
-  {
-    id: 'hsk1-60',
-    hanzi: '多少',
-    pinyin: 'duōshao',
-    meaning: 'Bao nhiêu',
-    level: 'HSK 1',
-    type: 'Đại từ',
-    example: {
-      hanzi: '你们学校有多少学生？',
-      pinyin: 'Nǐmen xuéxiào yǒu duōshao xuésheng?',
-      meaning: 'Trường bạn có bao nhiêu học sinh?'
+      meaning: 'Hôm nay tôi rất vui vẻ.'
     }
   },
 
-  // --- HSK 2 ---
+  // ==================== HSK 2 ====================
   {
     id: 'hsk2-01',
     hanzi: '帮助',
     pinyin: 'bāngzhù',
     meaning: 'Giúp đỡ, sự hỗ trợ',
     level: 'HSK 2',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Động từ',
     example: {
       hanzi: '谢谢大家的帮助。',
@@ -803,36 +395,11 @@ const DEFAULT_HSK_WORDS = [
   },
   {
     id: 'hsk2-02',
-    hanzi: '准备',
-    pinyin: 'zhǔnbèi',
-    meaning: 'Chuẩn bị, dự định',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '我正在准备考试。',
-      pinyin: 'Wǒ zhèngzài zhǔnbèi kǎoshì.',
-      meaning: 'Tôi đang chuẩn bị cho kỳ thi.'
-    }
-  },
-  {
-    id: 'hsk2-03',
-    hanzi: '开始',
-    pinyin: 'kāishǐ',
-    meaning: 'Bắt đầu',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '会议八点开始。',
-      pinyin: 'Huìyì bā diǎn kāishǐ.',
-      meaning: 'Cuộc họp bắt đầu lúc 8 giờ.'
-    }
-  },
-  {
-    id: 'hsk2-04',
     hanzi: '介绍',
     pinyin: 'jièshào',
     meaning: 'Giới thiệu',
     level: 'HSK 2',
+    category: 'Chào hỏi & Giao tiếp',
     type: 'Động từ',
     example: {
       hanzi: '让我介绍一下我的朋友。',
@@ -841,375 +408,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk2-05',
-    hanzi: '觉得',
-    pinyin: 'juéde',
-    meaning: 'Cảm thấy, thấy rằng, nghĩ rằng',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '我觉得这道菜很好吃。',
-      pinyin: 'Wǒ juéde zhè dào cài hěn hǎochī.',
-      meaning: 'Tôi thấy món ăn này rất ngon.'
-    }
-  },
-  {
-    id: 'hsk2-06',
-    hanzi: '懂',
-    pinyin: 'dǒng',
-    meaning: 'Hiểu, biết rõ',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '老师说的话我都懂了。',
-      pinyin: 'Lǎoshī shuō de huà wǒ dōu dǒng le.',
-      meaning: 'Lời thầy giáo nói tôi đều hiểu rồi.'
-    }
-  },
-  {
-    id: 'hsk2-07',
-    hanzi: '希望',
-    pinyin: 'xīwàng',
-    meaning: 'Hy vọng, mong muốn',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '希望你天天开心！',
-      pinyin: 'Xīwàng nǐ tiāntiān kāixīn!',
-      meaning: 'Hy vọng bạn mỗi ngày đều vui vẻ!'
-    }
-  },
-  {
-    id: 'hsk2-08',
-    hanzi: '跑步',
-    pinyin: 'pǎobù',
-    meaning: 'Chạy bộ',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '他每天早上都去跑步。',
-      pinyin: 'Tā měitiān zǎoshang dōu qù pǎobù.',
-      meaning: 'Anh ấy mỗi sáng đều đi chạy bộ.'
-    }
-  },
-  {
-    id: 'hsk2-09',
-    hanzi: '游泳',
-    pinyin: 'yóuyǒng',
-    meaning: 'Bơi lội',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '夏天我最喜欢游泳。',
-      pinyin: 'Xiàtiān wǒ zuì xǐhuan yóuyǒng.',
-      meaning: 'Mùa hè tôi thích bơi lội nhất.'
-    }
-  },
-  {
-    id: 'hsk2-10',
-    hanzi: '踢足球',
-    pinyin: 'tī zúqiú',
-    meaning: 'Đá bóng, chơi bóng đá',
-    level: 'HSK 2',
-    type: 'Cụm động từ',
-    example: {
-      hanzi: '弟弟在操场踢足球。',
-      pinyin: 'Dìdi zài cāochǎng tī zúqiú.',
-      meaning: 'Em trai đang đá bóng ở sân tập.'
-    }
-  },
-  {
-    id: 'hsk2-11',
-    hanzi: '打篮球',
-    pinyin: 'dǎ lánqiú',
-    meaning: 'Chơi bóng rổ',
-    level: 'HSK 2',
-    type: 'Cụm động từ',
-    example: {
-      hanzi: '下午我们去打篮球吧。',
-      pinyin: 'Xiàwǔ wǒmen qù dǎ lánqiú ba.',
-      meaning: 'Chiều nay chúng mình đi chơi bóng rổ nhé.'
-    }
-  },
-  {
-    id: 'hsk2-12',
-    hanzi: '唱歌',
-    pinyin: 'chànggē',
-    meaning: 'Hát, ca hát',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '她唱歌唱得非常好听。',
-      pinyin: 'Tā chànggē chàng de fēicháng hǎotīng.',
-      meaning: 'Cô ấy hát rất là hay.'
-    }
-  },
-  {
-    id: 'hsk2-13',
-    hanzi: '跳舞',
-    pinyin: 'tiàowǔ',
-    meaning: 'Nhảy múa, khiêu vũ',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '妹妹正在学跳舞。',
-      pinyin: 'Mèimei zhèngzài xué tiàowǔ.',
-      meaning: 'Em gái đang học múa.'
-    }
-  },
-  {
-    id: 'hsk2-14',
-    hanzi: '旅游',
-    pinyin: 'lǚyóu',
-    meaning: 'Du lịch',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '去年我们去中国旅游。',
-      pinyin: 'Qùnián wǒmen qù Zhōngguó lǚyóu.',
-      meaning: 'Năm ngoái chúng tôi đi du lịch Trung Quốc.'
-    }
-  },
-  {
-    id: 'hsk2-15',
-    hanzi: '上班',
-    pinyin: 'shàngbān',
-    meaning: 'Đi làm, bắt đầu làm việc',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '他每天坐地铁上班。',
-      pinyin: 'Tā měitiān zuò dìtiě shàngbān.',
-      meaning: 'Anh ấy hàng ngày đi tàu điện ngầm đi làm.'
-    }
-  },
-  {
-    id: 'hsk2-16',
-    hanzi: '生病',
-    pinyin: 'shēngbìng',
-    meaning: 'Bị ốm, bị bệnh',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '他生病了，在家里休息。',
-      pinyin: 'Tā shēngbìng le, zài jiālǐ xiūxi.',
-      meaning: 'Anh ấy bị ốm rồi, đang nghỉ ngơi ở nhà.'
-    }
-  },
-  {
-    id: 'hsk2-17',
-    hanzi: '休息',
-    pinyin: 'xiūxi',
-    meaning: 'Nghỉ ngơi',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '累了吧？快坐下休息一下。',
-      pinyin: 'Lèi le ba? Kuài zuò xià xiūxi yíxià.',
-      meaning: 'Mệt rồi đúng không? Mau ngồi xuống nghỉ chút đi.'
-    }
-  },
-  {
-    id: 'hsk2-18',
-    hanzi: '药',
-    pinyin: 'yào',
-    meaning: 'Thuốc',
-    level: 'HSK 2',
-    type: 'Danh từ',
-    example: {
-      hanzi: '医生说每天吃两次药。',
-      pinyin: 'Yīshēng shuō měitiān chī liǎng cì yào.',
-      meaning: 'Bác sĩ nói mỗi ngày uống thuốc 2 lần.'
-    }
-  },
-  {
-    id: 'hsk2-19',
-    hanzi: '身体',
-    pinyin: 'shēntǐ',
-    meaning: 'Sức khỏe, cơ thể',
-    level: 'HSK 2',
-    type: 'Danh từ',
-    example: {
-      hanzi: '祝你身体健康！',
-      pinyin: 'Zhù nǐ shēntǐ jiànkāng!',
-      meaning: 'Chúc bạn sức khỏe dồi dào!'
-    }
-  },
-  {
-    id: 'hsk2-20',
-    hanzi: '机场',
-    pinyin: 'jīchǎng',
-    meaning: 'Sân bay, phi trường',
-    level: 'HSK 2',
-    type: 'Danh từ',
-    example: {
-      hanzi: '我现在要去机场接朋友。',
-      pinyin: 'Wǒ xiànzài yào qù jīchǎng jiē péngyou.',
-      meaning: 'Bây giờ tôi phải ra sân bay đón bạn.'
-    }
-  },
-  {
-    id: 'hsk2-21',
-    hanzi: '教室',
-    pinyin: 'jiàoshì',
-    meaning: 'Phòng học, lớp học',
-    level: 'HSK 2',
-    type: 'Danh từ',
-    example: {
-      hanzi: '教室里有很多同学。',
-      pinyin: 'Jiàoshì lǐ yǒu hěn duō tóngxué.',
-      meaning: 'Trong phòng học có rất nhiều bạn học.'
-    }
-  },
-  {
-    id: 'hsk2-22',
-    hanzi: '房间',
-    pinyin: 'fángjiān',
-    meaning: 'Căn phòng',
-    level: 'HSK 2',
-    type: 'Danh từ',
-    example: {
-      hanzi: '这个房间很干净。',
-      pinyin: 'Zhè ge fángjiān hěn gānjìng.',
-      meaning: 'Căn phòng này rất sạch sẽ.'
-    }
-  },
-  {
-    id: 'hsk2-23',
-    hanzi: '路',
-    pinyin: 'lù',
-    meaning: 'Đường, con đường',
-    level: 'HSK 2',
-    type: 'Danh từ',
-    example: {
-      hanzi: '路上车很多，慢点开。',
-      pinyin: 'Lùshang chē hěn duō, màn diǎn kāi.',
-      meaning: 'Trên đường xe cộ rất đông, lái chậm chút nhé.'
-    }
-  },
-  {
-    id: 'hsk2-24',
-    hanzi: '远',
-    pinyin: 'yuǎn',
-    meaning: 'Xa',
-    level: 'HSK 2',
-    type: 'Tính từ',
-    example: {
-      hanzi: '我家离学校不太远。',
-      pinyin: 'Wǒ jiā lí xuéxiào bú tài yuǎn.',
-      meaning: 'Nhà tôi cách trường học không xa lắm.'
-    }
-  },
-  {
-    id: 'hsk2-25',
-    hanzi: '近',
-    pinyin: 'jìn',
-    meaning: 'Gần',
-    level: 'HSK 2',
-    type: 'Tính từ',
-    example: {
-      hanzi: '超市离这里很近。',
-      pinyin: 'Chāoshì lí zhèlǐ hěn jìn.',
-      meaning: 'Siêu thị cách đây rất gần.'
-    }
-  },
-  {
-    id: 'hsk2-26',
-    hanzi: '快',
-    pinyin: 'kuài',
-    meaning: 'Nhanh, mau, sắp',
-    level: 'HSK 2',
-    type: 'Tính từ / Phó từ',
-    example: {
-      hanzi: '快走，火车快开了！',
-      pinyin: 'Kuài zǒu, huǒchē kuài kāi le!',
-      meaning: 'Đi nhanh lên, tàu hỏa sắp chạy rồi!'
-    }
-  },
-  {
-    id: 'hsk2-27',
-    hanzi: '慢',
-    pinyin: 'màn',
-    meaning: 'Chậm',
-    level: 'HSK 2',
-    type: 'Tính từ',
-    example: {
-      hanzi: '请说慢一点儿。',
-      pinyin: 'Qǐng shuō màn yìdiǎnr.',
-      meaning: 'Xin vui lòng nói chậm lại một chút.'
-    }
-  },
-  {
-    id: 'hsk2-28',
-    hanzi: '便宜',
-    pinyin: 'piányi',
-    meaning: 'Rẻ',
-    level: 'HSK 2',
-    type: 'Tính từ',
-    example: {
-      hanzi: '这件衣服又漂亮又便宜。',
-      pinyin: 'Zhè jiàn yīfu yòu piàoliang yòu piányi.',
-      meaning: 'Chiếc áo này vừa đẹp vừa rẻ.'
-    }
-  },
-  {
-    id: 'hsk2-29',
-    hanzi: '贵',
-    pinyin: 'guì',
-    meaning: 'Đắt, quý',
-    level: 'HSK 2',
-    type: 'Tính từ',
-    example: {
-      hanzi: '这家饭馆的菜有点贵。',
-      pinyin: 'Zhè jiā fànguǎn de cài yǒudiǎn guì.',
-      meaning: 'Món ăn của quán ăn này hơi đắt.'
-    }
-  },
-  {
-    id: 'hsk2-30',
-    hanzi: '新',
-    pinyin: 'xīn',
-    meaning: 'Mới',
-    level: 'HSK 2',
-    type: 'Tính từ',
-    example: {
-      hanzi: '这是我的新自行车。',
-      pinyin: 'Zhè shì wǒ de xīn zìxíngchē.',
-      meaning: 'Đây là chiếc xe đạp mới của tôi.'
-    }
-  },
-  {
-    id: 'hsk2-31',
-    hanzi: '穿',
-    pinyin: 'chuān',
-    meaning: 'Mặc (quần áo), đi (giày dép)',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '她穿了一件红裙子。',
-      pinyin: 'Tā chuān le yí jiàn hóng qúnzi.',
-      meaning: 'Cô ấy mặc một chiếc váy đỏ.'
-    }
-  },
-  {
-    id: 'hsk2-32',
-    hanzi: '洗',
-    pinyin: 'xǐ',
-    meaning: 'Rửa, giặt',
-    level: 'HSK 2',
-    type: 'Động từ',
-    example: {
-      hanzi: '吃饭前要先洗手。',
-      pinyin: 'Chī fàn qián yào xiān xǐ shǒu.',
-      meaning: 'Trước khi ăn cơm phải rửa tay trước.'
-    }
-  },
-  {
-    id: 'hsk2-33',
+    id: 'hsk2-03',
     hanzi: '哥哥',
     pinyin: 'gēge',
     meaning: 'Anh trai',
     level: 'HSK 2',
+    category: 'Gia đình & Con người',
     type: 'Danh từ',
     example: {
       hanzi: '我哥哥比我大三岁。',
@@ -1218,11 +422,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk2-34',
+    id: 'hsk2-04',
     hanzi: '姐姐',
     pinyin: 'jiějie',
     meaning: 'Chị gái',
     level: 'HSK 2',
+    category: 'Gia đình & Con người',
     type: 'Danh từ',
     example: {
       hanzi: '我姐姐是护士。',
@@ -1231,11 +436,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk2-35',
+    id: 'hsk2-05',
     hanzi: '弟弟',
     pinyin: 'dìdi',
     meaning: 'Em trai',
     level: 'HSK 2',
+    category: 'Gia đình & Con người',
     type: 'Danh từ',
     example: {
       hanzi: '弟弟喜欢踢足球。',
@@ -1244,11 +450,12 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk2-36',
+    id: 'hsk2-06',
     hanzi: '妹妹',
     pinyin: 'mèimei',
     meaning: 'Em gái',
     level: 'HSK 2',
+    category: 'Gia đình & Con người',
     type: 'Danh từ',
     example: {
       hanzi: '妹妹在看动画片。',
@@ -1257,65 +464,731 @@ const DEFAULT_HSK_WORDS = [
     }
   },
   {
-    id: 'hsk2-37',
-    hanzi: '孩子',
-    pinyin: 'háizi',
-    meaning: 'Trẻ con, con cái',
+    id: 'hsk2-07',
+    hanzi: '跑步',
+    pinyin: 'pǎobù',
+    meaning: 'Chạy bộ',
     level: 'HSK 2',
+    category: 'Thể thao & Giải trí',
+    type: 'Động từ',
+    example: {
+      hanzi: '他每天早上都去跑步。',
+      pinyin: 'Tā měitiān zǎoshang dōu qù pǎobù.',
+      meaning: 'Anh ấy mỗi sáng đều đi chạy bộ.'
+    }
+  },
+  {
+    id: 'hsk2-08',
+    hanzi: '游泳',
+    pinyin: 'yóuyǒng',
+    meaning: 'Bơi lội',
+    level: 'HSK 2',
+    category: 'Thể thao & Giải trí',
+    type: 'Động từ',
+    example: {
+      hanzi: '夏天我最喜欢游泳。',
+      pinyin: 'Xiàtiān wǒ zuì xǐhuan yóuyǒng.',
+      meaning: 'Mùa hè tôi thích bơi lội nhất.'
+    }
+  },
+  {
+    id: 'hsk2-09',
+    hanzi: '踢足球',
+    pinyin: 'tī zúqiú',
+    meaning: 'Đá bóng',
+    level: 'HSK 2',
+    category: 'Thể thao & Giải trí',
+    type: 'Cụm động từ',
+    example: {
+      hanzi: '下午我们一起去踢足球吧。',
+      pinyin: 'Xiàwǔ wǒmen yìqǐ qù tī zúqiú ba.',
+      meaning: 'Chiều nay chúng mình cùng đi đá bóng nhé.'
+    }
+  },
+  {
+    id: 'hsk2-10',
+    hanzi: '生病',
+    pinyin: 'shēngbìng',
+    meaning: 'Bị ốm, bị bệnh',
+    level: 'HSK 2',
+    category: 'Sức khỏe & Y tế',
+    type: 'Động từ',
+    example: {
+      hanzi: '他生病了，在家里休息。',
+      pinyin: 'Tā shēngbìng le, zài jiālǐ xiūxi.',
+      meaning: 'Anh ấy bị ốm rồi, đang nghỉ ngơi ở nhà.'
+    }
+  },
+  {
+    id: 'hsk2-11',
+    hanzi: '药',
+    pinyin: 'yào',
+    meaning: 'Thuốc',
+    level: 'HSK 2',
+    category: 'Sức khỏe & Y tế',
     type: 'Danh từ',
     example: {
-      hanzi: '小孩子们在公园里玩。',
-      pinyin: 'Xiǎo háizimen zài gōngyuán lǐ wán.',
-      meaning: 'Các bạn nhỏ đang chơi trong công viên.'
+      hanzi: '吃药后多休息。',
+      pinyin: 'Chī yào hòu duō xiūxi.',
+      meaning: 'Sau khi uống thuốc hãy nghỉ ngơi nhiều.'
     }
   },
   {
-    id: 'hsk2-38',
-    hanzi: '服务员',
-    pinyin: 'fúwùyuán',
-    meaning: 'Nhân viên phục vụ',
+    id: 'hsk2-12',
+    hanzi: '机场',
+    pinyin: 'jīchǎng',
+    meaning: 'Sân bay, phi trường',
     level: 'HSK 2',
+    category: 'Giao thông & Du lịch',
     type: 'Danh từ',
     example: {
-      hanzi: '服务员，请给我们菜单。',
-      pinyin: 'Fúwùyuán, qǐng gěi wǒmen càidān.',
-      meaning: 'Phục vụ ơi, xin cho chúng tôi thực đơn.'
+      hanzi: '我现在要去机场接朋友。',
+      pinyin: 'Wǒ xiànzài yào qù jīchǎng jiē péngyou.',
+      meaning: 'Bây giờ tôi phải ra sân bay đón bạn.'
     }
   },
   {
-    id: 'hsk2-39',
-    hanzi: '已经',
-    pinyin: 'yǐjīng',
-    meaning: 'Đã, rồi',
+    id: 'hsk2-13',
+    hanzi: '旅游',
+    pinyin: 'lǚyóu',
+    meaning: 'Du lịch',
     level: 'HSK 2',
-    type: 'Phó từ',
+    category: 'Giao thông & Du lịch',
+    type: 'Động từ',
     example: {
-      hanzi: '我已经写完作业了。',
-      pinyin: 'Wǒ yǐjīng xiě wán zuòyè le.',
-      meaning: 'Tôi đã làm xong bài tập rồi.'
+      hanzi: '去年我们去中国旅游。',
+      pinyin: 'Qùnián wǒmen qù Zhōngguó lǚyóu.',
+      meaning: 'Năm ngoái chúng tôi đi du lịch Trung Quốc.'
     }
   },
   {
-    id: 'hsk2-40',
-    hanzi: '一起',
-    pinyin: 'yìqǐ',
-    meaning: 'Cùng nhau',
+    id: 'hsk2-14',
+    hanzi: '便宜',
+    pinyin: 'piányi',
+    meaning: 'Rẻ',
     level: 'HSK 2',
+    category: 'Mua sắm & Tiền tệ',
+    type: 'Tính từ',
+    example: {
+      hanzi: '这件衣服又漂亮又便宜。',
+      pinyin: 'Zhè jiàn yīfu yòu piàoliang yòu piányi.',
+      meaning: 'Chiếc áo này vừa đẹp vừa rẻ.'
+    }
+  },
+  {
+    id: 'hsk2-15',
+    hanzi: '贵',
+    pinyin: 'guì',
+    meaning: 'Đắt, quý',
+    level: 'HSK 2',
+    category: 'Mua sắm & Tiền tệ',
+    type: 'Tính từ',
+    example: {
+      hanzi: '这家饭馆的菜有点贵。',
+      pinyin: 'Zhè jiā fànguǎn de cài yǒudiǎn guì.',
+      meaning: 'Món ăn của quán này hơi đắt.'
+    }
+  },
+
+  // ==================== HSK 3 ====================
+  {
+    id: 'hsk3-01',
+    hanzi: '打算',
+    pinyin: 'dǎsuan',
+    meaning: 'Dự định, tính toán',
+    level: 'HSK 3',
+    category: 'Thời gian & Ngày tháng',
+    type: 'Động từ',
+    example: {
+      hanzi: '周末你有什么打算？',
+      pinyin: 'Zhōumò nǐ yǒu shénme dǎsuan?',
+      meaning: 'Cuối tuần bạn có dự định gì không?'
+    }
+  },
+  {
+    id: 'hsk3-02',
+    hanzi: '决定',
+    pinyin: 'juédìng',
+    meaning: 'Quyết định',
+    level: 'HSK 3',
+    category: 'Cảm xúc & Tính cách',
+    type: 'Động từ',
+    example: {
+      hanzi: '我已经决定去北京留学。',
+      pinyin: 'Wǒ yǐjīng juédìng qù Běijīng liúxué.',
+      meaning: 'Tôi đã quyết định đi du học Bắc Kinh.'
+    }
+  },
+  {
+    id: 'hsk3-03',
+    hanzi: '解决',
+    pinyin: 'jiějué',
+    meaning: 'Giải quyết',
+    level: 'HSK 3',
+    category: 'Công việc & Nghề nghiệp',
+    type: 'Động từ',
+    example: {
+      hanzi: '这个问题很容易解决。',
+      pinyin: 'Zhè ge wèntí hěn róngyì jiějué.',
+      meaning: 'Vấn đề này rất dễ giải quyết.'
+    }
+  },
+  {
+    id: 'hsk3-04',
+    hanzi: '提高',
+    pinyin: 'tígāo',
+    meaning: 'Nâng cao, cải thiện',
+    level: 'HSK 3',
+    category: 'Trường học & Giáo dục',
+    type: 'Động từ',
+    example: {
+      hanzi: '我的汉语水平提高了很多。',
+      pinyin: 'Wǒ de Hànyǔ shuǐpíng tígāo le hěn duō.',
+      meaning: 'Trình độ tiếng Trung của tôi đã tiến bộ nhiều.'
+    }
+  },
+  {
+    id: 'hsk3-05',
+    hanzi: '练习',
+    pinyin: 'liànxí',
+    meaning: 'Luyện tập, bài tập',
+    level: 'HSK 3',
+    category: 'Trường học & Giáo dục',
+    type: 'Động từ',
+    example: {
+      hanzi: '每天练习口语很有帮助。',
+      pinyin: 'Měitiān liànxí kǒuyǔ hěn yǒu bāngzhù.',
+      meaning: 'Mỗi ngày luyện khẩu ngữ rất có ích.'
+    }
+  },
+  {
+    id: 'hsk3-06',
+    hanzi: '经理',
+    pinyin: 'jīnglǐ',
+    meaning: 'Giám đốc, quản lý',
+    level: 'HSK 3',
+    category: 'Công việc & Nghề nghiệp',
+    type: 'Danh từ',
+    example: {
+      hanzi: '李经理正在办公室开会。',
+      pinyin: 'Lǐ jīnglǐ zhèngzài bàngōngshì kāihuì.',
+      meaning: 'Giám đốc Lý đang họp trong văn phòng.'
+    }
+  },
+  {
+    id: 'hsk3-07',
+    hanzi: '同事',
+    pinyin: 'tóngshì',
+    meaning: 'Đồng nghiệp',
+    level: 'HSK 3',
+    category: 'Công việc & Nghề nghiệp',
+    type: 'Danh từ',
+    example: {
+      hanzi: '我和同事们相处得很好。',
+      pinyin: 'Wǒ hé tóngshìmen xiāngchǔ de hěn hǎo.',
+      meaning: 'Tôi và các đồng nghiệp hòa thuận rất tốt.'
+    }
+  },
+  {
+    id: 'hsk3-08',
+    hanzi: '地铁',
+    pinyin: 'dìtiě',
+    meaning: 'Tàu điện ngầm',
+    level: 'HSK 3',
+    category: 'Giao thông & Du lịch',
+    type: 'Danh từ',
+    example: {
+      hanzi: '坐地铁去公司很方便。',
+      pinyin: 'Zuò dìtiě qù gōngsī hěn fāngbiàn.',
+      meaning: 'Đi tàu điện ngầm đến công ty rất thuận tiện.'
+    }
+  },
+  {
+    id: 'hsk3-09',
+    hanzi: '护照',
+    pinyin: 'hùzhào',
+    meaning: 'Hộ chiếu',
+    level: 'HSK 3',
+    category: 'Giao thông & Du lịch',
+    type: 'Danh từ',
+    example: {
+      hanzi: '出国前请检查护照。',
+      pinyin: 'Chūguó qián qǐng jiǎnchá hùzhào.',
+      meaning: 'Trước khi ra nước ngoài xin kiểm tra hộ chiếu.'
+    }
+  },
+  {
+    id: 'hsk3-10',
+    hanzi: '信用卡',
+    pinyin: 'xìnyòngkǎ',
+    meaning: 'Thẻ tín dụng',
+    level: 'HSK 3',
+    category: 'Mua sắm & Tiền tệ',
+    type: 'Danh từ',
+    example: {
+      hanzi: '这里可以用信用卡付款吗？',
+      pinyin: 'Zhèlǐ kěyǐ yòng xìnyòngkǎ fùkuǎn ma?',
+      meaning: 'Ở đây có thể thanh toán bằng thẻ tín dụng không?'
+    }
+  },
+  {
+    id: 'hsk3-11',
+    hanzi: '热情',
+    pinyin: 'rèqíng',
+    meaning: 'Nhiệt tình, hiếu khách',
+    level: 'HSK 3',
+    category: 'Cảm xúc & Tính cách',
+    type: 'Tính từ',
+    example: {
+      hanzi: '北京人非常热情好客。',
+      pinyin: 'Běijīng rén fēicháng rèqíng hàokè.',
+      meaning: 'Người Bắc Kinh rất nhiệt tình hiếu khách.'
+    }
+  },
+  {
+    id: 'hsk3-12',
+    hanzi: '舒服',
+    pinyin: 'shūfu',
+    meaning: 'Thoải mái, dễ chịu',
+    level: 'HSK 3',
+    category: 'Sức khỏe & Y tế',
+    type: 'Tính từ',
+    example: {
+      hanzi: '躺在沙发上真舒服。',
+      pinyin: 'Tǎng zài shāfā shang zhēn shūfu.',
+      meaning: 'Nằm trên ghế sô pha thật thoải mái.'
+    }
+  },
+
+  // ==================== HSK 4 ====================
+  {
+    id: 'hsk4-01',
+    hanzi: '经济',
+    pinyin: 'jīngjì',
+    meaning: 'Kinh tế',
+    level: 'HSK 4',
+    category: 'Kinh tế & Thương mại',
+    type: 'Danh từ',
+    example: {
+      hanzi: '近几年中国经济发展迅速。',
+      pinyin: 'Jìn jǐ nián Zhōngguó jīngjì fāzhǎn xùnsù.',
+      meaning: 'Những năm gần đây kinh tế Trung Quốc phát triển nhanh chóng.'
+    }
+  },
+  {
+    id: 'hsk4-02',
+    hanzi: '法律',
+    pinyin: 'fǎlǜ',
+    meaning: 'Pháp luật',
+    level: 'HSK 4',
+    category: 'Xã hội & Đời sống',
+    type: 'Danh từ',
+    example: {
+      hanzi: '每个人都应该遵守法律。',
+      pinyin: 'Měi ge rén dōu yīnggāi zūnshǒu fǎlǜ.',
+      meaning: 'Mỗi người đều nên tuân thủ pháp luật.'
+    }
+  },
+  {
+    id: 'hsk4-03',
+    hanzi: '科学',
+    pinyin: 'kēxué',
+    meaning: 'Khoa học',
+    level: 'HSK 4',
+    category: 'Khoa học & Công nghệ',
+    type: 'Danh từ',
+    example: {
+      hanzi: '科学技术改变了我们的生活。',
+      pinyin: 'Kēxué jìshù gǎibiàn le wǒmen de shēnghuó.',
+      meaning: 'Khoa học công nghệ đã thay đổi cuộc sống của chúng ta.'
+    }
+  },
+  {
+    id: 'hsk4-04',
+    hanzi: '经验',
+    pinyin: 'jīngyàn',
+    meaning: 'Kinh nghiệm',
+    level: 'HSK 4',
+    category: 'Công việc & Nghề nghiệp',
+    type: 'Danh từ',
+    example: {
+      hanzi: '他在这个行业积累了丰富经验。',
+      pinyin: 'Tā zài zhè ge hángyè jīlěi le fēngfù jīngyàn.',
+      meaning: 'Anh ấy đã tích lũy kinh nghiệm phong phú trong ngành này.'
+    }
+  },
+  {
+    id: 'hsk4-05',
+    hanzi: '态度',
+    pinyin: 'tàidu',
+    meaning: 'Thái độ',
+    level: 'HSK 4',
+    category: 'Cảm xúc & Tính cách',
+    type: 'Danh từ',
+    example: {
+      hanzi: '态度决定一切。',
+      pinyin: 'Tàidu juédìng yíqiè.',
+      meaning: 'Thái độ quyết định tất cả.'
+    }
+  },
+  {
+    id: 'hsk4-06',
+    hanzi: '坚持',
+    pinyin: 'jiānchí',
+    meaning: 'Kiên trì, bền bỉ',
+    level: 'HSK 4',
+    category: 'Cảm xúc & Tính cách',
+    type: 'Động từ',
+    example: {
+      hanzi: '只要坚持努力，就一定能成功。',
+      pinyin: 'Zhǐyào jiānchí nǔlì, jiù yídìng néng chénggōng.',
+      meaning: 'Chỉ cần kiên trì nỗ lực, nhất định sẽ thành công.'
+    }
+  },
+  {
+    id: 'hsk4-07',
+    hanzi: '交流',
+    pinyin: 'jiāoliú',
+    meaning: 'Giao lưu, trao đổi',
+    level: 'HSK 4',
+    category: 'Chào hỏi & Giao tiếp',
+    type: 'Động từ',
+    example: {
+      hanzi: '多跟同事交流能增进了解。',
+      pinyin: 'Duō gēn tóngshì jiāoliú néng zēngjìn liǎojiě.',
+      meaning: 'Giao lưu nhiều với đồng nghiệp giúp tăng cường hiểu biết.'
+    }
+  },
+  {
+    id: 'hsk4-08',
+    hanzi: '礼貌',
+    pinyin: 'lǐmào',
+    meaning: 'Lịch sự, lễ phép',
+    level: 'HSK 4',
+    category: 'Cảm xúc & Tính cách',
+    type: 'Danh từ / Tính từ',
+    example: {
+      hanzi: '对长辈要讲礼貌。',
+      pinyin: 'Duì zhǎngbèi yào jiǎng lǐmào.',
+      meaning: 'Đối với người lớn tuổi cần phải lịch sự lễ phép.'
+    }
+  },
+  {
+    id: 'hsk4-09',
+    hanzi: '顺便',
+    pinyin: 'shùnbiàn',
+    meaning: 'Nhân tiện, tiện thể',
+    level: 'HSK 4',
+    category: 'Xã hội & Đời sống',
     type: 'Phó từ',
     example: {
-      hanzi: '我们一起去买水果吧。',
-      pinyin: 'Wǒmen yìqǐ qù mǎi shuǐguǒ ba.',
-      meaning: 'Chúng mình cùng nhau đi mua hoa quả đi.'
+      hanzi: '你去超市顺便帮我买瓶牛奶吧。',
+      pinyin: 'Nǐ qù chāoshì shùnbiàn bāng wǒ mǎi píng niúnǎi ba.',
+      meaning: 'Bạn đi siêu thị nhân tiện mua giúp tôi hộp sữa nhé.'
+    }
+  },
+  {
+    id: 'hsk4-10',
+    hanzi: '尽管',
+    pinyin: 'jǐnguǎn',
+    meaning: 'Mặc dù, dẫu cho',
+    level: 'HSK 4',
+    category: 'Xã hội & Đời sống',
+    type: 'Liên từ',
+    example: {
+      hanzi: '尽管外面下着大雨，他依然准时到了。',
+      pinyin: 'Jǐnguǎn wàimiàn xià zhe dàyǔ, tā yīrán zhǔnshí dào le.',
+      meaning: 'Mặc dù bên ngoài mưa to, anh ấy vẫn đến đúng giờ.'
+    }
+  },
+
+  // ==================== HSK 5 ====================
+  {
+    id: 'hsk5-01',
+    hanzi: '投资',
+    pinyin: 'tóuzī',
+    meaning: 'Đầu tư',
+    level: 'HSK 5',
+    category: 'Kinh tế & Thương mại',
+    type: 'Động từ / Danh từ',
+    example: {
+      hanzi: '投资新能源领域具有广阔前景。',
+      pinyin: 'Tóuzī xīn néngyuán lǐngyù jùyǒu guǎngkuò qiánjǐng.',
+      meaning: 'Đầu tư vào lĩnh vực năng lượng mới có triển vọng rộng lớn.'
+    }
+  },
+  {
+    id: 'hsk5-02',
+    hanzi: '企业',
+    pinyin: 'qǐyè',
+    meaning: 'Doanh nghiệp, công ty',
+    level: 'HSK 5',
+    category: 'Kinh tế & Thương mại',
+    type: 'Danh từ',
+    example: {
+      hanzi: '中小型企业是经济活力的重要来源。',
+      pinyin: 'Zhōng xiǎoxíng qǐyè shì jīngjì huólì de zhòngyào láiyuán.',
+      meaning: 'Doanh nghiệp vừa và nhỏ là nguồn sức sống quan trọng của nền kinh tế.'
+    }
+  },
+  {
+    id: 'hsk5-03',
+    hanzi: '谈判',
+    pinyin: 'tánpàn',
+    meaning: 'Đàm phán, thương lượng',
+    level: 'HSK 5',
+    category: 'Kinh tế & Thương mại',
+    type: 'Động từ',
+    example: {
+      hanzi: '双方经过艰苦谈判达成了共识。',
+      pinyin: 'Shuāngfāng jīngguò jiānkǔ tánpàn dáchéng le gòngshí.',
+      meaning: 'Hai bên sau đàm phán gian khổ đã đạt được sự đồng thuận.'
+    }
+  },
+  {
+    id: 'hsk5-04',
+    hanzi: '合同',
+    pinyin: 'hétong',
+    meaning: 'Hợp đồng',
+    level: 'HSK 5',
+    category: 'Kinh tế & Thương mại',
+    type: 'Danh từ',
+    example: {
+      hanzi: '签字前务必仔细审查合同条款。',
+      pinyin: 'Qiānzì qián wùbì zǐxì shěnchá hétong tiáokuǎn.',
+      meaning: 'Trước khi ký nhất định phải kiểm tra kỹ các điều khoản hợp đồng.'
+    }
+  },
+  {
+    id: 'hsk5-05',
+    hanzi: '挑战',
+    pinyin: 'tiǎozhàn',
+    meaning: 'Thách thức',
+    level: 'HSK 5',
+    category: 'Công việc & Nghề nghiệp',
+    type: 'Danh từ / Động từ',
+    example: {
+      hanzi: '面对新的挑战，我们要勇往直前。',
+      pinyin: 'Miànduì xīn de tiǎozhàn, wǒmen yào yǒngwǎngzhíqián.',
+      meaning: 'Đối mặt với thách thức mới, chúng ta cần dũng cảm tiến lên.'
+    }
+  },
+  {
+    id: 'hsk5-06',
+    hanzi: '深刻',
+    pinyin: 'shēnkè',
+    meaning: 'Sâu sắc, sâu đậm',
+    level: 'HSK 5',
+    category: 'Cảm xúc & Tính cách',
+    type: 'Tính từ',
+    example: {
+      hanzi: '这次经历给我留下了深刻的印象。',
+      pinyin: 'Zhè cì jīnglì gěi wǒ liú xià le shēnkè de yìnxiàng.',
+      meaning: 'Trải nghiệm lần này đã để lại cho tôi ấn tượng sâu sắc.'
+    }
+  },
+  {
+    id: 'hsk5-07',
+    hanzi: '谨慎',
+    pinyin: 'jǐnshèn',
+    meaning: 'Cẩn trọng, thận trọng',
+    level: 'HSK 5',
+    category: 'Cảm xúc & Tính cách',
+    type: 'Tính từ',
+    example: {
+      hanzi: '在重大决策面前必须保持谨慎。',
+      pinyin: 'Zài zhòngdà juécè miànqián bìxū bǎochí jǐnshèn.',
+      meaning: 'Trước quyết định quan trọng phải giữ thái độ cẩn trọng.'
+    }
+  },
+  {
+    id: 'hsk5-08',
+    hanzi: '哲理',
+    pinyin: 'zhélǐ',
+    meaning: 'Triết lý',
+    level: 'HSK 5',
+    category: 'Thành ngữ & Triết lý',
+    type: 'Danh từ',
+    example: {
+      hanzi: '这则寓言蕴含着深刻的人生哲理。',
+      pinyin: 'Zhè zé yùyán yùnhán zhe shēnkè de rénshēng zhélǐ.',
+      meaning: 'Câu chuyện ngụ ngôn này hàm chứa triết lý nhân sinh sâu sắc.'
+    }
+  },
+
+  // ==================== HSK 6 ====================
+  {
+    id: 'hsk6-01',
+    hanzi: '潜移默化',
+    pinyin: 'qián yí mò huà',
+    meaning: 'Thấm nhuần ngấm dần (ảnh hưởng vô hình)',
+    level: 'HSK 6',
+    category: 'Thành ngữ & Triết lý',
+    type: 'Thành ngữ',
+    example: {
+      hanzi: '优秀的文学作品对读者有着潜移默化的熏陶。',
+      pinyin: 'Yōuxiù de wénxué zuòpǐn duì dúzhě yǒu zhe qián yí mò huà de xūntáo.',
+      meaning: 'Tác phẩm văn học xuất sắc có tác động thấm nhuần tự nhiên đến độc giả.'
+    }
+  },
+  {
+    id: 'hsk6-02',
+    hanzi: '未雨绸缪',
+    pinyin: 'wèi yǔ chóu móu',
+    meaning: 'Phòng ngừa chu đáo trước khi xảy ra sự cố',
+    level: 'HSK 6',
+    category: 'Thành ngữ & Triết lý',
+    type: 'Thành ngữ',
+    example: {
+      hanzi: '企业应当未雨绸缪，建立健全风险防范机制。',
+      pinyin: 'Qǐyè yīngdāng wèi yǔ chóu móu, jiànlì jiànquán fēngxiǎn fángfàn jīzhì.',
+      meaning: 'Doanh nghiệp nên phòng ngừa trước, xây dựng cơ chế đề phòng rủi ro vững chắc.'
+    }
+  },
+  {
+    id: 'hsk6-03',
+    hanzi: '循序渐进',
+    pinyin: 'xún xù jiàn jìn',
+    meaning: 'Tuần tự từng bước, tiến bộ bài bản',
+    level: 'HSK 6',
+    category: 'Thành ngữ & Triết lý',
+    type: 'Thành ngữ',
+    example: {
+      hanzi: '学习汉语必须循序渐进，不可急于求成。',
+      pinyin: 'Xuéxí Hànyǔ bìxū xún xù jiàn jìn, bù kě jí yú qiú chéng.',
+      meaning: 'Học tiếng Hán phải đi từng bước bài bản, không được nóng vội cầu thành.'
+    }
+  },
+  {
+    id: 'hsk6-04',
+    hanzi: '一丝不苟',
+    pinyin: 'yì sī bù gǒu',
+    meaning: 'Cẩn thận tỉ mỉ, không chút cẩu thả',
+    level: 'HSK 6',
+    category: 'Thành ngữ & Triết lý',
+    type: 'Thành ngữ',
+    example: {
+      hanzi: '老科学家对学术研究一丝不苟。',
+      pinyin: 'Lǎo kēxuéjiā duì xuéshù yánjiū yì sī bù gǒu.',
+      meaning: 'Nhà khoa học lão thành đối với nghiên cứu học thuật luôn tỉ mỉ chu đáo.'
+    }
+  },
+  {
+    id: 'hsk6-05',
+    hanzi: '阐述',
+    pinyin: 'chǎnshù',
+    meaning: 'Trình bày rõ ràng, luận giải sâu',
+    level: 'HSK 6',
+    category: 'Khoa học & Công nghệ',
+    type: 'Động từ',
+    example: {
+      hanzi: '报告深刻阐述了新时代可持续发展的核心理念。',
+      pinyin: 'Bàogào shēnkè chǎnshù le xīn shídài kěchíxù fāzhǎn de héxīn lǐniàn.',
+      meaning: 'Báo cáo đã luận giải sâu sắc triết lý cốt lõi của sự phát triển bền vững thời đại mới.'
+    }
+  },
+  {
+    id: 'hsk6-06',
+    hanzi: '统筹',
+    pinyin: 'tǒngchóu',
+    meaning: 'Quy hoạch tổng thể, điều phối chung',
+    level: 'HSK 6',
+    category: 'Kinh tế & Thương mại',
+    type: 'Động từ',
+    example: {
+      hanzi: '必须统筹兼顾经济发展与生态环境保护。',
+      pinyin: 'Bìxū tǒngchóu jiāngù jīngjì fāzhǎn yǔ shēngtài huánjìng bǎohù.',
+      meaning: 'Phải quy hoạch tổng thể hài hòa giữa phát triển kinh tế và bảo vệ môi trường sinh thái.'
+    }
+  },
+  {
+    id: 'hsk6-07',
+    hanzi: '颠覆',
+    pinyin: 'diānfù',
+    meaning: 'Đảo lộn, lật đổ, đột phá căn bản',
+    level: 'HSK 6',
+    category: 'Khoa học & Công nghệ',
+    type: 'Động từ',
+    example: {
+      hanzi: '人工智能正在颠覆众多传统产业格局。',
+      pinyin: 'Réngōng zhìnéng zhèngzài diānfù zhòngduō chuántǒng chǎnyè géjú.',
+      meaning: 'Trí tuệ nhân tạo đang làm đảo lộn cấu trúc của hàng loạt ngành công nghiệp truyền thống.'
+    }
+  },
+  {
+    id: 'hsk6-08',
+    hanzi: '繁荣',
+    pinyin: 'fánróng',
+    meaning: 'Phồn vinh, hưng thịnh',
+    level: 'HSK 6',
+    category: 'Kinh tế & Thương mại',
+    type: 'Tính từ / Động từ',
+    example: {
+      hanzi: '共同促进区域经济的长期稳定与繁荣。',
+      pinyin: 'Gòngtóng cùjìn qūyù jīngjì de chángqī wěndìng yǔ fánróng.',
+      meaning: 'Cùng nhau thúc đẩy sự ổn định và phồn vinh lâu dài của kinh tế khu vực.'
     }
   }
 ];
 
-// 2. EXERCISE TYPE: NHÌN HÌNH PHÁN ĐOÁN ĐÚNG SAI (Image True/False)
-// Inline vector illustrations with rich visual details
+// PRE-BUILT VOCABULARY DECKS (BỘ TỪ VỰNG MẪU HSK 1 ĐẾN HSK 6)
+const DEFAULT_DECKS = [
+  {
+    id: 'deck-hsk1-core',
+    title: 'Bộ từ HSK 1 Cốt Lõi',
+    description: 'Từ vựng nền tảng chào hỏi, xưng hô, ăn uống và sinh hoạt hàng ngày.',
+    level: 'HSK 1',
+    icon: '🌱',
+    wordIds: ['hsk1-01', 'hsk1-02', 'hsk1-03', 'hsk1-04', 'hsk1-05', 'hsk1-06', 'hsk1-07', 'hsk1-08', 'hsk1-09', 'hsk1-10', 'hsk1-11', 'hsk1-12', 'hsk1-13', 'hsk1-14', 'hsk1-15', 'hsk1-16', 'hsk1-17', 'hsk1-18', 'hsk1-19', 'hsk1-20', 'hsk1-21', 'hsk1-22', 'hsk1-23', 'hsk1-24', 'hsk1-25']
+  },
+  {
+    id: 'deck-hsk2-daily',
+    title: 'Bộ từ HSK 2 Đời Sống',
+    description: 'Mở rộng giao tiếp gia đình, thể thao, mua sắm và đi lại du lịch.',
+    level: 'HSK 2',
+    icon: '🌿',
+    wordIds: ['hsk2-01', 'hsk2-02', 'hsk2-03', 'hsk2-04', 'hsk2-05', 'hsk2-06', 'hsk2-07', 'hsk2-08', 'hsk2-09', 'hsk2-10', 'hsk2-11', 'hsk2-12', 'hsk2-13', 'hsk2-14', 'hsk2-15']
+  },
+  {
+    id: 'deck-hsk3-travel',
+    title: 'Bộ từ HSK 3 Học Tập & Công Sở',
+    description: 'Nâng cao trình độ, thảo luận công việc, văn phòng và giao dịch cơ bản.',
+    level: 'HSK 3',
+    icon: '🌲',
+    wordIds: ['hsk3-01', 'hsk3-02', 'hsk3-03', 'hsk3-04', 'hsk3-05', 'hsk3-06', 'hsk3-07', 'hsk3-08', 'hsk3-09', 'hsk3-10', 'hsk3-11', 'hsk3-12']
+  },
+  {
+    id: 'deck-hsk4-business',
+    title: 'Bộ từ HSK 4 Xã Hội & Pháp Lý',
+    description: 'Từ vựng chuyên sâu về kinh tế, pháp luật, khoa học và thái độ sống.',
+    level: 'HSK 4',
+    icon: '📘',
+    wordIds: ['hsk4-01', 'hsk4-02', 'hsk4-03', 'hsk4-04', 'hsk4-05', 'hsk4-06', 'hsk4-07', 'hsk4-08', 'hsk4-09', 'hsk4-10']
+  },
+  {
+    id: 'deck-hsk5-advanced',
+    title: 'Bộ từ HSK 5 Cao Cấp & Đàm Phán',
+    description: 'Thương mại quốc tế, hợp đồng, thách thức doanh nghiệp và tư duy logic.',
+    level: 'HSK 5',
+    icon: '📕',
+    wordIds: ['hsk5-01', 'hsk5-02', 'hsk5-03', 'hsk5-04', 'hsk5-05', 'hsk5-06', 'hsk5-07', 'hsk5-08']
+  },
+  {
+    id: 'deck-hsk6-mastery',
+    title: 'Bộ từ HSK 6 Thành Ngữ & Đỉnh Cao',
+    description: 'Thành ngữ 4 chữ uyên bác, thuật ngữ học thuật và tư duy chiến lược tầm vĩ mô.',
+    level: 'HSK 6',
+    icon: '👑',
+    wordIds: ['hsk6-01', 'hsk6-02', 'hsk6-03', 'hsk6-04', 'hsk6-05', 'hsk6-06', 'hsk6-07', 'hsk6-08']
+  }
+];
+
+// 2. EXERCISE TYPE: NHÌN HÌNH PHÁN ĐOÁN ĐÚNG SAI (With Level Tags)
 const IMAGE_TRUE_FALSE_EXERCISES = [
   {
     id: 'itf-1',
-    category: 'Đồ uống & Thức ăn',
+    level: 'HSK 1',
+    category: 'Đồ ăn & Thức uống',
     svg: `<svg viewBox="0 0 200 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="teaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1324,19 +1197,13 @@ const IMAGE_TRUE_FALSE_EXERCISES = [
         </linearGradient>
       </defs>
       <rect width="200" height="160" rx="16" fill="#fef3c7"/>
-      <!-- Saucer -->
       <ellipse cx="100" cy="130" rx="65" ry="14" fill="#cbd5e1"/>
       <ellipse cx="100" cy="128" rx="55" ry="10" fill="#f8fafc"/>
-      <!-- Cup Handle -->
       <path d="M 130 70 C 165 70 165 110 130 110" fill="none" stroke="#e2e8f0" stroke-width="12" stroke-linecap="round"/>
-      <!-- Cup Body -->
       <path d="M 60 60 L 72 120 C 73 125 127 125 128 120 L 140 60 Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="3"/>
-      <!-- Tea Liquid -->
       <ellipse cx="100" cy="68" rx="36" ry="12" fill="url(#teaGrad)"/>
-      <!-- Steam -->
       <path d="M 85 45 Q 80 35 88 25 Q 92 18 85 10" fill="none" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
       <path d="M 105 48 Q 112 38 104 28 Q 98 20 106 12" fill="none" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
-      <!-- Tea leaf tag -->
       <circle cx="100" cy="95" r="14" fill="#dcfce7"/>
       <text x="100" y="100" font-size="12" text-anchor="middle" fill="#166534" font-weight="bold">茶</text>
     </svg>`,
@@ -1348,46 +1215,33 @@ const IMAGE_TRUE_FALSE_EXERCISES = [
   },
   {
     id: 'itf-2',
-    category: 'Hoa quả',
+    level: 'HSK 1',
+    category: 'Đồ ăn & Thức uống',
     svg: `<svg viewBox="0 0 200 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
       <rect width="200" height="160" rx="16" fill="#fee2e2"/>
-      <!-- Shadow -->
       <ellipse cx="100" cy="138" rx="45" ry="10" fill="#fca5a5" opacity="0.6"/>
-      <!-- Apple Body -->
       <path d="M 100 45 C 80 30 55 50 55 85 C 55 125 90 135 100 135 C 110 135 145 125 145 85 C 145 50 120 30 100 45 Z" fill="#ef4444"/>
-      <!-- Highlight -->
       <path d="M 75 55 C 65 65 65 85 68 95" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
-      <!-- Stem -->
       <path d="M 100 45 Q 103 28 112 22" fill="none" stroke="#78350f" stroke-width="5" stroke-linecap="round"/>
-      <!-- Leaf -->
       <path d="M 104 36 C 118 30 130 35 128 42 C 120 48 108 42 104 36 Z" fill="#22c55e"/>
     </svg>`,
     statement: '这是西瓜。',
     pinyin: 'Zhè shì xīguā.',
     meaning: 'Đây là quả dưa hấu.',
     isCorrect: false,
-    explanation: 'Hình vẽ là quả táo đỏ (苹果 - píngguǒ), không phải là quả dưa hấu (西瓜 - xīguā). Nhận định là SAI (错误).'
+    explanation: 'Hình vẽ là quả táo đỏ (苹果 - píngguǒ), không phải dưa hấu (西瓜 - xīguā). Nhận định là SAI (错误).'
   },
   {
     id: 'itf-3',
-    category: 'Thể thao & Hoạt động',
+    level: 'HSK 2',
+    category: 'Thể thao & Giải trí',
     svg: `<svg viewBox="0 0 200 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
       <rect width="200" height="160" rx="16" fill="#e0f2fe"/>
-      <!-- Water pool -->
       <path d="M 0 100 Q 50 90 100 100 T 200 100 L 200 160 L 0 160 Z" fill="#38bdf8"/>
-      <path d="M 0 115 Q 50 108 100 115 T 200 115 L 200 160 L 0 160 Z" fill="#0284c7" opacity="0.8"/>
-      <!-- Swimmer -->
-      <!-- Head & cap -->
       <circle cx="115" cy="72" r="14" fill="#fde047"/>
-      <!-- Goggles -->
       <rect x="118" y="70" width="12" height="6" rx="3" fill="#0f172a"/>
-      <!-- Arm stroke -->
       <path d="M 95 85 C 85 70 95 50 115 52 C 125 53 140 60 148 68" fill="none" stroke="#fbcfe8" stroke-width="9" stroke-linecap="round"/>
-      <!-- Torso -->
       <path d="M 75 92 Q 95 85 110 88" stroke="#0284c7" stroke-width="14" stroke-linecap="round"/>
-      <!-- Water ripples -->
-      <circle cx="65" cy="100" r="8" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.7"/>
-      <circle cx="140" cy="98" r="10" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.7"/>
     </svg>`,
     statement: '他在游泳。',
     pinyin: 'Tā zài yóuyǒng.',
@@ -1397,147 +1251,70 @@ const IMAGE_TRUE_FALSE_EXERCISES = [
   },
   {
     id: 'itf-4',
-    category: 'Đồ vật học tập',
+    level: 'HSK 3',
+    category: 'Giao thông & Du lịch',
     svg: `<svg viewBox="0 0 200 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" rx="16" fill="#f3e8ff"/>
-      <!-- Stack of books -->
-      <!-- Book 1 (bottom) -->
-      <rect x="40" y="105" width="120" height="24" rx="4" fill="#3b82f6"/>
-      <rect x="45" y="110" width="115" height="14" fill="#ffffff"/>
-      <rect x="38" y="105" width="12" height="24" rx="3" fill="#1d4ed8"/>
-      <!-- Book 2 (middle) -->
-      <rect x="48" y="80" width="110" height="22" rx="4" fill="#10b981"/>
-      <rect x="52" y="85" width="105" height="12" fill="#ffffff"/>
-      <rect x="46" y="80" width="11" height="22" rx="3" fill="#047857"/>
-      <!-- Book 3 (top) -->
-      <rect x="55" y="58" width="95" height="20" rx="4" fill="#f59e0b"/>
-      <rect x="58" y="62" width="90" height="12" fill="#ffffff"/>
-      <rect x="53" y="58" width="10" height="20" rx="3" fill="#b45309"/>
-      <!-- Pencil on top -->
-      <line x1="70" y1="45" x2="135" y2="45" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
-      <polygon points="135,42 145,45 135,48" fill="#fbcfe8"/>
-      <polygon points="142,44 145,45 142,46" fill="#1e293b"/>
+      <rect width="200" height="160" rx="16" fill="#f0fdf4"/>
+      <rect x="50" y="45" width="100" height="75" rx="14" fill="#059669"/>
+      <rect x="60" y="55" width="80" height="30" rx="6" fill="#dcfce7"/>
+      <circle cx="70" cy="102" r="6" fill="#fef08a"/>
+      <circle cx="130" cy="102" r="6" fill="#fef08a"/>
+      <line x1="30" y1="135" x2="170" y2="135" stroke="#475569" stroke-width="6"/>
+      <text x="100" y="75" font-size="12" text-anchor="middle" fill="#065f46" font-weight="bold">SUBWAY</text>
     </svg>`,
-    statement: '这是一只猫。',
-    pinyin: 'Zhè shì yì zhī māo.',
-    meaning: 'Đây là một con mèo.',
-    isCorrect: false,
-    explanation: 'Hình minh họa là chồng sách (书 - shū) và cây bút, không phải là con mèo (猫 - māo). Nhận định là SAI (错误).'
+    statement: '坐地铁出行既快又准时。',
+    pinyin: 'Zuò dìtiě chūxíng jì kuài yòu zhǔnshí.',
+    meaning: 'Đi tàu điện ngầm vừa nhanh lại vừa đúng giờ.',
+    isCorrect: true,
+    explanation: 'Hình minh họa là tàu điện ngầm (地铁 - dìtiě). Nhận định là ĐÚNG (正确).'
   },
   {
     id: 'itf-5',
-    category: 'Nghề nghiệp',
+    level: 'HSK 4',
+    category: 'Khoa học & Công nghệ',
     svg: `<svg viewBox="0 0 200 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" rx="16" fill="#ecfdf5"/>
-      <!-- Doctor cartoon -->
-      <circle cx="100" cy="55" r="28" fill="#fed7aa"/>
-      <!-- Doctor cap with red cross -->
-      <path d="M 78 45 C 78 30 122 30 122 45 Z" fill="#ffffff"/>
-      <rect x="96" y="33" width="8" height="8" fill="#ef4444"/>
-      <rect x="94" y="35" width="12" height="4" fill="#ef4444"/>
-      <!-- Eyes & Smile -->
-      <circle cx="92" cy="56" r="3" fill="#334155"/>
-      <circle cx="108" cy="56" r="3" fill="#334155"/>
-      <path d="M 95 66 Q 100 70 105 66" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
-      <!-- Body White Coat -->
-      <path d="M 68 135 L 75 90 C 80 84 120 84 125 90 L 132 135 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
-      <!-- Stethoscope -->
-      <path d="M 86 88 C 86 112 114 112 114 88" fill="none" stroke="#0284c7" stroke-width="3"/>
-      <circle cx="100" cy="115" r="6" fill="#64748b"/>
+      <rect width="200" height="160" rx="16" fill="#f5f3ff"/>
+      <rect x="50" y="40" width="100" height="65" rx="6" fill="#334155"/>
+      <rect x="55" y="45" width="90" height="55" rx="4" fill="#0284c7"/>
+      <path d="M 65 85 L 80 70 L 105 80 L 130 55" fill="none" stroke="#22c55e" stroke-width="4"/>
+      <polygon points="40,110 160,110 150,118 50,118" fill="#94a3b8"/>
     </svg>`,
-    statement: '他是医生。',
-    pinyin: 'Tā shì yīshēng.',
-    meaning: 'Anh ấy là bác sĩ.',
+    statement: '笔记本电脑与科技让工作更高效。',
+    pinyin: 'Bǐjìběn diànnǎo yǔ kējì ràng gōngzuò gèng gāoxiào.',
+    meaning: 'Máy tính xách tay và công nghệ giúp công việc đạt hiệu suất cao hơn.',
     isCorrect: true,
-    explanation: 'Hình vẽ một bác sĩ mặc áo blu trắng, đội mũ chữ thập đỏ và đeo ống nghe (医生 - yīshēng). Nhận định là ĐÚNG (正确).'
+    explanation: 'Hình minh họa máy tính và biểu đồ tăng trưởng công nghệ. Nhận định là ĐÚNG (正确).'
   },
   {
     id: 'itf-6',
-    category: 'Giao thông',
-    svg: `<svg viewBox="0 0 200 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" rx="16" fill="#f0f9ff"/>
-      <!-- Clouds -->
-      <path d="M 30 50 Q 40 35 55 42 Q 70 30 85 45 Q 95 48 90 60 L 30 60 Z" fill="#ffffff" opacity="0.9"/>
-      <path d="M 130 110 Q 140 95 155 102 Q 170 90 185 105 L 130 120 Z" fill="#ffffff" opacity="0.8"/>
-      <!-- Airplane -->
-      <path d="M 60 90 C 80 85 140 75 160 70 C 168 68 168 76 160 82 C 145 92 90 102 70 105 Z" fill="#3b82f6"/>
-      <!-- Wing -->
-      <polygon points="105,82 85,45 105,48 125,80" fill="#1d4ed8"/>
-      <!-- Tail Wing -->
-      <polygon points="62,90 50,70 60,70 70,89" fill="#1d4ed8"/>
-      <!-- Jet Windows -->
-      <circle cx="115" cy="80" r="2.5" fill="#ffffff"/>
-      <circle cx="125" cy="78" r="2.5" fill="#ffffff"/>
-      <circle cx="135" cy="76" r="2.5" fill="#ffffff"/>
-      <circle cx="145" cy="74" r="2.5" fill="#ffffff"/>
-    </svg>`,
-    statement: '飞机在天上飞。',
-    pinyin: 'Fēijī zài tiānshang fēi.',
-    meaning: 'Máy bay đang bay trên bầu trời.',
-    isCorrect: true,
-    explanation: 'Hình vẽ chiếc máy bay (飞机 - fēijī) đang bay lượn giữa các đám mây trên trời. Nhận định là ĐÚNG (正确).'
-  },
-  {
-    id: 'itf-7',
-    category: 'Thời tiết',
-    svg: `<svg viewBox="0 0 200 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="160" rx="16" fill="#e2e8f0"/>
-      <!-- Dark Rain Cloud -->
-      <path d="M 50 65 Q 60 40 85 45 Q 110 30 130 50 Q 155 45 155 70 Q 160 90 140 95 L 60 95 Q 40 90 50 65 Z" fill="#64748b"/>
-      <!-- Raindrops -->
-      <line x1="65" y1="110" x2="58" y2="125" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-      <line x1="85" y1="105" x2="78" y2="120" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-      <line x1="105" y1="112" x2="98" y2="127" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-      <line x1="125" y1="106" x2="118" y2="121" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-      <line x1="145" y1="115" x2="138" y2="130" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
-    </svg>`,
-    statement: '今天天气很好，没下雨。',
-    pinyin: 'Jīntiān tiānqì hěn hǎo, méi xià yǔ.',
-    meaning: 'Hôm nay thời tiết rất đẹp, không mưa.',
-    isCorrect: false,
-    explanation: 'Hình vẽ mây đen và những hạt mưa đang rơi (正在下雨 - zhèngzài xià yǔ), câu mô tả nói "không mưa" là SAI (错误).'
-  },
-  {
-    id: 'itf-8',
-    category: 'Động vật',
+    level: 'HSK 5',
+    category: 'Kinh tế & Thương mại',
     svg: `<svg viewBox="0 0 200 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
       <rect width="200" height="160" rx="16" fill="#fff7ed"/>
-      <!-- Cat Head -->
-      <circle cx="100" cy="90" r="38" fill="#fb923c"/>
-      <!-- Ears -->
-      <polygon points="70,68 65,35 88,58" fill="#ea580c"/>
-      <polygon points="72,64 69,42 85,58" fill="#fed7aa"/>
-      <polygon points="130,68 135,35 112,58" fill="#ea580c"/>
-      <polygon points="128,64 131,42 115,58" fill="#fed7aa"/>
-      <!-- Eyes -->
-      <ellipse cx="86" cy="85" rx="5" ry="7" fill="#1e293b"/>
-      <ellipse cx="114" cy="85" rx="5" ry="7" fill="#1e293b"/>
-      <circle cx="84" cy="83" r="2" fill="#ffffff"/>
-      <circle cx="112" cy="83" r="2" fill="#ffffff"/>
-      <!-- Nose & Mouth -->
-      <polygon points="98,95 102,95 100,98" fill="#be123c"/>
-      <path d="M 95 100 Q 100 104 105 100" fill="none" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
-      <!-- Whiskers -->
-      <line x1="68" y1="92" x2="52" y2="88" stroke="#1e293b" stroke-width="2"/>
-      <line x1="68" y1="98" x2="50" y2="100" stroke="#1e293b" stroke-width="2"/>
-      <line x1="132" y1="92" x2="148" y2="88" stroke="#1e293b" stroke-width="2"/>
-      <line x1="132" y1="98" x2="150" y2="100" stroke="#1e293b" stroke-width="2"/>
+      <rect x="65" y="35" width="70" height="90" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+      <line x1="75" y1="50" x2="125" y2="50" stroke="#94a3b8" stroke-width="3"/>
+      <line x1="75" y1="65" x2="125" y2="65" stroke="#94a3b8" stroke-width="3"/>
+      <line x1="75" y1="80" x2="110" y2="80" stroke="#94a3b8" stroke-width="3"/>
+      <circle cx="115" cy="100" r="10" fill="#dc2626"/>
+      <text x="115" y="104" font-size="10" text-anchor="middle" fill="#ffffff" font-weight="bold">印</text>
     </svg>`,
-    statement: '这是一只可爱的小猫。',
-    pinyin: 'Zhè shì yì zhī kě\'ài de xiǎomāo.',
-    meaning: 'Đây là một chú mèo con đáng yêu.',
+    statement: '这是一份商业合同。',
+    pinyin: 'Zhè shì yí fèn shāngyè hétong.',
+    meaning: 'Đây là một bản hợp đồng thương mại.',
     isCorrect: true,
-    explanation: 'Hình ảnh vẽ một chú mèo con với tai và râu đặc trưng (小猫 - xiǎomāo). Nhận định là ĐÚNG (正确).'
+    explanation: 'Hình minh họa văn bản có đóng dấu đỏ (合同 - hétong). Nhận định là ĐÚNG (正确).'
   }
 ];
 
-// 3. EXERCISE TYPE: ĐỌC CÂU HỎI CHỌN CÂU TRẢ LỜI ĐÚNG (Reading Comprehension Q&A)
+// 3. EXERCISE TYPE: ĐỌC CÂU HỎI CHỌN CÂU TRẢ LỜI ĐÚNG (With Level Tags)
 const READING_COMPREHENSION_EXERCISES = [
   {
     id: 'rc-1',
+    level: 'HSK 1',
+    category: 'Trường học & Giáo dục',
     passage: '大卫是美国人，他在北京学习汉语。他每天早上七点半起床，八点去教室上课。中午他和中国同学一起在学校食堂吃饭。他很喜欢吃中国菜。',
     passagePinyin: 'Dàwèi shì Měiguó rén, tā zài Běijīng xuéxí Hànyǔ. Tā měitiān zǎoshang qī diǎn bàn qǐchuáng, bā diǎn qù jiàoshì shàngkè. Zhōngwǔ tā hé Zhōngguó tóngxué yìqǐ zài xuéxiào shítáng chī fàn. Tā hěn xǐhuan chī Zhōngguó cài.',
-    passageMeaning: 'David là người Mỹ, anh ấy học tiếng Trung ở Bắc Kinh. Hàng ngày anh thức dậy lúc 7 giờ rưỡi sáng, 8 giờ đến phòng học lên lớp. Buổi trưa anh ăn cơm cùng các bạn học Trung Quốc ở nhà ăn trường học. Anh ấy rất thích ăn món Trung Quốc.',
+    passageMeaning: 'David là người Mỹ, anh ấy học tiếng Trung ở Bắc Kinh. Hàng ngày anh thức dậy lúc 7:30 sáng, 8:00 đến lớp học. Buổi trưa anh ăn cơm cùng các bạn học Trung Quốc ở nhà ăn trường học. Anh ấy rất thích món Trung Quốc.',
     question: '大卫每天几点去教室上课？',
     questionPinyin: 'Dàwèi měitiān jǐ diǎn qù jiàoshì shàngkè?',
     questionMeaning: 'David mỗi ngày mấy giờ đến phòng học lên lớp?',
@@ -1548,13 +1325,15 @@ const READING_COMPREHENSION_EXERCISES = [
       { text: '中午十二点 (12:00)' }
     ],
     answerIndex: 1,
-    explanation: 'Đoạn văn nêu: "八点去教室上课" (8 giờ đến phòng học lên lớp). Bảy giờ rưỡi là giờ ngủ dậy (起床).'
+    explanation: 'Đoạn văn nêu: "八点去教室上课" (8 giờ đến phòng học lên lớp).'
   },
   {
     id: 'rc-2',
+    level: 'HSK 2',
+    category: 'Giao thông & Du lịch',
     passage: '李老师的家离学校不远。她每天走路去学校，不用坐出租车。李老师非常爱她的学生，同学们也都很喜欢她。',
     passagePinyin: 'Lǐ lǎoshī de jiā lí xuéxiào bù yuǎn. Tā měitiān zǒulù qù xuéxiào, bú yòng zuò chūzūchē. Lǐ lǎoshī fēicháng ài tā de xuésheng, tóngxuémen yě dōu hěn xǐhuan tā.',
-    passageMeaning: 'Nhà của cô giáo Lý cách trường học không xa. Cô ấy mỗi ngày đều đi bộ đến trường, không cần đi xe taxi. Cô Lý rất yêu thương học sinh của mình, và các bạn học sinh cũng đều rất yêu quý cô.',
+    passageMeaning: 'Nhà của cô giáo Lý cách trường học không xa. Cô ấy mỗi ngày đều đi bộ đến trường, không cần đi taxi.',
     question: '李老师每天怎么去学校？',
     questionPinyin: 'Lǐ lǎoshī měitiān zěnme qù xuéxiào?',
     questionMeaning: 'Cô giáo Lý mỗi ngày đi đến trường bằng cách nào?',
@@ -1565,49 +1344,92 @@ const READING_COMPREHENSION_EXERCISES = [
       { text: '骑自行车 (Đi xe đạp)' }
     ],
     answerIndex: 2,
-    explanation: 'Đoạn văn nêu rõ: "她每天走路去学校，不用坐出租车" (Cô ấy hàng ngày đi bộ đến trường, không cần đi taxi).'
+    explanation: 'Đoạn văn nêu rõ: "她每天走路去学校，不用坐出租车" (Đi bộ).'
   },
   {
     id: 'rc-3',
-    passage: '王朋买了一只小狗。小狗的身体是白色的，眼睛黑黑的，非常漂亮。王朋每天下班回家，小狗都在门口等他。',
-    passagePinyin: 'Wáng Péng mǎi le yì zhī xiǎogǒu. Xiǎogǒu de shēntǐ shì báisè de, yǎnjīng hēihēi de, fēicháng piàoliang. Wáng Péng měitiān xiàbān huí jiā, xiǎogǒu dōu zài ménkǒu děng tā.',
-    passageMeaning: 'Vương Bằng đã mua một chú chó con. Thân chú chó màu trắng, mắt đen láy, rất đẹp. Mỗi ngày Vương Bằng tan sở về nhà, chú chó con đều đứng chờ ở cửa.',
-    question: '小狗的身体是什么颜色的？',
-    questionPinyin: 'Xiǎogǒu de shēntǐ shì shénme yánsè de?',
-    questionMeaning: 'Thân hình chú chó màu gì?',
+    level: 'HSK 3',
+    category: 'Công việc & Nghề nghiệp',
+    passage: '王经理这周非常忙，因为公司下周要跟外国客户签订一份重要合同。他每天加班到晚上九点，希望能做好充分准备。',
+    passagePinyin: 'Wáng jīnglǐ zhè zhōu fēicháng máng, yīnwèi gōngsī xià zhōu yào gēn wàiguó kèhù qiāndìng yí fèn zhòngyào hétong. Tā měitiān jiābān dào wǎnshang jiǔ diǎn, xīwàng néng zuò hǎo chōngfèn zhǔnbèi.',
+    passageMeaning: 'Giám đốc Vương tuần này rất bận rộn vì công ty tuần tới phải ký hợp đồng quan trọng với khách nước ngoài. Anh ấy tăng ca đến 9h tối mỗi ngày để chuẩn bị kỹ lưỡng.',
+    question: '王经理为什么每天加班？',
+    questionPinyin: 'Wáng jīnglǐ wèishénme měitiān jiābān?',
+    questionMeaning: 'Vì sao giám đốc Vương mỗi ngày đều tăng ca?',
     options: [
-      { text: '黑色 (Màu đen)' },
-      { text: '白色 (Màu trắng)' },
-      { text: '黄色 (Màu vàng)' },
-      { text: '红色 (Màu đỏ)' }
+      { text: '准备去国外旅游 (Chuẩn bị du lịch nước ngoài)' },
+      { text: '准备签订重要合同 (Chuẩn bị ký hợp đồng quan trọng)' },
+      { text: '跟同事去运动 (Đi tập thể thao cùng đồng nghiệp)' },
+      { text: '学习汉语口语 (Học khẩu ngữ tiếng Hán)' }
     ],
     answerIndex: 1,
-    explanation: 'Đoạn văn viết: "小狗的身体是白色的" (Thân của chú chó là màu trắng). Mắt mới là màu đen (眼睛黑黑的).'
+    explanation: 'Đoạn văn viết: "因为公司下周要跟外国客户签订一份重要合同，希望能做好充分准备".'
   },
   {
     id: 'rc-4',
-    passage: '明天是星期六，小明和朋友们打算去商店买东西。小明想买一件新衣服，小红想买几本汉语书。买完东西后，他们还要一起去看电影。',
-    passagePinyin: 'Míngtiān shì xīngqīliù, Xiǎomíng hé péngyoumen dǎsuàn qù shāngdiàn mǎi dōngxi. Xiǎomíng xiǎng mǎi yí jiàn xīn yīfu, Xiǎohóng xiǎng mǎi jǐ běn Hànyǔ shū. Mǎi wán dōngxi hòu, tāmen hái yào yìqǐ qù kàn diànyǐng.',
-    passageMeaning: 'Ngày mai là thứ Bảy, Tiểu Minh và bạn bè dự định đến cửa hàng mua đồ. Tiểu Minh muốn mua một chiếc áo mới, Tiểu Hồng muốn mua vài quyển sách tiếng Trung. Sau khi mua sắm xong, họ còn định cùng nhau đi xem phim.',
-    question: '小红想买什么？',
-    questionPinyin: 'Xiǎohóng xiǎng mǎi shénme?',
-    questionMeaning: 'Tiểu Hồng muốn mua cái gì?',
+    level: 'HSK 4',
+    category: 'Khoa học & Công nghệ',
+    passage: '互联网技术的普及极大地改变了人们的生活方式。现在无论购物、订餐还是学习，只要有一部智能手机就能轻松搞定，节省了大量时间。',
+    passagePinyin: 'Hùliánwǎng jìshù de pǔjí jídà de gǎibiàn le rénmen de shēnghuó fāngshì. Xiànzài wúlùn gòuwù, dìngcān háishì xuéxí, zhǐyào yǒu yí bù zhìnéng shǒujī jiù néng qīngsōng gǎodìng, jiéshěng le dàliàng shíjiān.',
+    passageMeaning: 'Sự phổ cập của internet đã thay đổi sâu sắc lối sống con người. Giờ đây mua sắm, gọi đồ ăn hay học tập chỉ cần một chiếc smartphone là xong, tiết kiệm rất nhiều thời gian.',
+    question: '根据这段话，智能手机给人们带来了什么好处？',
+    questionPinyin: 'Gēnjù zhè duàn huà, zhìnéng shǒujī gěi rénmen dàilái le shénme hǎochu?',
+    questionMeaning: 'Theo đoạn văn, smartphone mang lại lợi ích gì cho con người?',
     options: [
-      { text: '一件新衣服 (Một chiếc áo mới)' },
-      { text: '几本汉语书 (Vài quyển sách tiếng Trung)' },
-      { text: '电影票 (Vé xem phim)' },
-      { text: '一部新手机 (Một chiếc điện thoại mới)' }
+      { text: '让生活更轻松便利 (Cuộc sống nhẹ nhàng tiện lợi hơn)' },
+      { text: '让人不想工作 (Làm con người lười làm việc)' },
+      { text: '减少了人际交流 (Làm giảm giao tiếp con người)' },
+      { text: '手机价格变得很贵 (Điện thoại trở nên đắt đỏ)' }
+    ],
+    answerIndex: 0,
+    explanation: 'Đoạn văn nêu bật: "只要有一部智能手机就能轻松搞定，节省了大量时间" -> mang lại sự tiện lợi, nhanh chóng.'
+  },
+  {
+    id: 'rc-5',
+    level: 'HSK 5',
+    category: 'Kinh tế & Thương mại',
+    passage: '在激烈的市场竞争中，企业仅凭价格优势已经很难立足，必须依靠技术创新与优质服务来提高核心竞争力，才能赢得消费者的长期信赖。',
+    passagePinyin: 'Zài jīliè de shìchǎng jìngzhēng zhōng, qǐyè jǐn píng jiàgé yōushì yǐjīng hěn nán lìzú, bìxū yīkào jìshù chuàngxīn yǔ yōuzhì fúwù lái tígāo héxīn jìngzhēnglì, cáinéng yíngdé xiāofèizhě de chángqī xìnlài.',
+    passageMeaning: 'Trong cạnh tranh khốc liệt, doanh nghiệp chỉ dựa vào lợi thế giá cả đã khó trụ vững, mà phải dựa vào sáng tạo kỹ thuật và dịch vụ vượt trội để nâng cao sức cạnh tranh cốt lõi.',
+    question: '企业要想赢得长期信赖，关键要依靠什么？',
+    questionPinyin: 'Qǐyè yào xiǎng yíngdé chángqī xìnlài, guānjiàn yào yīkào shénme?',
+    questionMeaning: 'Doanh nghiệp muốn giành được niềm tin lâu dài, then chốt phải dựa vào điều gì?',
+    options: [
+      { text: '降低产品价格 (Hạ giá sản phẩm)' },
+      { text: '技术创新与优质服务 (Sáng tạo công nghệ & dịch vụ ưu việt)' },
+      { text: '扩大广告宣传 (Mở rộng quảng cáo)' },
+      { text: '减少员工数量 (Cắt giảm nhân viên)' }
     ],
     answerIndex: 1,
-    explanation: 'Tiểu Minh muốn mua áo mới ("小明想买一件新衣服"), còn Tiểu Hồng muốn mua sách tiếng Trung ("小红想买几本汉语书").'
+    explanation: 'Đoạn văn khẳng định: "必须依靠技术创新与优质服务来提高核心竞争力".'
+  },
+  {
+    id: 'rc-6',
+    level: 'HSK 6',
+    category: 'Thành ngữ & Triết lý',
+    passage: '成大事者，贵在未雨绸缪与持之以恒。如果急功近利、浅尝辄止，终究难成大器。唯有循序渐进、一丝不苟，方能在千锤百炼中铸就辉煌。',
+    passagePinyin: 'Chéng dà shì zhě, guì zài wèi yǔ chóu móu yǔ chí zhī yǐ héng. Rúguǒ jígōngjìnlì, qiǎnchángzhézhǐ, zhōngjiū nán chéng dà qì. Wéi yǒu xún xù jiàn jìn, yì sī bù gǒu, fāng néng zài qiān chuí bǎi liàn zhōng zhù jiù huīhuáng.',
+    passageMeaning: 'Người làm việc lớn, quý ở chỗ biết phòng ngừa chu đáo và kiên trì đến cùng. Nếu hám lợi trước mắt, nếm thử rồi dừng thì khó thành đại nghiệp.',
+    question: '文中强调成功的关键态度是什么？',
+    questionPinyin: 'Wén zhōng qiángdiào chénggōng de guānjiàn tàidu shì shénme?',
+    questionMeaning: 'Thái độ then chốt để thành công được nhấn mạnh trong bài là gì?',
+    options: [
+      { text: '急功近利 (Hám lợi trước mắt)' },
+      { text: '随遇而安 (Tùy cơ ứng biến qua ngày)' },
+      { text: '循序渐进与坚持不懈 (Tuần tự bài bản & kiên trì không ngừng)' },
+      { text: '等待好运降临 (Chờ vận may)' }
+    ],
+    answerIndex: 2,
+    explanation: 'Bài viết đúc kết: "唯有循序渐进、一丝不苟，贵在未雨绸缪与持之以恒".'
   }
 ];
 
-// 4. EXERCISE TYPE: CHỌN BỘ TỪ ĐIỀN VÀO ĐOẠN VĂN (Cloze Passages / Fill-in-blanks)
+// 4. EXERCISE TYPE: CHỌN BỘ TỪ ĐIỀN VÀO ĐOẠN VĂN (Cloze Passages)
 const CLOZE_PASSAGES_EXERCISES = [
   {
     id: 'cloze-1',
-    title: 'Một ngày của tôi (我的一天)',
+    level: 'HSK 1',
+    title: 'Một ngày của tôi (HSK 1)',
     textParts: [
       '今天天气非常',
       '。我和朋友一起去',
@@ -1620,21 +1442,16 @@ const CLOZE_PASSAGES_EXERCISES = [
       { key: 'A', hanzi: '好', pinyin: 'hǎo', meaning: 'tốt, đẹp' },
       { key: 'B', hanzi: '商店', pinyin: 'shāngdiàn', meaning: 'cửa hàng' },
       { key: 'C', hanzi: '苹果', pinyin: 'píngguǒ', meaning: 'quả táo' },
-      { key: 'D', hanzi: '高兴', pinyin: 'gāoxìng', meaning: 'vui mừng' },
-      { key: 'E', hanzi: '生病', pinyin: 'shēngbìng', meaning: 'bị bệnh' }
+      { key: 'D', hanzi: '高兴', pinyin: 'gāoxìng', meaning: 'vui mừng' }
     ],
-    correctAnswers: {
-      0: 'A', // 好
-      1: 'B', // 商店
-      2: 'C', // 苹果
-      3: 'D'  // 高兴
-    },
+    correctAnswers: { 0: 'A', 1: 'B', 2: 'C', 3: 'D' },
     fullText: '今天天气非常好 (A)。我和朋友一起去商店 (B) 买东西。我们买了几个红苹果 (C)，大家都非常高兴 (D)。',
     translation: 'Hôm nay thời tiết rất đẹp. Tôi và bạn cùng nhau đến cửa hàng mua đồ. Chúng tôi đã mua mấy quả táo đỏ, mọi người đều vô cùng vui vẻ.'
   },
   {
     id: 'cloze-2',
-    title: 'Tại bệnh viện (在医院)',
+    level: 'HSK 2',
+    title: 'Tại bệnh viện (HSK 2)',
     textParts: [
       '大卫昨天',
       '了，今天早上他去',
@@ -1647,48 +1464,107 @@ const CLOZE_PASSAGES_EXERCISES = [
       { key: 'A', hanzi: '生病', pinyin: 'shēngbìng', meaning: 'bị ốm' },
       { key: 'B', hanzi: '医院', pinyin: 'yīyuàn', meaning: 'bệnh viện' },
       { key: 'C', hanzi: '医生', pinyin: 'yīshēng', meaning: 'bác sĩ' },
-      { key: 'D', hanzi: '休息', pinyin: 'xiūxi', meaning: 'nghỉ ngơi' },
-      { key: 'E', hanzi: '跑步', pinyin: 'pǎobù', meaning: 'chạy bộ' }
+      { key: 'D', hanzi: '休息', pinyin: 'xiūxi', meaning: 'nghỉ ngơi' }
     ],
-    correctAnswers: {
-      0: 'A', // 生病
-      1: 'B', // 医院
-      2: 'C', // 医生
-      3: 'D'  // 休息
-    },
+    correctAnswers: { 0: 'A', 1: 'B', 2: 'C', 3: 'D' },
     fullText: '大卫昨天生病 (A) 了，今天早上他去医院 (B) 看病。医生 (C) 告诉他要多喝水、多休息 (D)。',
-    translation: 'David hôm qua bị ốm rồi, sáng nay anh ấy đến bệnh viện khám bệnh. Bác sĩ bảo anh ấy phải uống nhiều nước, nghỉ ngơi nhiều.'
+    translation: 'David hôm qua bị ốm rồi, sáng nay anh ấy đến bệnh viện khám. Bác sĩ bảo anh phải uống nhiều nước, nghỉ ngơi nhiều.'
   },
   {
     id: 'cloze-3',
-    title: 'Sở thích thể thao (运动爱好)',
+    level: 'HSK 3',
+    title: 'Học tập & Rèn luyện (HSK 3)',
     textParts: [
-      '我和哥哥都喜欢运动。哥哥喜欢在操场',
-      '，而我更喜欢去泳池',
-      '。运动让我们的',
-      '越来越好。'
+      '为了',
+      '自己的汉语水平，王朋每天都认真',
+      '。他',
+      '今年报名参加 HSK 3 级',
+      '。'
     ],
-    blankCount: 3,
+    blankCount: 4,
     wordBank: [
-      { key: 'A', hanzi: '踢足球', pinyin: 'tī zúqiú', meaning: 'đá bóng' },
-      { key: 'B', hanzi: '游泳', pinyin: 'yóuyǒng', meaning: 'bơi lội' },
-      { key: 'C', hanzi: '身体', pinyin: 'shēntǐ', meaning: 'sức khỏe, cơ thể' },
-      { key: 'D', hanzi: '唱歌', pinyin: 'chànggē', meaning: 'hát' }
+      { key: 'A', hanzi: '提高', pinyin: 'tígāo', meaning: 'nâng cao' },
+      { key: 'B', hanzi: '练习', pinyin: 'liànxí', meaning: 'luyện tập' },
+      { key: 'C', hanzi: '打算', pinyin: 'dǎsuan', meaning: 'dự định' },
+      { key: 'D', hanzi: '考试', pinyin: 'kǎoshì', meaning: 'kỳ thi' }
     ],
-    correctAnswers: {
-      0: 'A', // 踢足球
-      1: 'B', // 游泳
-      2: 'C'  // 身体
-    },
-    fullText: '我和哥哥都喜欢运动。哥哥喜欢在操场踢足球 (A)，而我更喜欢去泳池游泳 (B)。运动让我们的身体 (C) 越来越好。',
-    translation: 'Tôi và anh trai đều thích thể thao. Anh trai thích đá bóng ở sân tập, còn tôi thích đi bơi ở hồ bơi hơn. Thể thao giúp sức khỏe của chúng tôi ngày càng tốt.'
+    correctAnswers: { 0: 'A', 1: 'B', 2: 'C', 3: 'D' },
+    fullText: '为了提高 (A) 自己的汉语水平，王朋每天都认真练习 (B)。他打算 (C) 今年报名参加 HSK 3 级考试 (D)。',
+    translation: 'Để nâng cao trình độ tiếng Hán của mình, Vương Bằng mỗi ngày đều chăm chỉ luyện tập. Anh ấy dự định năm nay đăng ký thi HSK 3.'
+  },
+  {
+    id: 'cloze-4',
+    level: 'HSK 4',
+    title: 'Bí quyết thành công (HSK 4)',
+    textParts: [
+      '在工作中，积极的',
+      '非常重要。只要我们能够',
+      '努力，不轻易',
+      '，就一定能够取得',
+      '。'
+    ],
+    blankCount: 4,
+    wordBank: [
+      { key: 'A', hanzi: '态度', pinyin: 'tàidu', meaning: 'thái độ' },
+      { key: 'B', hanzi: '坚持', pinyin: 'jiānchí', meaning: 'kiên trì' },
+      { key: 'C', hanzi: '放弃', pinyin: 'fàngqì', meaning: 'từ bỏ' },
+      { key: 'D', hanzi: '成功', pinyin: 'chénggōng', meaning: 'thành công' }
+    ],
+    correctAnswers: { 0: 'A', 1: 'B', 2: 'C', 3: 'D' },
+    fullText: '在工作中，积极的态度 (A) 非常重要。只要我们能够坚持 (B) 努力，不轻易放弃 (C)，就一定能够取得成功 (D)。',
+    translation: 'Trong công việc, thái độ tích cực rất quan trọng. Chỉ cần chúng ta kiên trì nỗ lực, không dễ dàng bỏ cuộc, nhất định sẽ gặt hái thành công.'
+  },
+  {
+    id: 'cloze-5',
+    level: 'HSK 5',
+    title: 'Hợp tác kinh doanh (HSK 5)',
+    textParts: [
+      '经过长达三天的商务',
+      '，两家',
+      '终于就合作细则达成了一致，并正式',
+      '了战略合作',
+      '。'
+    ],
+    blankCount: 4,
+    wordBank: [
+      { key: 'A', hanzi: '谈判', pinyin: 'tánpàn', meaning: 'đàm phán' },
+      { key: 'B', hanzi: '企业', pinyin: 'qǐyè', meaning: 'doanh nghiệp' },
+      { key: 'C', hanzi: '签订', pinyin: 'qiāndìng', meaning: 'ký kết' },
+      { key: 'D', hanzi: '合同', pinyin: 'hétong', meaning: 'hợp đồng' }
+    ],
+    correctAnswers: { 0: 'A', 1: 'B', 2: 'C', 3: 'D' },
+    fullText: '经过长达三天的商务谈判 (A)，两家企业 (B) 终于就合作细则达成了一致，并正式签订 (C) 了战略合作合同 (D)。',
+    translation: 'Sau đàm phán thương mại kéo dài 3 ngày, hai doanh nghiệp đã thống nhất điều khoản hợp tác và chính thức ký kết hợp đồng.'
+  },
+  {
+    id: 'cloze-6',
+    level: 'HSK 6',
+    title: 'Triết lý học vấn (HSK 6)',
+    textParts: [
+      '治学之道，贵在',
+      '与持之以恒。对待任何细节都必须',
+      '，切忌',
+      '，方能真正',
+      '学术的真谛。'
+    ],
+    blankCount: 4,
+    wordBank: [
+      { key: 'A', hanzi: '循序渐进', pinyin: 'xún xù jiàn jìn', meaning: 'tuần tự từng bước' },
+      { key: 'B', hanzi: '一丝不苟', pinyin: 'yì sī bù gǒu', meaning: 'tỉ mỉ không cẩu thả' },
+      { key: 'C', hanzi: '急功近利', pinyin: 'jí gōng jìn lì', meaning: 'hám lợi trước mắt' },
+      { key: 'D', hanzi: '领悟', pinyin: 'lǐngwù', meaning: 'lĩnh hội' }
+    ],
+    correctAnswers: { 0: 'A', 1: 'B', 2: 'C', 3: 'D' },
+    fullText: '治学之道，贵在循序渐进 (A) 与持之以恒。对待任何细节都必须一丝不苟 (B)，切忌急功近利 (C)，方能真正领悟 (D) 学术的真谛。',
+    translation: 'Đạo học thuật quý ở chỗ tuần tự từng bước và kiên trì. Với mọi chi tiết đều phải tỉ mỉ, tránh hám lợi trước mắt, mới thực sự lĩnh hội được chân lý.'
   }
 ];
 
-// 5. EXERCISE TYPE: NHÌN PHIÊN ÂM VIẾT HÁN TỰ (Pinyin to Hanzi)
+// 5. EXERCISE TYPE: NHÌN PHIÊN ÂM VIẾT HÁN TỰ (With Level Tags)
 const PINYIN_TO_HANZI_EXERCISES = [
   {
     id: 'pth-1',
+    level: 'HSK 1',
     pinyin: 'lǎoshī',
     meaning: 'Thầy / cô giáo',
     hanzi: '老师',
@@ -1697,46 +1573,25 @@ const PINYIN_TO_HANZI_EXERCISES = [
   },
   {
     id: 'pth-2',
+    level: 'HSK 1',
     pinyin: 'píngguǒ',
     meaning: 'Quả táo',
     hanzi: '苹果',
-    hint: 'Píngguǒ (trái cây tròn ngọt)',
+    hint: 'Píngguǒ (hoa quả ngọt giòn)',
     tiles: ['苹', '果', '西', '瓜', '茶', '水']
   },
   {
     id: 'pth-3',
-    pinyin: 'xièxie',
-    meaning: 'Cảm ơn',
-    hanzi: '谢谢',
-    hint: 'Xièxie (lời cảm ơn)',
-    tiles: ['谢', '谢', '不', '客', '气', '对']
-  },
-  {
-    id: 'pth-4',
-    pinyin: 'xuéxí',
-    meaning: 'Học tập',
-    hanzi: '学习',
-    hint: 'Xuéxí (trau dồi kiến thức)',
-    tiles: ['学', '习', '校', '生', '汉', '字']
-  },
-  {
-    id: 'pth-5',
-    pinyin: 'péngyou',
-    meaning: 'Bạn bè',
-    hanzi: '朋友',
-    hint: 'Péngyou (tri kỷ, bạn hữu)',
-    tiles: ['朋', '友', '同', '学', '他', '她']
-  },
-  {
-    id: 'pth-6',
+    level: 'HSK 2',
     pinyin: 'bāngzhù',
     meaning: 'Giúp đỡ',
     hanzi: '帮助',
-    hint: 'Bāngzhù (hỗ trợ tương trợ)',
+    hint: 'Bāngzhù (hỗ trợ)',
     tiles: ['帮', '助', '请', '问', '工', '作']
   },
   {
-    id: 'pth-7',
+    id: 'pth-4',
+    level: 'HSK 2',
     pinyin: 'fēijī',
     meaning: 'Máy bay',
     hanzi: '飞机',
@@ -1744,77 +1599,112 @@ const PINYIN_TO_HANZI_EXERCISES = [
     tiles: ['飞', '机', '车', '场', '开', '天']
   },
   {
+    id: 'pth-5',
+    level: 'HSK 3',
+    pinyin: 'jīnglǐ',
+    meaning: 'Giám đốc, quản lý',
+    hanzi: '经理',
+    hint: 'Jīnglǐ (người lãnh đạo bộ phận)',
+    tiles: ['经', '理', '同', '事', '公', '司']
+  },
+  {
+    id: 'pth-6',
+    level: 'HSK 4',
+    pinyin: 'jīngjì',
+    meaning: 'Kinh tế',
+    hanzi: '经济',
+    hint: 'Jīngjì (nền kinh tế)',
+    tiles: ['经', '济', '法', '律', '发', '展']
+  },
+  {
+    id: 'pth-7',
+    level: 'HSK 5',
+    pinyin: 'tóuzī',
+    meaning: 'Đầu tư',
+    hanzi: '投资',
+    hint: 'Tóuzī (bỏ vốn sinh lời)',
+    tiles: ['投', '资', '金', '合', '同', '企']
+  },
+  {
     id: 'pth-8',
-    pinyin: 'gāoxìng',
-    meaning: 'Vui vẻ, mừng rỡ',
-    hanzi: '高兴',
-    hint: 'Gāoxìng (tâm trạng tươi vui)',
-    tiles: ['高', '兴', '快', '乐', '好', '心']
+    level: 'HSK 6',
+    pinyin: 'fánróng',
+    meaning: 'Phồn vinh',
+    hanzi: '繁荣',
+    hint: 'Fánróng (thịnh vượng rực rỡ)',
+    tiles: ['繁', '荣', '富', '强', '昌', '盛']
   }
 ];
 
-// 6. EXERCISE TYPE: SẮP XẾP TỪ THÀNH CÂU HOÀN CHỈNH (Sentence Unscramble)
+// 6. EXERCISE TYPE: SẮP XẾP TỪ THÀNH CÂU (With Level Tags)
 const SENTENCE_ORDERING_EXERCISES = [
   {
     id: 'so-1',
+    level: 'HSK 1',
     tokens: ['我想', '去', '北京', '看', '朋友', '。'],
     scrambled: ['看', '北京', '我想', '。', '朋友', '去'],
     correctSentence: '我想去北京看朋友。',
     pinyin: 'Wǒ xiǎng qù Běijīng kàn péngyou.',
     vietnamese: 'Tôi muốn đi Bắc Kinh thăm bạn.',
-    grammarPoint: 'Cấu trúc câu liên động (连动句): Chủ ngữ + Động từ 1 (đến nơi nào) + Động từ 2 (làm gì).'
+    grammarPoint: 'Cấu trúc câu liên động (连动句): Chủ ngữ + Động từ 1 (nơi chốn) + Động từ 2 (mục đích).'
   },
   {
     id: 'so-2',
-    tokens: ['今天', '天气', '很', '好', '。'],
-    scrambled: ['好', '今天', '。', '天气', '很'],
-    correctSentence: '今天天气很好。',
-    pinyin: 'Jīntiān tiānqì hěn hǎo.',
-    vietnamese: 'Hôm nay thời tiết rất đẹp.',
-    grammarPoint: 'Câu vị ngữ tính từ: Chủ từ + Phó từ chỉ mức độ (很) + Tính từ.'
-  },
-  {
-    id: 'so-3',
+    level: 'HSK 2',
     tokens: ['他', '在', '医院', '工作', '。'],
     scrambled: ['工作', '在', '他', '。', '医院'],
     correctSentence: '他在医院工作。',
     pinyin: 'Tā zài yīyuàn gōngzuò.',
     vietnamese: 'Anh ấy làm việc ở bệnh viện.',
-    grammarPoint: 'Cấu trúc giới từ chỉ địa điểm: Chủ ngữ + 在 + Nơi chốn + Động từ (Làm việc ở đâu, tiếng Trung đặt [Ở đâu] trước [Hành động]).'
+    grammarPoint: 'Cấu trúc giới từ chỉ địa điểm: Chủ ngữ + 在 + Nơi chốn + Động từ.'
+  },
+  {
+    id: 'so-3',
+    level: 'HSK 3',
+    tokens: ['坐地铁', '去', '公司', '非常', '方便', '。'],
+    scrambled: ['公司', '非常', '去', '方便', '坐地铁', '。'],
+    correctSentence: '坐地铁去公司非常方便。',
+    pinyin: 'Zuò dìtiě qù gōngsī fēicháng fāngbiàn.',
+    vietnamese: 'Đi tàu điện ngầm đến công ty vô cùng thuận tiện.',
+    grammarPoint: 'Cụm động từ làm chủ ngữ: [坐地铁去公司] + Phó từ chỉ mức độ + Tính từ.'
   },
   {
     id: 'so-4',
-    tokens: ['你会', '说', '汉语', '吗', '？'],
-    scrambled: ['吗', '你会', '汉语', '？', '说'],
-    correctSentence: '你会说汉语吗？',
-    pinyin: 'Nǐ huì shuō Hànyǔ ma?',
-    vietnamese: 'Bạn biết nói tiếng Trung không?',
-    grammarPoint: 'Câu hỏi có trợ từ nghi vấn 吗 đặt ở cuối câu khẳng định.'
+    level: 'HSK 4',
+    tokens: ['只要', '坚持', '努力', '就一定能', '成功', '。'],
+    scrambled: ['成功', '坚持', '只要', '就一定能', '努力', '。'],
+    correctSentence: '只要坚持努力就一定能成功。',
+    pinyin: 'Zhǐyào jiānchí nǔlì jiù yídìng néng chénggōng.',
+    vietnamese: 'Chỉ cần kiên trì nỗ lực thì nhất định có thể thành công.',
+    grammarPoint: 'Cặp liên từ điều kiện thiết yếu: 只要... 就... (Chỉ cần... thì...).'
   },
   {
     id: 'so-5',
-    tokens: ['我们', '一起', '去', '吃', '米饭', '吧', '。'],
-    scrambled: ['吃', '吧', '去', '一起', '米饭', '。', '我们'],
-    correctSentence: '我们一起去吃米饭吧。',
-    pinyin: 'Wǒmen yìqǐ qù chī mǐfàn ba.',
-    vietnamese: 'Chúng mình cùng nhau đi ăn cơm nhé.',
-    grammarPoint: 'Phó từ 一起 (cùng nhau) đứng trước cụm động từ; 吧 biểu thị ngữ khí đề nghị nhẹ nhàng.'
+    level: 'HSK 5',
+    tokens: ['签字前', '务必', '仔细审查', '合同条款', '。'],
+    scrambled: ['仔细审查', '务必', '合同条款', '签字前', '。'],
+    correctSentence: '签字前务必仔细审查合同条款。',
+    pinyin: 'Qiānzì qián wùbì zǐxì shěnchá hétong tiáokuǎn.',
+    vietnamese: 'Trước khi ký tên nhất định phải xem xét kỹ các điều khoản hợp đồng.',
+    grammarPoint: 'Trạng từ chỉ thời gian đứng trước vị ngữ: [签字前] + Phó từ mệnh lệnh [务必] + Động từ + Tân ngữ.'
   },
   {
     id: 'so-6',
-    tokens: ['桌子上', '有', '三本', '汉语书', '。'],
-    scrambled: ['汉语书', '有', '桌子上', '三本', '。'],
-    correctSentence: '桌子上有三本汉语书。',
-    pinyin: 'Zhuōzi shang yǒu sān běn Hànyǔ shū.',
-    vietnamese: 'Trên bàn có ba quyển sách tiếng Trung.',
-    grammarPoint: 'Câu tồn hiện (存现句): Từ chỉ nơi chốn (桌子上) + 有 + Lượng từ + Danh từ.'
+    level: 'HSK 6',
+    tokens: ['学习汉语', '必须', '循序渐进', '不可', '急于求成', '。'],
+    scrambled: ['循序渐进', '不可', '必须', '急于求成', '学习汉语', '。'],
+    correctSentence: '学习汉语必须循序渐进不可急于求成。',
+    pinyin: 'Xuéxí Hànyǔ bìxū xún xù jiàn jìn bù kě jí yú qiú chéng.',
+    vietnamese: 'Học tiếng Hán phải tuần tự từng bước, không được nóng vội mong thành.',
+    grammarPoint: 'Cặp đối thành ngữ bốn chữ: 循序渐进 (tuần tự) đối lập với 急于求成 (nóng vội).'
   }
 ];
 
-// 7. EXERCISE TYPE: DỊCH CÂU VIỆT SANG TRUNG (Translation Practice)
+// 7. EXERCISE TYPE: DỊCH CÂU VIỆT SANG TRUNG (With Level Tags)
 const TRANSLATION_EXERCISES = [
   {
     id: 'trans-1',
+    level: 'HSK 1',
     vietnamese: 'Ngày mai bạn có rảnh không? Chúng ta đi uống cà phê nhé.',
     targetHanzi: '明天你有空吗？我们去喝咖啡吧。',
     pinyin: 'Míngtiān nǐ yǒu kòng ma? Wǒmen qù hē kāfēi ba.',
@@ -1823,34 +1713,11 @@ const TRANSLATION_EXERCISES = [
       { text: '你有空明天吗？我们去喝咖啡呢。', isCorrect: false },
       { text: '明天你空有吗？我们喝咖啡去吗。', isCorrect: false }
     ],
-    explanation: 'Từ chỉ thời gian "明天" đứng trước chủ ngữ hoặc sau chủ ngữ, trước vị ngữ. Trợ từ ngữ khí "吧" dùng cuối câu đề nghị/rủ rê.'
+    explanation: 'Từ chỉ thời gian "明天" đứng trước chủ ngữ hoặc sau chủ ngữ. Trợ từ ngữ khí "吧" dùng cuối câu đề nghị.'
   },
   {
     id: 'trans-2',
-    vietnamese: 'Tôi không thích xem phim này, nó hơi dài.',
-    targetHanzi: '我不喜欢看这个电影，它有点儿长。',
-    pinyin: 'Wǒ bù xǐhuan kàn zhè ge diànyǐng, tā yǒudiǎnr cháng.',
-    options: [
-      { text: '我没喜欢看这个电影，它一点儿长。', isCorrect: false },
-      { text: '我不喜欢看这个电影，它有点儿长。', isCorrect: true },
-      { text: '我不喜欢看这电影个，它真长。', isCorrect: false }
-    ],
-    explanation: 'Phủ định cảm xúc/ý chí "xǐhuan" dùng "bù" (không dùng "méi"). Cụm "yǒudiǎnr + tính từ" (hơi...) biểu thị ý không vừa lòng.'
-  },
-  {
-    id: 'trans-3',
-    vietnamese: 'Nhà của tôi cách trường học rất gần, đi bộ mười phút là tới.',
-    targetHanzi: '我家离学校很近，走路十分钟就到了。',
-    pinyin: 'Wǒ jiā lí xuéxiào hěn jìn, zǒulù shí fēnzhōng jiù dào le.',
-    options: [
-      { text: '我家在学校很近，走路十分钟就到了。', isCorrect: false },
-      { text: '我家离学校很近，走路十分钟就到了。', isCorrect: true },
-      { text: '我家从学校很近，走路十分钟就到了。', isCorrect: false }
-    ],
-    explanation: 'Cấu trúc chỉ khoảng cách giữa 2 địa điểm trong tiếng Hán: "A 离 B + tính từ khoảng cách (远 / 近)". Không dùng "在" hay "从".'
-  },
-  {
-    id: 'trans-4',
+    level: 'HSK 2',
     vietnamese: 'Hôm qua anh ấy không đến trường vì bị ốm.',
     targetHanzi: '昨天他没来学校，因为他生病了。',
     pinyin: 'Zuótiān tā méi lái xuéxiào, yīnwèi tā shēngbìng le.',
@@ -1859,203 +1726,139 @@ const TRANSLATION_EXERCISES = [
       { text: '昨天他没来学校，因为他生病了。', isCorrect: true },
       { text: '昨天他没去学校，虽然他生病了。', isCorrect: false }
     ],
-    explanation: 'Hành động chưa xảy ra trong quá khứ ("hôm qua không đến") dùng "没 (méi)", không dùng "不 (bù)". Dùng liên từ "因为 (bởi vì)".'
+    explanation: 'Hành động không xảy ra trong quá khứ dùng "没 (méi)", không dùng "不 (bù)".'
+  },
+  {
+    id: 'trans-3',
+    level: 'HSK 3',
+    vietnamese: 'Nhà của tôi cách công ty rất gần, đi bộ mười phút là tới.',
+    targetHanzi: '我家离公司很近，走路十分钟就到了。',
+    pinyin: 'Wǒ jiā lí gōngsī hěn jìn, zǒulù shí fēnzhōng jiù dào le.',
+    options: [
+      { text: '我家在公司很近，走路十分钟就到了。', isCorrect: false },
+      { text: '我家离公司很近，走路十分钟就到了。', isCorrect: true },
+      { text: '我家从公司很近，走路十分钟就到了。', isCorrect: false }
+    ],
+    explanation: 'Cấu trúc chỉ khoảng cách: "A 离 B + tính từ (远 / 近)". Không dùng "在" hay "从".'
+  },
+  {
+    id: 'trans-4',
+    level: 'HSK 4',
+    vietnamese: 'Mặc dù trời mưa to, nhưng anh ấy vẫn đến đúng giờ.',
+    targetHanzi: '尽管外边下着大雨，但他依然准时到了。',
+    pinyin: 'Jǐnguǎn wàibiān xià zhe dàyǔ, dàn tā yīrán zhǔnshí dào le.',
+    options: [
+      { text: '尽管外边下着大雨，但他依然准时到了。', isCorrect: true },
+      { text: '因为外边下着大雨，所以他依然准时到了。', isCorrect: false },
+      { text: '虽然外边下大雨，或者他依然准时到了。', isCorrect: false }
+    ],
+    explanation: 'Cặp liên từ nhượng bộ: 尽管... 但/依然... (Mặc dù... nhưng vẫn...).'
+  },
+  {
+    id: 'trans-5',
+    level: 'HSK 5',
+    vietnamese: 'Doanh nghiệp cần phải chú trọng nâng cao sức cạnh tranh cốt lõi.',
+    targetHanzi: '企业必须注重提升自身的核心竞争力。',
+    pinyin: 'Qǐyè bìxū zhùzhòng tíshēng zìshēn de héxīn jìngzhēnglì.',
+    options: [
+      { text: '企业必须注重提升自身的核心竞争力。', isCorrect: true },
+      { text: '企业需要看重高大自己的竞争力。', isCorrect: false },
+      { text: '企业一定喜欢提高自己的核心争论。', isCorrect: false }
+    ],
+    explanation: 'Cụm chuẩn HSK 5: 提升...核心竞争力 (Nâng cao năng lực cạnh tranh cốt lõi).'
+  },
+  {
+    id: 'trans-6',
+    level: 'HSK 6',
+    vietnamese: 'Chúng ta phải phòng ngừa chu đáo trước khi rủi ro xảy ra.',
+    targetHanzi: '我们必须在风险发生前做到未雨绸缪。',
+    pinyin: 'Wǒmen bìxū zài fēngxiǎn fāshēng qián zuò dào wèi yǔ chóu móu.',
+    options: [
+      { text: '我们必须在风险发生前做到未雨绸缪。', isCorrect: true },
+      { text: '我们应该在风险后来急功近利。', isCorrect: false },
+      { text: '我们要在没有下雨的时候一丝不苟。', isCorrect: false }
+    ],
+    explanation: 'Thành ngữ HSK 6: 未雨绸缪 (chu bị trước, phòng ngừa trước rủi ro).'
   }
 ];
 
-// 8. EXERCISE TYPE: HOÀN THÀNH HỘI THOẠI 2 LƯỢT TRẢ LỜI (2-turn Dialogue Completion)
+// 8. EXERCISE TYPE: HOÀN THÀNH HỘI THOẠI 2 LƯỢT TRẢ LỜI (With Level Tags)
 const TWO_TURN_DIALOGUES = [
   {
     id: 'dial-1',
-    topic: 'Hỏi đường đến thư viện (问路)',
-    partner: {
-      name: 'Bạn học Trương (张同学)',
-      role: 'Người qua đường thân thiện'
-    },
-    // Turn 1
+    level: 'HSK 1',
+    topic: 'Hỏi đường thư viện (HSK 1-2)',
+    partner: { name: 'Bạn Trương (张同学)', role: 'Người qua đường' },
     turn1: {
       prompt: '你好，请问学校图书馆怎么走？',
       pinyin: 'Nǐ hǎo, qǐngwèn xuéxiào túshūguǎn zěnme zǒu?',
       meaning: 'Xin chào, cho hỏi thư viện trường đi như thế nào ạ?',
       options: [
-        {
-          text: '一直往前走，在第二个路口向右拐就是。',
-          pinyin: 'Yìzhí wǎng qián zǒu, zài dì-èr ge lùkǒu xiàng yòu guǎi jiù shì.',
-          meaning: 'Cứ đi thẳng về phía trước, ở ngã rẽ thứ hai rẽ phải là tới.',
-          isCorrect: true,
-          feedback: 'Chỉ đường rất chính xác và lịch sự!'
-        },
-        {
-          text: '我不喜欢喝绿茶。',
-          pinyin: 'Wǒ bù xǐhuan hē lǜchá.',
-          meaning: 'Tôi không thích uống trà xanh.',
-          isCorrect: false,
-          feedback: 'Lạc đề hoàn toàn, bạn ấy đang hỏi đường.'
-        },
-        {
-          text: '今天星期天，不用去上课。',
-          pinyin: 'Jīntiān xīngqītiān, bú yòng qù shàngkè.',
-          meaning: 'Hôm nay chủ nhật, không cần đi học.',
-          isCorrect: false,
-          feedback: 'Không trả lời trúng câu hỏi của người qua đường.'
-        }
+        { text: '一直往前走，在第二个路口向右拐就是。', pinyin: 'Yìzhí wǎng qián zǒu, zài dì-èr ge lùkǒu xiàng yòu guǎi jiù shì.', meaning: 'Cứ đi thẳng, ở ngã rẽ thứ 2 rẽ phải là tới.', isCorrect: true },
+        { text: '我不喜欢喝绿茶。', pinyin: 'Wǒ bù xǐhuan hē lǜchá.', meaning: 'Tôi không thích uống trà xanh.', isCorrect: false },
+        { text: '今天星期天。', pinyin: 'Jīntiān xīngqītiān.', meaning: 'Hôm nay chủ nhật.', isCorrect: false }
       ]
     },
-    // Turn 2
     turn2: {
       prompt: '好的，太感谢你了！那里离这里远吗？',
       pinyin: 'Hǎo de, tài gǎnxiè nǐ le! Nàlǐ lí zhèlǐ yuǎn ma?',
-      meaning: 'Vâng, cảm ơn bạn nhiều lắm! Chỗ đó cách đây có xa không?',
+      meaning: 'Vâng, cảm ơn bạn nhiều! Chỗ đó cách đây có xa không?',
       options: [
-        {
-          text: '很近，走五分钟就到了。祝你学习愉快！',
-          pinyin: 'Hěn jìn, zǒu wǔ fēnzhōng jiù dào le. Zhù nǐ xuéxí yúkuài!',
-          meaning: 'Rất gần, đi bộ 5 phút là tới nơi rồi. Chúc bạn học tập vui vẻ!',
-          isCorrect: true,
-          feedback: 'Tuyệt vời! Kết thúc cuộc hội thoại rất tự nhiên và ấm áp.'
-        },
-        {
-          text: '这个手机两千块钱。',
-          pinyin: 'Zhè ge shǒujī liǎng qiān kuài qián.',
-          meaning: 'Chiếc điện thoại này hai nghìn tệ.',
-          isCorrect: false,
-          feedback: 'Người ta đang hỏi xa hay gần chứ không hỏi giá tiền!'
-        },
-        {
-          text: '对不起，我是医生。',
-          pinyin: 'Duìbuqǐ, wǒ shì yīshēng.',
-          meaning: 'Xin lỗi, tôi là bác sĩ.',
-          isCorrect: false,
-          feedback: 'Câu trả lời không logic với câu hỏi khoảng cách.'
-        }
+        { text: '很近，走五分钟就到了。祝你顺利！', pinyin: 'Hěn jìn, zǒu wǔ fēnzhōng jiù dào le. Zhù nǐ shùnlì!', meaning: 'Rất gần, đi 5 phút là tới. Chúc bạn thuận lợi!', isCorrect: true },
+        { text: '这个手机两千块钱。', pinyin: 'Zhè ge shǒujī liǎng qiān kuài qián.', meaning: 'Chiếc điện thoại này 2000 tệ.', isCorrect: false },
+        { text: '我是医生。', pinyin: 'Wǒ shì yīshēng.', meaning: 'Tôi là bác sĩ.', isCorrect: false }
       ]
     }
   },
   {
     id: 'dial-2',
-    topic: 'Gọi món ở quán ăn (在饭馆点菜)',
-    partner: {
-      name: 'Nhân viên phục vụ (服务员)',
-      role: 'Nhân viên nhà hàng'
-    },
+    level: 'HSK 3',
+    topic: 'Gọi món ở nhà hàng (HSK 2-3)',
+    partner: { name: 'Phục vụ bàn (服务员)', role: 'Nhân viên nhà hàng' },
     turn1: {
       prompt: '您好，欢迎光临！请问您想吃点儿什么？',
       pinyin: 'Nín hǎo, huānyíng guānglín! Qǐngwèn nín xiǎng chī diǎnr shénme?',
       meaning: 'Kính chào quý khách! Xin hỏi quý khách muốn dùng món gì ạ?',
       options: [
-        {
-          text: '服务员，请给我一份宫保鸡丁和一碗米饭。',
-          pinyin: 'Fúwùyuán, qǐng gěi wǒ yí fèn gōngbǎojīdīng hé yì wǎn mǐfàn.',
-          meaning: 'Phục vụ ơi, cho tôi một phần gà Kung Pao và một bát cơm trắng.',
-          isCorrect: true,
-          feedback: 'Rất chuẩn! Gọi món rõ ràng kèm lượng từ chính xác (份, 碗).'
-        },
-        {
-          text: '我要去机场接朋友。',
-          pinyin: 'Wǒ yào qù jīchǎng jiē péngyou.',
-          meaning: 'Tôi phải ra sân bay đón bạn.',
-          isCorrect: false,
-          feedback: 'Bạn đang ở quán ăn, câu này không phù hợp.'
-        },
-        {
-          text: '今天天气很冷。',
-          pinyin: 'Jīntiān tiānqì hěn lěng.',
-          meaning: 'Hôm nay thời tiết rất lạnh.',
-          isCorrect: false,
-          feedback: 'Không đáp lại yêu cầu gọi món.'
-        }
+        { text: '服务员，请给我一份宫保鸡丁和一碗米饭。', pinyin: 'Fúwùyuán, qǐng gěi wǒ yí fèn gōngbǎojīdīng hé yì wǎn mǐfàn.', meaning: 'Cho tôi một phần gà Kung Pao và bát cơm trắng.', isCorrect: true },
+        { text: '我要去机场接朋友。', pinyin: 'Wǒ yào qù jīchǎng jiē péngyou.', meaning: 'Tôi phải đi sân bay đón bạn.', isCorrect: false },
+        { text: '今天天气很冷。', pinyin: 'Jīntiān tiānqì hěn lěng.', meaning: 'Hôm nay thời tiết rất lạnh.', isCorrect: false }
       ]
     },
     turn2: {
-      prompt: '好的，已经为您记下了。请问您需要喝点儿什么饮料吗？',
-      pinyin: 'Hǎo de, yǐjīng wèi nín jì xià le. Qǐngwèn nín xūyào hē diǎnr shénme yǐnliào ma?',
-      meaning: 'Dạ được rồi, em đã ghi lại rồi ạ. Xin hỏi quý khách có cần dùng đồ uống gì không ạ?',
+      prompt: '好的，已经记下了。请问您需要喝点儿什么饮料吗？',
+      pinyin: 'Hǎo de, yǐjīng jì xià le. Qǐngwèn nín xūyào hē diǎnr shénme yǐnliào ma?',
+      meaning: 'Dạ vâng đã ghi lại rồi ạ. Quý khách có cần dùng đồ uống gì không ạ?',
       options: [
-        {
-          text: '请给我一杯热绿茶，谢谢。',
-          pinyin: 'Qǐng gěi wǒ yì bēi rè lǜchá, xièxie.',
-          meaning: 'Xin cho tôi một tách trà xanh nóng nhé, cảm ơn bạn.',
-          isCorrect: true,
-          feedback: 'Hoàn hảo! Trả lời đúng đồ uống mong muốn.'
-        },
-        {
-          text: '我不会写汉字。',
-          pinyin: 'Wǒ bú huì xiě hànzì.',
-          meaning: 'Tôi không biết viết chữ Hán.',
-          isCorrect: false,
-          feedback: 'Nhân viên hỏi đồ uống, không hỏi kỹ năng viết chữ Hán.'
-        },
-        {
-          text: '明天见，再见！',
-          pinyin: 'Míngtiān jiàn, zàijiàn!',
-          meaning: 'Ngày mai gặp, tạm biệt!',
-          isCorrect: false,
-          feedback: 'Bạn vừa mới gọi món xong, chưa thể tạm biệt ra về được.'
-        }
+        { text: '请给我一杯热绿茶，谢谢。', pinyin: 'Qǐng gěi wǒ yì bēi rè lǜchá, xièxie.', meaning: 'Cho tôi một tách trà xanh nóng nhé, cảm ơn.', isCorrect: true },
+        { text: '我不会写汉字。', pinyin: 'Wǒ bú huì xiě hànzì.', meaning: 'Tôi không biết viết chữ Hán.', isCorrect: false },
+        { text: '明天见，再见！', pinyin: 'Míngtiān jiàn, zàijiàn!', meaning: 'Ngày mai gặp, tạm biệt!', isCorrect: false }
       ]
     }
   },
   {
     id: 'dial-3',
-    topic: 'Làm quen bạn mới tại trường (新同学打招呼)',
-    partner: {
-      name: 'Vương Lệ (王丽)',
-      role: 'Bạn học cùng lớp'
-    },
+    level: 'HSK 4',
+    topic: 'Thảo luận công việc văn phòng (HSK 4-5)',
+    partner: { name: 'Trần Tổng (陈总)', role: 'Trưởng phòng kinh doanh' },
     turn1: {
-      prompt: '你好！我是王丽，中文系一年级学生。你叫什么名字？',
-      pinyin: 'Nǐ hǎo! Wǒ shì Wáng Lì, Zhōngwén xì yī niánjí xuésheng. Nǐ jiào shénme míngzi?',
-      meaning: 'Chào bạn! Mình là Vương Lệ, sinh viên năm nhất khoa tiếng Trung. Bạn tên là gì?',
+      prompt: '小李，下周新产品的市场推广方案准备得怎么样了？',
+      pinyin: 'Xiǎo Lǐ, xià zhōu xīn chǎnpǐn de shìchǎng tuīguǎng fāng\'àn zhǔnbèi de zěnmeyàng le?',
+      meaning: 'Tiểu Lý, phương án quảng bá sản phẩm mới tuần tới đã chuẩn bị thế nào rồi?',
       options: [
-        {
-          text: '你好王丽！我叫阮文南，也是一年级新生。很高兴认识你！',
-          pinyin: 'Nǐ hǎo Wáng Lì! Wǒ jiào Ruǎn Wénnán, yě shì yī niánjí xīnshēng. Hěn gāoxìng rènshi nǐ!',
-          meaning: 'Chào Vương Lệ! Mình tên là Nguyễn Văn Nam, cũng là tân sinh viên năm nhất. Rất vui được biết bạn!',
-          isCorrect: true,
-          feedback: 'Tự giới thiệu bản thân rất chuẩn mực và thân thiện!'
-        },
-        {
-          text: '这个苹果五块钱。',
-          pinyin: 'Zhè ge píngguǒ wǔ kuài qián.',
-          meaning: 'Quả táo này năm tệ.',
-          isCorrect: false,
-          feedback: 'Người ta hỏi tên mà lại báo giá táo!'
-        },
-        {
-          text: '没关系，我不客气。',
-          pinyin: 'Méi guānxi, wǒ bú kèqi.',
-          meaning: 'Không sao, tôi không khách sáo.',
-          isCorrect: false,
-          feedback: 'Dùng sai mẫu câu giao tiếp khi làm quen.'
-        }
+        { text: '陈总，方案已经初稿完成，我正和团队核对预算细节，明天上午向您汇报。', pinyin: 'Chén zǒng, fāng\'àn yǐjīng chūgǎo wánchéng, wǒ zhèng hé tuánduì héduì yùsuàn xìjié, míngtiān shàngwǔ xiàng nín huìbào.', meaning: 'Thưa Trần Tổng, dự thảo đã xong, tôi đang rà soát ngân sách và sẽ báo cáo sáng mai.', isCorrect: true },
+        { text: '我不喜欢吃辣的菜。', pinyin: 'Wǒ bù xǐhuan chī là de cài.', meaning: 'Tôi không thích ăn đồ cay.', isCorrect: false },
+        { text: '昨天我买了新裤子。', pinyin: 'Zuótiān wǒ mǎi le xīn kùzi.', meaning: 'Hôm qua tôi mua quần mới.', isCorrect: false }
       ]
     },
     turn2: {
-      prompt: '我也很高兴认识你！放学后你打算做什么？要不要一起去图书馆？',
-      pinyin: 'Wǒ yě hěn gāoxìng rènshi nǐ! Fàngxué hòu nǐ dǎsuàn zuò shénme? Yào bu yào yìqǐ qù túshūguǎn?',
-      meaning: 'Mình cũng rất vui được quen bạn! Sau giờ học bạn định làm gì? Có muốn cùng đi thư viện không?',
+      prompt: '很好，这次推广非常关键，一定要注重线上与线下的协同配合。',
+      pinyin: 'Hěn hǎo, zhè cì tuīguǎng fēicháng guānjiàn, yídìng yào zhùzhòng xiànshàng yǔ xiànxià de xiétóng pèihé.',
+      meaning: 'Rất tốt, đợt quảng bá này rất then chốt, nhất định phải chú trọng phối hợp giữa online và offline.',
       options: [
-        {
-          text: '好啊！我正想去借两本汉字书，放学后我们在门口见吧。',
-          pinyin: 'Hǎo a! Wǒ zhèng xiǎng qù jiè liǎng běn hànzì shū, fàngxué hòu wǒmen zài ménkǒu jiàn ba.',
-          meaning: 'Được chứ! Mình đang muốn đi mượn hai quyển sách chữ Hán, tan học tụi mình gặp nhau ở cổng nhé.',
-          isCorrect: true,
-          feedback: 'Đồng ý lời rủ và hẹn địa điểm rất tự nhiên!'
-        },
-        {
-          text: '我不认识大夫。',
-          pinyin: 'Wǒ bú rènshi dàifu.',
-          meaning: 'Tôi không quen biết bác sĩ.',
-          isCorrect: false,
-          feedback: 'Không liên quan đến lời mời đi thư viện.'
-        },
-        {
-          text: '昨天我吃了米饭。',
-          pinyin: 'Zuótiān wǒ chī le mǐfàn.',
-          meaning: 'Hôm qua tôi đã ăn cơm.',
-          isCorrect: false,
-          feedback: 'Đang bàn về kế hoạch sau giờ học hôm nay.'
-        }
+        { text: '明白！我们已经制定了双线联动的策略，确保实现预期效益。', pinyin: 'Míngbai! Wǒmen yǐjīng zhìdìng le shuāngxiàn liándòng de cèlüè, quèbǎo shíxiàn yùqī xiàoyì.', meaning: 'Rõ rồi ạ! Chúng tôi đã lên chiến lược kép để đảm bảo hiệu quả kỳ vọng.', isCorrect: true },
+        { text: '现在是下午三点整。', pinyin: 'Xiànzài shì xiàwǔ sān diǎn zhěng.', meaning: 'Bây giờ là 3 giờ đúng.', isCorrect: false },
+        { text: '感冒了要多喝开水。', pinyin: 'Gǎnmào le yào duō hē kāishuǐ.', meaning: 'Bị cảm thì nên uống nước sôi.', isCorrect: false }
       ]
     }
   }

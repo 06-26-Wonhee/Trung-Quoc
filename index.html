@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hoa Ngữ Học Viện - Học, Ôn Tập & Kiểm Tra Tiếng Trung Toàn Diện</title>
-  <meta name="description" content="Trang web học, ôn tập và kiểm tra tiếng Trung HSK 1 - HSK 2 hoàn chỉnh với Web Speech API và bài tập đa dạng.">
+  <title>Hoa Ngữ Học Viện - Học, Ôn Tập & Kiểm Tra Tiếng Trung HSK 1 - HSK 6</title>
+  <meta name="description" content="Trang web học, ôn tập và kiểm tra tiếng Trung toàn diện từ HSK 1 đến HSK 6, sắp xếp theo chủ đề và tạo bộ từ vựng thông minh.">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
         <div class="logo-icon-seal">汉</div>
         <div class="logo-text">
           <h1>Hoa Ngữ Học Viện</h1>
-          <p>Học & Ôn Tập Tiếng Trung HSK 1 - 2</p>
+          <p>Học & Luyện Thi Tiếng Trung HSK 1 - HSK 6</p>
         </div>
       </div>
 
@@ -28,7 +28,11 @@
         </button>
         <button class="nav-tab-btn" data-tab="vocab">
           <span>📚</span>
-          <span>Học từ vựng</span>
+          <span>Từ vựng HSK 1-6</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="decks">
+          <span>🗂️</span>
+          <span>Bộ từ vựng</span>
         </button>
         <button class="nav-tab-btn" data-tab="practice">
           <span>🎯</span>
@@ -70,13 +74,16 @@
       <div class="hero-banner">
         <div class="hero-content">
           <div class="hero-tag">✨ Nền tảng học tiếng Trung trực tiếp trên trình duyệt</div>
-          <h2>Chinh phục <span>Hán Ngữ HSK 1 & HSK 2</span> Dễ dàng, Hiệu quả</h2>
+          <h2>Chinh phục <span>Hán Ngữ HSK 1 đến HSK 6</span> Dễ dàng & Toàn diện</h2>
           <p>
-            Hệ thống học từ vựng chuẩn ngữ âm với Web Speech API, kết hợp 8 dạng bài tập tương tác chuyên sâu: từ vựng, đọc hiểu, điền đoạn văn, nhìn hình phán đoán, viết hán tự và hội thoại thực tế.
+            Phân loại chi tiết từ HSK 1 đến HSK 6 theo 16 chủ đề đời sống, kết hợp hệ thống tạo bộ từ vựng thông minh, phát âm Web Speech API và 8 dạng bài tập tương tác chuyên sâu.
           </p>
           <div class="hero-actions">
             <button class="btn btn-primary btn-lg" data-goto-tab="vocab">
-              <span>📚 Bắt đầu học từ vựng</span>
+              <span>📚 Khám phá từ vựng HSK 1-6</span>
+            </button>
+            <button class="btn btn-outline btn-lg" data-goto-tab="decks">
+              <span>🗂️ Xem các bộ từ vựng</span>
             </button>
             <button class="btn btn-outline btn-lg" data-goto-tab="practice" data-practice-type="vocab-quiz">
               <span>🎯 Luyện tập ngay</span>
@@ -84,35 +91,63 @@
           </div>
         </div>
 
-        <!-- Quick Stats Card -->
+        <!-- Comprehensive Stats Grid -->
         <div class="hero-stats-card">
           <div class="stat-row">
             <div class="stat-label">
               <span>📖</span>
-              <span>Tổng kho từ vựng:</span>
+              <span>Tổng kho từ:</span>
             </div>
             <div class="stat-value stat-total-words">0</div>
           </div>
           <div class="stat-row">
             <div class="stat-label">
+              <span>🗂️</span>
+              <span>Số bộ từ vựng:</span>
+            </div>
+            <div class="stat-value stat-total-decks">6</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">
               <span>🌱</span>
-              <span>Từ vựng HSK 1:</span>
+              <span>HSK 1:</span>
             </div>
             <div class="stat-value stat-hsk1-words">0</div>
           </div>
           <div class="stat-row">
             <div class="stat-label">
               <span>🌿</span>
-              <span>Từ vựng HSK 2:</span>
+              <span>HSK 2:</span>
             </div>
             <div class="stat-value stat-hsk2-words">0</div>
           </div>
           <div class="stat-row">
             <div class="stat-label">
-              <span>⭐</span>
-              <span>Từ vựng yêu thích đã lưu:</span>
+              <span>🌲</span>
+              <span>HSK 3:</span>
             </div>
-            <div class="stat-value stat-fav-words">0</div>
+            <div class="stat-value stat-hsk3-words">0</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">
+              <span>📘</span>
+              <span>HSK 4:</span>
+            </div>
+            <div class="stat-value stat-hsk4-words">0</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">
+              <span>📕</span>
+              <span>HSK 5:</span>
+            </div>
+            <div class="stat-value stat-hsk5-words">0</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">
+              <span>👑</span>
+              <span>HSK 6:</span>
+            </div>
+            <div class="stat-value stat-hsk6-words">0</div>
           </div>
         </div>
       </div>
@@ -120,80 +155,80 @@
       <!-- Feature Modules Showcase -->
       <div class="section-heading">
         <div>
-          <h3>Các chế độ học & luyện tập nổi bật</h3>
-          <p>Chọn một hình thức để bắt đầu rèn luyện ngay bây giờ</p>
+          <h3>Các tính năng học & luyện tập nổi bật</h3>
+          <p>Lựa chọn hình thức rèn luyện phù hợp với trình độ mục tiêu của bạn</p>
         </div>
       </div>
 
       <div class="features-grid">
         <div class="feature-card" data-goto-tab="vocab">
           <div class="feature-icon-badge">🗂️</div>
-          <h4>Học từ vựng & Flashcards</h4>
-          <p>Xem danh sách từ HSK 1 - 2 có chữ Hán, Pinyin, nghĩa và phát âm giọng đọc chuẩn bản xứ.</p>
+          <h4>Phân cấp HSK 1 đến HSK 6</h4>
+          <p>Phân loại từ vựng từ sơ cấp đến cao cấp, tra cứu Hán tự, Pinyin, nghĩa và phát âm chuẩn.</p>
           <span class="feature-link">Vào học ngay ➔</span>
+        </div>
+
+        <div class="feature-card" data-goto-tab="vocab" data-group-topic="true">
+          <div class="feature-icon-badge">📑</div>
+          <h4>Sắp xếp theo 16 chủ đề</h4>
+          <p>Gom nhóm từ vựng theo chủ đề: Ẩm thực, Gia đình, Công việc, Giao thông, Kinh tế, Thành ngữ...</p>
+          <span class="feature-link">Xem theo chủ đề ➔</span>
+        </div>
+
+        <div class="feature-card" data-goto-tab="decks">
+          <div class="feature-icon-badge">📦</div>
+          <h4>Tạo & Quản lý bộ từ vựng</h4>
+          <p>Tự tạo các bộ từ vựng tùy chỉnh theo mục tiêu học, học theo thẻ Flashcard 3D và trắc nghiệm.</p>
+          <span class="feature-link">Quản lý bộ từ ➔</span>
         </div>
 
         <div class="feature-card" data-goto-tab="practice" data-practice-type="vocab-quiz">
           <div class="feature-icon-badge">🎲</div>
-          <h4>Trắc nghiệm từ vựng</h4>
-          <p>Câu hỏi trắc nghiệm ngẫu nhiên kiểm tra Hán tự, Pinyin và nghĩa tiếng Việt với chấm điểm tức thì.</p>
-          <span class="feature-link">Bắt đầu thi ➔</span>
+          <h4>Luyện tập phân cấp HSK 1 - 6</h4>
+          <p>Chọn riêng cấp độ HSK 1 đến HSK 6 để làm trắc nghiệm từ vựng với phản hồi điểm số tức thì.</p>
+          <span class="feature-link">Luyện tập ➔</span>
         </div>
 
         <div class="feature-card" data-goto-tab="practice" data-practice-type="image-tf">
           <div class="feature-icon-badge">🖼️</div>
           <h4>Nhìn hình đoán Đúng/Sai</h4>
-          <p>Quan sát hình ảnh minh họa sống động và phán đoán xem câu miêu tả bằng tiếng Trung Đúng hay Sai.</p>
-          <span class="feature-link">Luyện tập ➔</span>
+          <p>Quan sát tranh vẽ minh họa sống động và phán đoán câu miêu tả tiếng Trung Đúng hay Sai.</p>
+          <span class="feature-link">Luyện hình ảnh ➔</span>
         </div>
 
         <div class="feature-card" data-goto-tab="practice" data-practice-type="reading-comp">
           <div class="feature-icon-badge">📖</div>
           <h4>Đọc hiểu & Trả lời câu hỏi</h4>
-          <p>Đọc đoạn văn ngắn, luyện phản xạ đọc chữ Hán và chọn câu trả lời chính xác nhất.</p>
-          <span class="feature-link">Thử sức ➔</span>
-        </div>
-
-        <div class="feature-card" data-goto-tab="practice" data-practice-type="cloze-test">
-          <div class="feature-icon-badge">🧩</div>
-          <h4>Điền từ vào đoạn văn</h4>
-          <p>Chọn các từ thích hợp từ ngân hàng từ vựng để điền vào các chỗ trống trong đoạn văn.</p>
-          <span class="feature-link">Điền từ ➔</span>
-        </div>
-
-        <div class="feature-card" data-goto-tab="practice" data-practice-type="pinyin-to-hanzi">
-          <div class="feature-icon-badge">✍️</div>
-          <h4>Nhìn phiên âm viết Hán tự</h4>
-          <p>Nhìn Pinyin và nghĩa tiếng Việt, gõ hoặc dùng bàn phím ảo ghép chữ Hán tương ứng.</p>
-          <span class="feature-link">Viết chữ ➔</span>
+          <p>Đoạn văn phân cấp độ từ HSK 1 đến HSK 6, hỗ trợ ẩn hiện Pinyin và nghe phát âm toàn bài.</p>
+          <span class="feature-link">Luyện đọc hiểu ➔</span>
         </div>
 
         <div class="feature-card" data-goto-tab="practice" data-practice-type="sentence-order">
           <div class="feature-icon-badge">🔀</div>
           <h4>Sắp xếp từ thành câu</h4>
-          <p>Ghép các khối từ bị xáo trộn thành câu hoàn chỉnh đúng ngữ pháp tiếng Trung.</p>
+          <p>Ghép các khối từ ngữ xáo trộn thành câu đúng ngữ pháp tiếng Hán, kèm phân tích ngữ pháp.</p>
           <span class="feature-link">Ghép câu ➔</span>
         </div>
 
         <div class="feature-card" data-goto-tab="practice" data-practice-type="dialogue-turn">
           <div class="feature-icon-badge">💬</div>
           <h4>Hội thoại 2 lượt trả lời</h4>
-          <p>Mô phỏng hội thoại giao tiếp thực tế với nhân vật ảo qua 2 vòng phản hồi logic.</p>
-          <span class="feature-link">Giao tiếp ➔</span>
+          <p>Giao tiếp thực tế với nhân vật ảo theo tình huống giao tiếp đời sống và công sở chuyên nghiệp.</p>
+          <span class="feature-link">Hội thoại ➔</span>
         </div>
       </div>
     </section>
 
     <!-- ======================================================================
-         TAB 2: HỌC TỪ VỰNG (VOCABULARY EXPLORER & FLASHCARDS)
+         TAB 2: HỌC TỪ VỰNG HSK 1 - 6 & CHỦ ĐỀ (VOCABULARY EXPLORER)
          ====================================================================== -->
     <section id="tab-vocab" class="tab-section">
-      <!-- Toolbar: Search, Filters & View Mode -->
+      <!-- Toolbar: Search, Level Filters, Topic Selector & View Mode -->
       <div class="vocab-toolbar">
         <div class="toolbar-top">
           <div class="search-box">
             <span class="search-icon">🔍</span>
-            <input type="text" id="vocab-search-input" class="search-input" placeholder="Tìm theo chữ Hán, Pinyin hoặc nghĩa tiếng Việt...">
+            <input type="text" id="vocab-search-input" class="search-input" placeholder="Tìm theo chữ Hán, Pinyin, nghĩa hoặc chủ đề...">
             <button id="btn-clear-search" class="clear-search-btn" title="Xóa tìm kiếm">✕</button>
           </div>
 
@@ -207,18 +242,37 @@
           </div>
         </div>
 
+        <!-- Level Filter Pills: HSK 1 to HSK 6 -->
         <div class="filter-pills-bar">
-          <div class="pills-group">
-            <button class="filter-pill active" data-filter="ALL">Tất cả từ vựng</button>
-            <button class="filter-pill" data-filter="HSK 1">Cấp độ HSK 1</button>
-            <button class="filter-pill" data-filter="HSK 2">Cấp độ HSK 2</button>
+          <div class="pills-group" id="vocab-level-pills">
+            <button class="filter-pill active" data-filter="ALL">Tất cả (HSK 1-6)</button>
+            <button class="filter-pill" data-filter="HSK 1">HSK 1</button>
+            <button class="filter-pill" data-filter="HSK 2">HSK 2</button>
+            <button class="filter-pill" data-filter="HSK 3">HSK 3</button>
+            <button class="filter-pill" data-filter="HSK 4">HSK 4</button>
+            <button class="filter-pill" data-filter="HSK 5">HSK 5</button>
+            <button class="filter-pill" data-filter="HSK 6">HSK 6</button>
             <button class="filter-pill" data-filter="FAVORITES">⭐ Đã lưu yêu thích</button>
           </div>
           <span class="badge badge-accent" id="vocab-results-count">0 từ vựng</span>
         </div>
+
+        <!-- Topic / Category Filter & Grouping -->
+        <div class="toolbar-topic-bar">
+          <div class="topic-select-group">
+            <label for="vocab-category-select">🏷️ Lọc theo chủ đề:</label>
+            <select id="vocab-category-select" class="topic-dropdown">
+              <option value="ALL">Tất cả các chủ đề</option>
+            </select>
+          </div>
+
+          <button id="btn-toggle-group-topic" class="btn btn-sm btn-outline">
+            <span>📑 Gom nhóm hiển thị theo chủ đề</span>
+          </button>
+        </div>
       </div>
 
-      <!-- View 1: Grid Cards -->
+      <!-- View 1: Grid Cards (Standard or Topic-Grouped) -->
       <div id="vocab-grid-container" class="vocab-grid"></div>
 
       <!-- View 2: 3D Flashcard Deck Mode (Hidden by default) -->
@@ -226,9 +280,41 @@
     </section>
 
     <!-- ======================================================================
-         TAB 3: LUYỆN TẬP ĐA DẠNG (PRACTICE HUB)
+         TAB 3: BỘ TỪ VỰNG HSK 1 - 6 (DECKS MANAGER)
+         ====================================================================== -->
+    <section id="tab-decks" class="tab-section">
+      <div class="decks-header-bar">
+        <div>
+          <h2>📦 Các Bộ Từ Vựng HSK 1 - HSK 6</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Học tập trung theo từng bộ chủ đề hoặc tự tạo bộ từ vựng cá nhân để luyện phản xạ.</p>
+        </div>
+        <button id="btn-open-create-deck-modal" class="btn btn-primary btn-lg">
+          <span>➕ Tạo bộ từ vựng mới</span>
+        </button>
+      </div>
+
+      <!-- Decks Grid Container -->
+      <div id="decks-grid-container" class="decks-grid"></div>
+    </section>
+
+    <!-- ======================================================================
+         TAB 4: LUYỆN TẬP PHÂN CẤP HSK 1 - 6 (PRACTICE HUB)
          ====================================================================== -->
     <section id="tab-practice" class="tab-section">
+      <!-- Practice Level Selector Bar -->
+      <div class="practice-level-bar">
+        <span class="practice-level-label">🎯 Cấp độ luyện tập:</span>
+        <div class="practice-level-pills" id="practice-level-pills">
+          <button class="practice-level-pill active" data-level="ALL">Tất cả cấp độ</button>
+          <button class="practice-level-pill" data-level="HSK 1">HSK 1</button>
+          <button class="practice-level-pill" data-level="HSK 2">HSK 2</button>
+          <button class="practice-level-pill" data-level="HSK 3">HSK 3</button>
+          <button class="practice-level-pill" data-level="HSK 4">HSK 4</button>
+          <button class="practice-level-pill" data-level="HSK 5">HSK 5</button>
+          <button class="practice-level-pill" data-level="HSK 6">HSK 6</button>
+        </div>
+      </div>
+
       <div class="practice-hub-layout">
         <!-- Sub-Navigation for all 8 practice types -->
         <aside class="practice-sidebar">
@@ -273,14 +359,14 @@
     </section>
 
     <!-- ======================================================================
-         TAB 4: KIỂM TRA TỪ MỚI & THI THỬ HSK (MOCK EXAM)
+         TAB 5: KIỂM TRA TỪ MỚI & THI THỬ HSK (MOCK EXAM)
          ====================================================================== -->
     <section id="tab-test" class="tab-section">
       <div id="test-arena-container"></div>
     </section>
 
     <!-- ======================================================================
-         TAB 5: THÊM TỪ VỰNG & QUẢN LÝ DỮ LIỆU
+         TAB 6: THÊM TỪ VỰNG & QUẢN LÝ DỮ LIỆU
          ====================================================================== -->
     <section id="tab-custom" class="tab-section">
       <div class="section-heading">
@@ -314,17 +400,29 @@
                 <input type="text" id="input-meaning" class="form-control" placeholder="Ví dụ: Máy vi tính" required>
               </div>
               <div class="form-group">
-                <label for="select-level">Cấp độ HSK</label>
+                <label for="select-level">Cấp độ HSK *</label>
                 <select id="select-level" class="form-control">
                   <option value="HSK 1">HSK 1</option>
                   <option value="HSK 2">HSK 2</option>
+                  <option value="HSK 3">HSK 3</option>
+                  <option value="HSK 4">HSK 4</option>
+                  <option value="HSK 5">HSK 5</option>
+                  <option value="HSK 6">HSK 6</option>
                 </select>
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="input-type">Từ loại</label>
-              <input type="text" id="input-type" class="form-control" placeholder="Ví dụ: Danh từ, Động từ...">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="select-category">Chủ đề từ vựng</label>
+                <select id="select-category" class="form-control">
+                  <!-- Populated dynamically from CATEGORIES_LIST -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="input-type">Từ loại</label>
+                <input type="text" id="input-type" class="form-control" placeholder="Ví dụ: Danh từ, Động từ...">
+              </div>
             </div>
 
             <div class="form-group">
@@ -352,7 +450,7 @@
         <!-- Data Backup & Reset -->
         <div class="data-card">
           <h3>💾 Sao lưu & Đồng bộ dữ liệu</h3>
-          <p class="form-subtitle">Dữ liệu học tập được lưu cục bộ trên trình duyệt của bạn.</p>
+          <p class="form-subtitle">Dữ liệu học tập và các bộ từ vựng được lưu cục bộ trên trình duyệt của bạn.</p>
 
           <div class="data-actions-list">
             <div class="data-action-item">
@@ -373,8 +471,8 @@
             </div>
 
             <div class="data-action-item" style="border-top: 1px solid var(--border-color); padding-top: 18px;">
-              <strong>Khôi phục dữ liệu gốc mẫu</strong>
-              <p>Đưa toàn bộ kho từ vựng về lại bộ mẫu HSK 1 và HSK 2 chuẩn ban đầu.</p>
+              <strong>Khôi phục dữ liệu gốc mẫu (HSK 1 - 6)</strong>
+              <p>Đưa toàn bộ kho từ vựng và các bộ từ vựng về lại bộ mẫu chuẩn ban đầu.</p>
               <button id="btn-reset-defaults" class="btn btn-danger btn-sm">
                 <span>⚠️ Khôi phục dữ liệu mẫu ban đầu</span>
               </button>
@@ -389,9 +487,10 @@
   <div id="word-detail-modal" class="modal-overlay hidden">
     <div class="modal-card">
       <button class="modal-close-btn" id="btn-close-modal">✕</button>
-      <div style="display: flex; justify-content: center; gap: 8px;">
+      <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
         <span class="badge badge-primary" id="modal-word-level">HSK 1</span>
         <span class="badge badge-accent" id="modal-word-type">Từ vựng</span>
+        <span class="badge badge-success" id="modal-word-category">Chủ đề</span>
       </div>
       <div class="modal-hanzi chinese-text" id="modal-word-hanzi">你</div>
       <div class="modal-pinyin" id="modal-word-pinyin">nǐ</div>
@@ -418,10 +517,63 @@
     </div>
   </div>
 
+  <!-- Modal: Create New Vocabulary Deck -->
+  <div id="create-deck-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="btn-close-create-deck-modal">✕</button>
+      <h3 style="margin-bottom: 6px;">📦 Tạo Bộ Từ Vựng Mới</h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 18px;">Tập hợp các từ vựng theo nhu cầu học tập của bạn.</p>
+
+      <form id="create-deck-form">
+        <div class="form-group">
+          <label for="deck-input-title">Tên bộ từ vựng *</label>
+          <input type="text" id="deck-input-title" class="form-control" placeholder="Ví dụ: Từ vựng HSK 3 giao tiếp công sở..." required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="deck-select-level">Cấp độ HSK *</label>
+            <select id="deck-select-level" class="form-control">
+              <option value="HSK 1">HSK 1</option>
+              <option value="HSK 2">HSK 2</option>
+              <option value="HSK 3">HSK 3</option>
+              <option value="HSK 4">HSK 4</option>
+              <option value="HSK 5">HSK 5</option>
+              <option value="HSK 6">HSK 6</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="deck-input-icon">Biểu tượng (Icon / Emoji)</label>
+            <input type="text" id="deck-input-icon" class="form-control" value="📚" style="text-align: center; font-size: 1.2rem;">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="deck-input-desc">Mô tả ngắn về bộ từ</label>
+          <input type="text" id="deck-input-desc" class="form-control" placeholder="Ví dụ: Ôn tập 20 từ trọng tâm trước kỳ thi...">
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label>Chọn từ vựng đưa vào bộ:</label>
+            <button type="button" class="btn btn-sm btn-outline" id="btn-deck-select-all">Chọn tất cả từ cấp độ này</button>
+          </div>
+          <div class="deck-words-selector" id="deck-words-selector-container">
+            <!-- Checkbox list of words rendered dynamically -->
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 14px;">
+          <span>Lưu bộ từ vựng</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
-      <p>Hoa Ngữ Học Viện &bull; Xây dựng bằng HTML, CSS, JavaScript thuần &bull; Tích hợp Web Speech API</p>
+      <p>Hoa Ngữ Học Viện &bull; Xây dựng bằng HTML, CSS, JavaScript thuần &bull; Tích hợp Web Speech API &bull; HSK 1 - HSK 6</p>
     </div>
   </footer>
 

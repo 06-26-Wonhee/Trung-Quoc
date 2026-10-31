@@ -1,12 +1,13 @@
 /**
- * Exercises Module
- * Implements interactive engines for all 7+ Chinese practice modes.
+ * Exercises Module - HSK 1 to HSK 6 Level-Aware Practice Engines
+ * Implements interactive engines for all 8 Chinese practice modes.
  */
 
 class ExerciseManager {
   constructor() {
     this.currentMode = null;
     this.quizState = {};
+    this.currentLevel = 'ALL';
     this.stats = {
       correctCount: 0,
       totalCount: 0
@@ -14,33 +15,48 @@ class ExerciseManager {
   }
 
   // --- 1. DYNAMIC VOCABULARY QUIZ ---
-  initVocabQuiz(container, vocabList) {
-    if (!vocabList || vocabList.length < 4) {
-      container.innerHTML = `<div class="empty-state">Cần ít nhất 4 từ vựng để bắt đầu trắc nghiệm.</div>`;
+  initVocabQuiz(container, vocabList, levelFilter = 'ALL') {
+    this.currentLevel = levelFilter;
+    let targetList = vocabList;
+    if (levelFilter !== 'ALL') {
+      targetList = vocabList.filter(w => w.level === levelFilter);
+    }
+
+    if (!targetList || targetList.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">📂</div>
+          <h3>Chưa có từ vựng thuộc cấp độ ${levelFilter}</h3>
+          <p>Hãy chọn cấp độ khác hoặc thêm từ vựng mới vào kho dữ liệu.</p>
+        </div>
+      `;
       return;
     }
 
     this.vocabList = vocabList;
+    this.targetList = targetList;
+    const qCount = Math.min(10, targetList.length);
+
     this.quizState = {
       score: 0,
-      total: 10,
+      total: qCount,
       currentStep: 0,
-      questions: this.generateVocabQuestions(vocabList, 10),
+      questions: this.generateVocabQuestions(targetList, vocabList, qCount),
       answered: false
     };
 
     this.renderVocabQuizStep(container);
   }
 
-  generateVocabQuestions(vocabList, count) {
-    const shuffled = [...vocabList].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, Math.min(count, vocabList.length));
+  generateVocabQuestions(targetList, allVocab, count) {
+    const shuffled = [...targetList].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, count);
     const questionTypes = ['hanzi-to-vi', 'vi-to-hanzi', 'hanzi-to-pinyin', 'audio-to-hanzi'];
 
     return selected.map((word) => {
       const qType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-      // Generate 3 distractors
-      const distractors = vocabList
+      // Get 3 distractors from allVocab (or targetList)
+      const distractors = allVocab
         .filter(w => w.id !== word.id)
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
@@ -53,7 +69,7 @@ class ExerciseManager {
 
       if (qType === 'hanzi-to-vi') {
         prompt = word.hanzi;
-        promptSub = `${word.pinyin} • ${word.level}`;
+        promptSub = `${word.pinyin} • ${word.level} • ${word.category || ''}`;
       } else if (qType === 'vi-to-hanzi') {
         prompt = word.meaning;
         promptSub = `Chọn chữ Hán tương ứng (${word.level})`;
@@ -61,7 +77,6 @@ class ExerciseManager {
         prompt = word.hanzi;
         promptSub = `Chọn phiên âm Pinyin đúng`;
       } else {
-        // audio-to-hanzi
         prompt = '🔊 Nghe và chọn từ đúng';
         promptSub = 'Nhấp biểu tượng loa để nghe lại';
         isAudio = true;
@@ -93,8 +108,8 @@ class ExerciseManager {
     const { questions, currentStep, score, total } = this.quizState;
 
     if (currentStep >= questions.length) {
-      this.renderQuizResults(container, score, total, () => {
-        this.initVocabQuiz(container, this.vocabList);
+      this.renderQuizResults(container, score, total * 10, () => {
+        this.initVocabQuiz(container, this.vocabList, this.currentLevel);
       });
       return;
     }
@@ -110,6 +125,7 @@ class ExerciseManager {
 
         <div class="exercise-header">
           <span class="badge badge-primary">Câu ${currentStep + 1}/${total}</span>
+          <span class="badge ${this.getBadgeClass(q.word.level)}">${q.word.level}</span>
           <span class="badge badge-success">Điểm: ${score}</span>
         </div>
 
@@ -148,7 +164,6 @@ class ExerciseManager {
       </div>
     `;
 
-    // Auto play audio if audio question
     if (q.isAudio) {
       setTimeout(() => speechEngine.speak(q.word.hanzi), 300);
     }
@@ -196,7 +211,7 @@ class ExerciseManager {
           feedbackBox.innerHTML = `
             <div class="feedback-title">❌ Chưa chính xác!</div>
             <div class="feedback-detail">
-              Đáp án đúng là: <strong>${q.word.hanzi}</strong> [${q.word.pinyin}] - ${q.word.meaning}
+              Đáp án đúng: <strong>${q.word.hanzi}</strong> [${q.word.pinyin}] - ${q.word.meaning}
             </div>
           `;
         }
@@ -214,17 +229,25 @@ class ExerciseManager {
   }
 
   // --- 2. NHÌN HÌNH PHÁN ĐOÁN ĐÚNG SAI (Image True/False) ---
-  initImageTrueFalse(container) {
+  initImageTrueFalse(container, levelFilter = 'ALL') {
+    this.currentLevel = levelFilter;
+    let list = IMAGE_TRUE_FALSE_EXERCISES;
+    if (levelFilter !== 'ALL') {
+      list = list.filter(item => item.level === levelFilter);
+    }
+    if (list.length === 0) list = IMAGE_TRUE_FALSE_EXERCISES;
+
+    this.itfList = list;
     this.itfIndex = 0;
     this.itfScore = 0;
     this.renderImageTrueFalse(container);
   }
 
   renderImageTrueFalse(container) {
-    const list = IMAGE_TRUE_FALSE_EXERCISES;
+    const list = this.itfList;
     if (this.itfIndex >= list.length) {
       this.renderQuizResults(container, this.itfScore, list.length * 10, () => {
-        this.initImageTrueFalse(container);
+        this.initImageTrueFalse(container, this.currentLevel);
       });
       return;
     }
@@ -239,7 +262,8 @@ class ExerciseManager {
         </div>
 
         <div class="exercise-header">
-          <span class="badge badge-primary">Bài tập Nhìn hình: ${this.itfIndex + 1}/${list.length}</span>
+          <span class="badge badge-primary">Bài tập: ${this.itfIndex + 1}/${list.length}</span>
+          <span class="badge ${this.getBadgeClass(item.level)}">${item.level}</span>
           <span class="badge badge-accent">${item.category}</span>
           <span class="badge badge-success">Điểm: ${this.itfScore}</span>
         </div>
@@ -306,11 +330,8 @@ class ExerciseManager {
       trueBtn.disabled = true;
       falseBtn.disabled = true;
 
-      if (item.isCorrect) {
-        trueBtn.classList.add('correct');
-      } else {
-        falseBtn.classList.add('correct');
-      }
+      if (item.isCorrect) trueBtn.classList.add('correct');
+      else falseBtn.classList.add('correct');
 
       if (isCorrect) {
         this.itfScore += 10;
@@ -346,17 +367,25 @@ class ExerciseManager {
   }
 
   // --- 3. ĐỌC CÂU HỎI CHỌN CÂU TRẢ LỜI ĐÚNG (Reading Comprehension) ---
-  initReadingComprehension(container) {
+  initReadingComprehension(container, levelFilter = 'ALL') {
+    this.currentLevel = levelFilter;
+    let list = READING_COMPREHENSION_EXERCISES;
+    if (levelFilter !== 'ALL') {
+      list = list.filter(item => item.level === levelFilter);
+    }
+    if (list.length === 0) list = READING_COMPREHENSION_EXERCISES;
+
+    this.rcList = list;
     this.rcIndex = 0;
     this.rcScore = 0;
     this.renderReadingComprehension(container);
   }
 
   renderReadingComprehension(container) {
-    const list = READING_COMPREHENSION_EXERCISES;
+    const list = this.rcList;
     if (this.rcIndex >= list.length) {
       this.renderQuizResults(container, this.rcScore, list.length * 10, () => {
-        this.initReadingComprehension(container);
+        this.initReadingComprehension(container, this.currentLevel);
       });
       return;
     }
@@ -372,12 +401,13 @@ class ExerciseManager {
 
         <div class="exercise-header">
           <span class="badge badge-primary">Đọc hiểu: Bài ${this.rcIndex + 1}/${list.length}</span>
+          <span class="badge ${this.getBadgeClass(item.level)}">${item.level}</span>
           <span class="badge badge-success">Điểm: ${this.rcScore}</span>
         </div>
 
         <div class="rc-passage-box">
           <div class="rc-passage-title">
-            <span>📖 Đoạn văn ngắn</span>
+            <span>📖 Đoạn văn ngắn (${item.category})</span>
             <div class="rc-actions">
               <button class="btn btn-sm btn-icon" id="btn-rc-toggle-pinyin">
                 <span>Pinyin & Dịch</span>
@@ -483,23 +513,31 @@ class ExerciseManager {
   }
 
   // --- 4. CHỌN BỘ TỪ ĐIỀN VÀO ĐOẠN VĂN (Cloze Test) ---
-  initClozeExercise(container) {
+  initClozeExercise(container, levelFilter = 'ALL') {
+    this.currentLevel = levelFilter;
+    let list = CLOZE_PASSAGES_EXERCISES;
+    if (levelFilter !== 'ALL') {
+      list = list.filter(item => item.level === levelFilter);
+    }
+    if (list.length === 0) list = CLOZE_PASSAGES_EXERCISES;
+
+    this.clozeList = list;
     this.clozeIndex = 0;
     this.clozeScore = 0;
     this.renderClozeExercise(container);
   }
 
   renderClozeExercise(container) {
-    const list = CLOZE_PASSAGES_EXERCISES;
+    const list = this.clozeList;
     if (this.clozeIndex >= list.length) {
       this.renderQuizResults(container, this.clozeScore, list.length * 20, () => {
-        this.initClozeExercise(container);
+        this.initClozeExercise(container, this.currentLevel);
       });
       return;
     }
 
     const item = list[this.clozeIndex];
-    const userSelections = {}; // blankIndex -> wordKey
+    const userSelections = {};
     let activeBlankIndex = 0;
 
     const renderText = () => {
@@ -528,7 +566,8 @@ class ExerciseManager {
         </div>
 
         <div class="exercise-header">
-          <span class="badge badge-primary">Điền từ vào đoạn văn: ${this.clozeIndex + 1}/${list.length}</span>
+          <span class="badge badge-primary">Điền từ: ${this.clozeIndex + 1}/${list.length}</span>
+          <span class="badge ${this.getBadgeClass(item.level)}">${item.level}</span>
           <span class="badge badge-accent">${item.title}</span>
           <span class="badge badge-success">Điểm: ${this.clozeScore}</span>
         </div>
@@ -588,13 +627,11 @@ class ExerciseManager {
 
     attachBlankListeners();
 
-    // Word chip click
     wordBankContainer.querySelectorAll('.wordbank-chip').forEach(chip => {
       chip.addEventListener('click', () => {
         speechEngine.playClick();
         const key = chip.dataset.key;
         userSelections[activeBlankIndex] = key;
-        // Move to next unfilled blank if any
         for (let b = 0; b < item.blankCount; b++) {
           if (!userSelections[b]) {
             activeBlankIndex = b;
@@ -615,16 +652,12 @@ class ExerciseManager {
     });
 
     checkBtn.addEventListener('click', () => {
-      // Validate all blanks
       let correctCount = 0;
       let allAnswered = true;
 
       for (let i = 0; i < item.blankCount; i++) {
-        if (!userSelections[i]) {
-          allAnswered = false;
-        } else if (userSelections[i] === item.correctAnswers[i]) {
-          correctCount++;
-        }
+        if (!userSelections[i]) allAnswered = false;
+        else if (userSelections[i] === item.correctAnswers[i]) correctCount++;
       }
 
       if (!allAnswered) {
@@ -669,17 +702,25 @@ class ExerciseManager {
   }
 
   // --- 5. NHÌN PHIÊN ÂM VIẾT HÁN TỰ (Pinyin to Hanzi) ---
-  initPinyinToHanzi(container) {
+  initPinyinToHanzi(container, levelFilter = 'ALL') {
+    this.currentLevel = levelFilter;
+    let list = PINYIN_TO_HANZI_EXERCISES;
+    if (levelFilter !== 'ALL') {
+      list = list.filter(item => item.level === levelFilter);
+    }
+    if (list.length === 0) list = PINYIN_TO_HANZI_EXERCISES;
+
+    this.pthList = list;
     this.pthIndex = 0;
     this.pthScore = 0;
     this.renderPinyinToHanzi(container);
   }
 
   renderPinyinToHanzi(container) {
-    const list = PINYIN_TO_HANZI_EXERCISES;
+    const list = this.pthList;
     if (this.pthIndex >= list.length) {
       this.renderQuizResults(container, this.pthScore, list.length * 10, () => {
-        this.initPinyinToHanzi(container);
+        this.initPinyinToHanzi(container, this.currentLevel);
       });
       return;
     }
@@ -695,6 +736,7 @@ class ExerciseManager {
 
         <div class="exercise-header">
           <span class="badge badge-primary">Viết chữ Hán: ${this.pthIndex + 1}/${list.length}</span>
+          <span class="badge ${this.getBadgeClass(item.level)}">${item.level}</span>
           <span class="badge badge-success">Điểm: ${this.pthScore}</span>
         </div>
 
@@ -806,23 +848,30 @@ class ExerciseManager {
   }
 
   // --- 6. SẮP XẾP TỪ THÀNH CÂU HOÀN CHỈNH (Sentence Unscramble) ---
-  initSentenceOrdering(container) {
+  initSentenceOrdering(container, levelFilter = 'ALL') {
+    this.currentLevel = levelFilter;
+    let list = SENTENCE_ORDERING_EXERCISES;
+    if (levelFilter !== 'ALL') {
+      list = list.filter(item => item.level === levelFilter);
+    }
+    if (list.length === 0) list = SENTENCE_ORDERING_EXERCISES;
+
+    this.soList = list;
     this.soIndex = 0;
     this.soScore = 0;
     this.renderSentenceOrdering(container);
   }
 
   renderSentenceOrdering(container) {
-    const list = SENTENCE_ORDERING_EXERCISES;
+    const list = this.soList;
     if (this.soIndex >= list.length) {
       this.renderQuizResults(container, this.soScore, list.length * 10, () => {
-        this.initSentenceOrdering(container);
+        this.initSentenceOrdering(container, this.currentLevel);
       });
       return;
     }
 
     const item = list[this.soIndex];
-    // Pool tokens with unique IDs
     let poolTokens = item.scrambled.map((token, id) => ({ id, token }));
     let userSentence = [];
     let answered = false;
@@ -831,7 +880,6 @@ class ExerciseManager {
       const targetArea = container.querySelector('#so-target-area');
       const poolArea = container.querySelector('#so-pool-area');
 
-      // Render selected tokens
       if (userSentence.length === 0) {
         targetArea.innerHTML = `<span class="placeholder-text">Nhấp vào các từ bên dưới để ghép thành câu...</span>`;
       } else {
@@ -842,7 +890,6 @@ class ExerciseManager {
         `).join('');
       }
 
-      // Render pool tokens
       poolArea.innerHTML = poolTokens.map(t => `
         <button class="token-chip pool-chip chinese-text" data-id="${t.id}">
           ${t.token}
@@ -860,6 +907,7 @@ class ExerciseManager {
 
         <div class="exercise-header">
           <span class="badge badge-primary">Sắp xếp câu: ${this.soIndex + 1}/${list.length}</span>
+          <span class="badge ${this.getBadgeClass(item.level)}">${item.level}</span>
           <span class="badge badge-success">Điểm: ${this.soScore}</span>
         </div>
 
@@ -889,7 +937,6 @@ class ExerciseManager {
     `;
 
     const attachListeners = () => {
-      // Click selected chip to return to pool
       container.querySelectorAll('.selected-chip').forEach(btn => {
         btn.addEventListener('click', () => {
           if (answered) return;
@@ -902,7 +949,6 @@ class ExerciseManager {
         });
       });
 
-      // Click pool chip to add to sentence
       container.querySelectorAll('.pool-chip').forEach(btn => {
         btn.addEventListener('click', () => {
           if (answered) return;
@@ -970,7 +1016,6 @@ class ExerciseManager {
         `;
       }
 
-      // Add audio pronunciation button inside feedback
       const listenBtn = document.createElement('button');
       listenBtn.className = 'btn btn-sm btn-icon btn-listen';
       listenBtn.innerHTML = `<span>🔊 Nghe câu đúng</span>`;
@@ -991,17 +1036,25 @@ class ExerciseManager {
   }
 
   // --- 7. DỊCH CÂU VIỆT SANG TRUNG (Translation Practice) ---
-  initTranslation(container) {
+  initTranslation(container, levelFilter = 'ALL') {
+    this.currentLevel = levelFilter;
+    let list = TRANSLATION_EXERCISES;
+    if (levelFilter !== 'ALL') {
+      list = list.filter(item => item.level === levelFilter);
+    }
+    if (list.length === 0) list = TRANSLATION_EXERCISES;
+
+    this.transList = list;
     this.transIndex = 0;
     this.transScore = 0;
     this.renderTranslation(container);
   }
 
   renderTranslation(container) {
-    const list = TRANSLATION_EXERCISES;
+    const list = this.transList;
     if (this.transIndex >= list.length) {
       this.renderQuizResults(container, this.transScore, list.length * 10, () => {
-        this.initTranslation(container);
+        this.initTranslation(container, this.currentLevel);
       });
       return;
     }
@@ -1017,6 +1070,7 @@ class ExerciseManager {
 
         <div class="exercise-header">
           <span class="badge badge-primary">Dịch Việt - Trung: ${this.transIndex + 1}/${list.length}</span>
+          <span class="badge ${this.getBadgeClass(item.level)}">${item.level}</span>
           <span class="badge badge-success">Điểm: ${this.transScore}</span>
         </div>
 
@@ -1111,25 +1165,30 @@ class ExerciseManager {
   }
 
   // --- 8. HOÀN THÀNH HỘI THOẠI 2 LƯỢT TRẢ LỜI (2-turn Dialogue Completion) ---
-  initTwoTurnDialogue(container) {
+  initTwoTurnDialogue(container, levelFilter = 'ALL') {
+    this.currentLevel = levelFilter;
+    let list = TWO_TURN_DIALOGUES;
+    if (levelFilter !== 'ALL') {
+      list = list.filter(item => item.level === levelFilter);
+    }
+    if (list.length === 0) list = TWO_TURN_DIALOGUES;
+
+    this.dialList = list;
     this.dialIndex = 0;
     this.dialScore = 0;
     this.renderTwoTurnDialogue(container);
   }
 
   renderTwoTurnDialogue(container) {
-    const list = TWO_TURN_DIALOGUES;
+    const list = this.dialList;
     if (this.dialIndex >= list.length) {
       this.renderQuizResults(container, this.dialScore, list.length * 20, () => {
-        this.initTwoTurnDialogue(container);
+        this.initTwoTurnDialogue(container, this.currentLevel);
       });
       return;
     }
 
     const item = list[this.dialIndex];
-    let currentTurn = 1;
-    let turn1Answer = null;
-    let turn2Answer = null;
 
     container.innerHTML = `
       <div class="exercise-card">
@@ -1139,12 +1198,12 @@ class ExerciseManager {
 
         <div class="exercise-header">
           <span class="badge badge-primary">Hội thoại thực tế: ${this.dialIndex + 1}/${list.length}</span>
+          <span class="badge ${this.getBadgeClass(item.level)}">${item.level}</span>
           <span class="badge badge-accent">${item.topic}</span>
           <span class="badge badge-success">Điểm: ${this.dialScore}</span>
         </div>
 
         <div class="dialogue-chat-window" id="dialogue-chat-window">
-          <!-- Turn 1 NPC Message -->
           <div class="chat-message npc-message" id="msg-turn1-npc">
             <div class="avatar-circle">👤</div>
             <div class="message-content">
@@ -1158,13 +1217,8 @@ class ExerciseManager {
             </div>
           </div>
 
-          <!-- User Turn 1 Bubble (will appear after choice) -->
           <div id="user-turn1-slot"></div>
-
-          <!-- NPC Turn 2 Message (will appear after Turn 1 correct) -->
           <div id="npc-turn2-slot"></div>
-
-          <!-- User Turn 2 Bubble (will appear after choice) -->
           <div id="user-turn2-slot"></div>
         </div>
 
@@ -1198,25 +1252,21 @@ class ExerciseManager {
       </div>
     `;
 
-    const chatWindow = container.querySelector('#dialogue-chat-window');
-    const actionPanel = container.querySelector('#dialogue-action-panel');
     const optionsGrid = container.querySelector('#dialogue-options');
     const turnIndicator = container.querySelector('#turn-indicator');
+    const actionPanel = container.querySelector('#dialogue-action-panel');
     const feedback = container.querySelector('#dial-feedback');
     const nextBtn = container.querySelector('#btn-dial-next');
 
-    // Attach listeners for Turn 1
     const attachTurn1Listeners = () => {
       optionsGrid.querySelectorAll('.dialogue-choice-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const idx = parseInt(btn.dataset.idx, 10);
           const opt = item.turn1.options[idx];
-          turn1Answer = opt;
 
           if (opt.isCorrect) {
             speechEngine.playSuccess();
             this.dialScore += 10;
-            // Render user message bubble
             container.querySelector('#user-turn1-slot').innerHTML = `
               <div class="chat-message user-message animate-fade-in">
                 <div class="message-content">
@@ -1232,16 +1282,13 @@ class ExerciseManager {
               </div>
             `;
 
-            // Transition to Turn 2 after 600ms
-            setTimeout(() => {
-              renderTurn2();
-            }, 600);
+            setTimeout(() => renderTurn2(), 600);
           } else {
             speechEngine.playError();
             feedback.className = 'feedback-box error-feedback';
             feedback.innerHTML = `
               <div class="feedback-title">❌ Chưa phù hợp với hoàn cảnh!</div>
-              <div class="feedback-detail">${opt.feedback} Vui lòng chọn lại.</div>
+              <div class="feedback-detail">Câu này không trả lời đúng ý đối phương. Vui lòng chọn lại.</div>
             `;
             feedback.classList.remove('hidden');
           }
@@ -1250,10 +1297,7 @@ class ExerciseManager {
     };
 
     const renderTurn2 = () => {
-      currentTurn = 2;
       feedback.classList.add('hidden');
-
-      // Add NPC turn 2 bubble
       container.querySelector('#npc-turn2-slot').innerHTML = `
         <div class="chat-message npc-message animate-fade-in">
           <div class="avatar-circle">👤</div>
@@ -1269,7 +1313,6 @@ class ExerciseManager {
         </div>
       `;
 
-      // Speak NPC reply
       setTimeout(() => speechEngine.speak(item.turn2.prompt), 200);
 
       turnIndicator.innerHTML = `Lượt 2/2: ${item.partner.name} tiếp tục đáp lời. Bạn hãy chọn câu phản hồi phù hợp:`;
@@ -1283,12 +1326,10 @@ class ExerciseManager {
         </button>
       `).join('');
 
-      // Turn 2 choices listeners
       optionsGrid.querySelectorAll('.dialogue-choice-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const idx = parseInt(btn.dataset.idx, 10);
           const opt = item.turn2.options[idx];
-          turn2Answer = opt;
 
           if (opt.isCorrect) {
             speechEngine.playSuccess();
@@ -1312,10 +1353,8 @@ class ExerciseManager {
             actionPanel.classList.add('hidden');
             feedback.className = 'feedback-box correct-feedback';
             feedback.innerHTML = `
-              <div class="feedback-title">🎉 Chúc mừng! Bạn đã hoàn thành xuất sắc đoạn hội thoại 2 lượt (+20 điểm)</div>
-              <div class="feedback-detail">
-                Cuộc trò chuyện đã diễn ra rất tự nhiên và chính xác theo phong cách giao tiếp của người bản xứ!
-              </div>
+              <div class="feedback-title">🎉 Chúc mừng! Bạn đã hoàn thành xuất sắc đoạn hội thoại (+20 điểm)</div>
+              <div class="feedback-detail">Cuộc trò chuyện đã diễn ra chuẩn xác theo phong cách giao tiếp bản ngữ!</div>
             `;
             feedback.classList.remove('hidden');
             nextBtn.classList.remove('hidden');
@@ -1324,7 +1363,7 @@ class ExerciseManager {
             feedback.className = 'feedback-box error-feedback';
             feedback.innerHTML = `
               <div class="feedback-title">❌ Chưa phù hợp với hoàn cảnh!</div>
-              <div class="feedback-detail">${opt.feedback} Vui lòng chọn lại.</div>
+              <div class="feedback-detail">Câu trả lời chưa đúng ngữ cảnh. Vui lòng chọn lại.</div>
             `;
             feedback.classList.remove('hidden');
           }
@@ -1339,6 +1378,18 @@ class ExerciseManager {
       this.dialIndex++;
       this.renderTwoTurnDialogue(container);
     });
+  }
+
+  getBadgeClass(level) {
+    switch (level) {
+      case 'HSK 1': return 'badge-hsk1';
+      case 'HSK 2': return 'badge-hsk2';
+      case 'HSK 3': return 'badge-hsk3';
+      case 'HSK 4': return 'badge-hsk4';
+      case 'HSK 5': return 'badge-hsk5';
+      case 'HSK 6': return 'badge-hsk6';
+      default: return 'badge-primary';
+    }
   }
 
   // --- COMMON QUIZ RESULT COMPONENT ---

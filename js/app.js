@@ -1,16 +1,25 @@
 /**
  * Main Application Logic
- * Manages tabs, state, vocabulary explorer, flashcard mode, mock test, and local storage.
+ * Manages HSK 1-6 levels, topic-based categorization, vocabulary decks,
+ * interactive exercises, mock test mode, and persistent LocalStorage.
  */
 
 class ChineseLearningApp {
   constructor() {
     this.words = [];
+    this.decks = [];
     this.favorites = new Set();
     this.activeTab = 'home';
+
+    // Vocab Explorer filters & views
     this.currentLevelFilter = 'ALL';
+    this.currentCategoryFilter = 'ALL';
     this.searchQuery = '';
+    this.groupByTopic = false;
+
+    // Practice filter
     this.currentPracticeType = 'vocab-quiz';
+    this.practiceLevel = 'ALL';
 
     // Flashcard deck state
     this.flashcardList = [];
@@ -21,7 +30,7 @@ class ChineseLearningApp {
     this.testState = {
       active: false,
       timer: null,
-      timeLeft: 600, // 10 mins
+      timeLeft: 900,
       questions: [],
       userAnswers: {},
       currentQIndex: 0
@@ -32,25 +41,36 @@ class ChineseLearningApp {
 
   init() {
     this.loadData();
+    this.populateCategoryDropdowns();
     this.bindNavigation();
     this.bindHomeActions();
     this.bindVocabControls();
-    this.bindPracticeSelector();
+    this.bindPracticeControls();
+    this.bindDecksManager();
     this.bindCustomWordForm();
     this.bindSettings();
     this.renderVocabList();
+    this.renderDecks();
     this.updateStats();
   }
 
   // --- DATA & STORAGE ---
   loadData() {
     try {
-      const savedVocab = localStorage.getItem('zh_saved_vocab');
+      const savedVocab = localStorage.getItem('zh_saved_vocab_v2');
       if (savedVocab) {
         this.words = JSON.parse(savedVocab);
       } else {
         this.words = [...DEFAULT_HSK_WORDS];
         this.saveWords();
+      }
+
+      const savedDecks = localStorage.getItem('zh_saved_decks');
+      if (savedDecks) {
+        this.decks = JSON.parse(savedDecks);
+      } else {
+        this.decks = [...DEFAULT_DECKS];
+        this.saveDecks();
       }
 
       const savedFavs = localStorage.getItem('zh_favorites');
@@ -60,14 +80,23 @@ class ChineseLearningApp {
     } catch (e) {
       console.warn('Error reading localStorage:', e);
       this.words = [...DEFAULT_HSK_WORDS];
+      this.decks = [...DEFAULT_DECKS];
     }
   }
 
   saveWords() {
     try {
-      localStorage.setItem('zh_saved_vocab', JSON.stringify(this.words));
+      localStorage.setItem('zh_saved_vocab_v2', JSON.stringify(this.words));
     } catch (e) {
       console.warn('Could not save words to localStorage:', e);
+    }
+  }
+
+  saveDecks() {
+    try {
+      localStorage.setItem('zh_saved_decks', JSON.stringify(this.decks));
+    } catch (e) {
+      console.warn('Could not save decks to localStorage:', e);
     }
   }
 
@@ -94,25 +123,48 @@ class ChineseLearningApp {
     const totalCount = this.words.length;
     const hsk1Count = this.words.filter(w => w.level === 'HSK 1').length;
     const hsk2Count = this.words.filter(w => w.level === 'HSK 2').length;
-    const favCount = this.favorites.size;
+    const hsk3Count = this.words.filter(w => w.level === 'HSK 3').length;
+    const hsk4Count = this.words.filter(w => w.level === 'HSK 4').length;
+    const hsk5Count = this.words.filter(w => w.level === 'HSK 5').length;
+    const hsk6Count = this.words.filter(w => w.level === 'HSK 6').length;
+    const decksCount = this.decks.length;
 
     document.querySelectorAll('.stat-total-words').forEach(el => el.textContent = totalCount);
+    document.querySelectorAll('.stat-total-decks').forEach(el => el.textContent = decksCount);
     document.querySelectorAll('.stat-hsk1-words').forEach(el => el.textContent = hsk1Count);
     document.querySelectorAll('.stat-hsk2-words').forEach(el => el.textContent = hsk2Count);
-    document.querySelectorAll('.stat-fav-words').forEach(el => el.textContent = favCount);
+    document.querySelectorAll('.stat-hsk3-words').forEach(el => el.textContent = hsk3Count);
+    document.querySelectorAll('.stat-hsk4-words').forEach(el => el.textContent = hsk4Count);
+    document.querySelectorAll('.stat-hsk5-words').forEach(el => el.textContent = hsk5Count);
+    document.querySelectorAll('.stat-hsk6-words').forEach(el => el.textContent = hsk6Count);
+  }
+
+  populateCategoryDropdowns() {
+    const vocabCatSelect = document.getElementById('vocab-category-select');
+    const customWordCatSelect = document.getElementById('select-category');
+
+    if (vocabCatSelect && typeof CATEGORIES_LIST !== 'undefined') {
+      vocabCatSelect.innerHTML = `<option value="ALL">Tất cả các chủ đề</option>` +
+        CATEGORIES_LIST.map(c => `<option value="${c.name}">${c.icon} ${c.name}</option>`).join('');
+    }
+
+    if (customWordCatSelect && typeof CATEGORIES_LIST !== 'undefined') {
+      customWordCatSelect.innerHTML = CATEGORIES_LIST.map(c => 
+        `<option value="${c.name}">${c.icon} ${c.name}</option>`
+      ).join('');
+    }
   }
 
   // --- NAVIGATION ---
   bindNavigation() {
     const navLinks = document.querySelectorAll('.nav-tab-btn');
     navLinks.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', () => {
         const targetTab = btn.dataset.tab;
         this.switchTab(targetTab);
       });
     });
 
-    // Mobile menu toggle if present
     const menuToggle = document.getElementById('btn-mobile-menu');
     const navMenu = document.getElementById('main-nav-menu');
     if (menuToggle && navMenu) {
@@ -126,16 +178,13 @@ class ChineseLearningApp {
     this.activeTab = tabId;
     speechEngine.playClick();
 
-    // Update active nav button
     document.querySelectorAll('.nav-tab-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
 
-    // Close mobile nav menu
     const navMenu = document.getElementById('main-nav-menu');
     if (navMenu) navMenu.classList.remove('open');
 
-    // Hide all tab sections, show target
     document.querySelectorAll('.tab-section').forEach(sec => {
       sec.classList.remove('active');
     });
@@ -146,43 +195,74 @@ class ChineseLearningApp {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Trigger initializers if entering specific tabs
     if (tabId === 'practice') {
-      this.loadPracticeModule(this.currentPracticeType);
+      this.loadPracticeModule(this.currentPracticeType, this.practiceLevel);
     } else if (tabId === 'test') {
       this.initTestTab();
     } else if (tabId === 'vocab') {
       this.renderVocabList();
+    } else if (tabId === 'decks') {
+      this.renderDecks();
     }
   }
 
   bindHomeActions() {
-    // Quick action cards on homepage
     document.querySelectorAll('[data-goto-tab]').forEach(el => {
       el.addEventListener('click', () => {
         const tab = el.dataset.gotoTab;
         if (el.dataset.practiceType) {
           this.currentPracticeType = el.dataset.practiceType;
         }
+        if (el.dataset.groupTopic === 'true') {
+          this.groupByTopic = true;
+          const btnGroup = document.getElementById('btn-toggle-group-topic');
+          if (btnGroup) btnGroup.classList.add('active');
+        }
         this.switchTab(tab);
       });
     });
   }
 
-  // --- VOCABULARY EXPLORER ---
+  // --- VOCABULARY EXPLORER (HSK 1 - 6 & TOPICS) ---
   bindVocabControls() {
-    // Filter level pills
-    document.querySelectorAll('.filter-pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        speechEngine.playClick();
-        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        this.currentLevelFilter = pill.dataset.filter;
+    // Level pills (HSK 1 to HSK 6)
+    const pillsContainer = document.getElementById('vocab-level-pills');
+    if (pillsContainer) {
+      pillsContainer.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          speechEngine.playClick();
+          pillsContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          this.currentLevelFilter = pill.dataset.filter;
+          this.renderVocabList();
+        });
+      });
+    }
+
+    // Category / Topic dropdown
+    const catSelect = document.getElementById('vocab-category-select');
+    if (catSelect) {
+      catSelect.addEventListener('change', (e) => {
+        this.currentCategoryFilter = e.target.value;
         this.renderVocabList();
       });
-    });
+    }
 
-    // Search bar
+    // Toggle Group by Topic
+    const btnToggleGroup = document.getElementById('btn-toggle-group-topic');
+    if (btnToggleGroup) {
+      btnToggleGroup.addEventListener('click', () => {
+        speechEngine.playClick();
+        this.groupByTopic = !this.groupByTopic;
+        btnToggleGroup.classList.toggle('active', this.groupByTopic);
+        btnToggleGroup.innerHTML = this.groupByTopic
+          ? `<span>📋 Chuyển về hiển thị dạng phẳng</span>`
+          : `<span>📑 Gom nhóm hiển thị theo chủ đề</span>`;
+        this.renderVocabList();
+      });
+    }
+
+    // Search input
     const searchInput = document.getElementById('vocab-search-input');
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
@@ -235,9 +315,16 @@ class ChineseLearningApp {
   getFilteredWords() {
     return this.words.filter(word => {
       // Level filter
-      if (this.currentLevelFilter === 'HSK 1' && word.level !== 'HSK 1') return false;
-      if (this.currentLevelFilter === 'HSK 2' && word.level !== 'HSK 2') return false;
-      if (this.currentLevelFilter === 'FAVORITES' && !this.favorites.has(word.id)) return false;
+      if (this.currentLevelFilter === 'FAVORITES') {
+        if (!this.favorites.has(word.id)) return false;
+      } else if (this.currentLevelFilter !== 'ALL' && word.level !== this.currentLevelFilter) {
+        return false;
+      }
+
+      // Category / Topic filter
+      if (this.currentCategoryFilter !== 'ALL' && word.category !== this.currentCategoryFilter) {
+        return false;
+      }
 
       // Search query
       if (this.searchQuery) {
@@ -245,8 +332,10 @@ class ChineseLearningApp {
         const matchHanzi = word.hanzi.toLowerCase().includes(q);
         const matchPinyin = word.pinyin.toLowerCase().includes(q);
         const matchMeaning = word.meaning.toLowerCase().includes(q);
-        if (!matchHanzi && !matchPinyin && !matchMeaning) return false;
+        const matchCategory = (word.category || '').toLowerCase().includes(q);
+        if (!matchHanzi && !matchPinyin && !matchMeaning && !matchCategory) return false;
       }
+
       return true;
     });
   }
@@ -263,53 +352,93 @@ class ChineseLearningApp {
       container.innerHTML = `
         <div class="empty-state">
           <div class="empty-icon">🔍</div>
-          <h3>Không tìm thấy từ vựng nào</h3>
-          <p>Hãy thử tìm bằng từ khóa khác hoặc chuyển bộ lọc cấp độ.</p>
+          <h3>Không tìm thấy từ vựng nào phù hợp</h3>
+          <p>Hãy thử tìm bằng từ khóa khác hoặc chuyển bộ lọc cấp độ / chủ đề.</p>
         </div>
       `;
       return;
     }
 
-    container.innerHTML = filtered.map(word => {
-      const isFav = this.favorites.has(word.id);
-      return `
-        <div class="vocab-card animate-card" data-id="${word.id}">
-          <div class="card-top-bar">
-            <span class="badge ${word.level === 'HSK 1' ? 'badge-hsk1' : 'badge-hsk2'}">${word.level}</span>
-            <span class="vocab-type-tag">${word.type || 'Từ vựng'}</span>
-            <button class="btn-fav ${isFav ? 'favorited' : ''}" data-id="${word.id}" title="${isFav ? 'Bỏ lưu' : 'Lưu từ'}">
-              ${isFav ? '★' : '☆'}
-            </button>
-          </div>
+    if (!this.groupByTopic) {
+      container.className = 'vocab-grid';
+      container.innerHTML = filtered.map(word => this.renderWordCardHtml(word)).join('');
+    } else {
+      // Group by Topic
+      container.className = '';
+      const grouped = {};
+      filtered.forEach(word => {
+        const cat = word.category || 'Chủ đề chung';
+        if (!grouped[cat]) grouped[cat] = [];
+        grouped[cat].push(word);
+      });
 
-          <div class="card-main-content" data-detail-id="${word.id}">
-            <div class="vocab-hanzi chinese-text">${word.hanzi}</div>
-            <div class="vocab-pinyin">${word.pinyin}</div>
-            <div class="vocab-meaning">${word.meaning}</div>
+      let html = '';
+      for (const [catName, wordsInCat] of Object.entries(grouped)) {
+        const catObj = CATEGORIES_LIST.find(c => c.name === catName);
+        const icon = catObj ? catObj.icon : '🏷️';
+        html += `
+          <div class="topic-group-section">
+            <div class="topic-group-header">
+              <div class="topic-group-title">
+                <span>${icon}</span>
+                <span>${catName}</span>
+              </div>
+              <span class="topic-group-count">${wordsInCat.length} từ vựng</span>
+            </div>
+            <div class="vocab-grid">
+              ${wordsInCat.map(w => this.renderWordCardHtml(w)).join('')}
+            </div>
           </div>
+        `;
+      }
+      container.innerHTML = html;
+    }
 
-          <div class="card-example-box">
-            <div class="example-hanzi chinese-text">${word.example.hanzi}</div>
-            <div class="example-pinyin">${word.example.pinyin}</div>
-            <div class="example-vi">🇻🇳 ${word.example.meaning}</div>
-          </div>
+    this.attachWordCardListeners(container);
+  }
 
-          <div class="card-bottom-actions">
-            <button class="btn btn-sm btn-icon btn-listen" data-speak="${word.hanzi}">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-              </svg>
-              <span>Phát âm</span>
-            </button>
-            <button class="btn btn-sm btn-outline btn-example-listen" data-speak="${word.example.hanzi}">
-              <span>Ví dụ 🔊</span>
-            </button>
-          </div>
+  renderWordCardHtml(word) {
+    const isFav = this.favorites.has(word.id);
+    const badgeClass = exerciseManager.getBadgeClass(word.level);
+
+    return `
+      <div class="vocab-card animate-card" data-id="${word.id}">
+        <div class="card-top-bar">
+          <span class="badge ${badgeClass}">${word.level}</span>
+          <span class="vocab-category-tag">${word.category || word.type || 'Từ vựng'}</span>
+          <button class="btn-fav ${isFav ? 'favorited' : ''}" data-id="${word.id}" title="${isFav ? 'Bỏ lưu' : 'Lưu từ'}">
+            ${isFav ? '★' : '☆'}
+          </button>
         </div>
-      `;
-    }).join('');
 
-    // Attach card event listeners
+        <div class="card-main-content" data-detail-id="${word.id}">
+          <div class="vocab-hanzi chinese-text">${word.hanzi}</div>
+          <div class="vocab-pinyin">${word.pinyin}</div>
+          <div class="vocab-meaning">${word.meaning}</div>
+        </div>
+
+        <div class="card-example-box">
+          <div class="example-hanzi chinese-text">${word.example.hanzi}</div>
+          <div class="example-pinyin">${word.example.pinyin}</div>
+          <div class="example-vi">🇻🇳 ${word.example.meaning}</div>
+        </div>
+
+        <div class="card-bottom-actions">
+          <button class="btn btn-sm btn-icon btn-listen" data-speak="${word.hanzi}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <span>Phát âm</span>
+          </button>
+          <button class="btn btn-sm btn-outline btn-example-listen" data-speak="${word.example.hanzi}">
+            <span>Ví dụ 🔊</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  attachWordCardListeners(container) {
     container.querySelectorAll('.btn-fav').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -333,7 +462,6 @@ class ChineseLearningApp {
       });
     });
 
-    // Word detail modal click
     container.querySelectorAll('.card-main-content').forEach(box => {
       box.addEventListener('click', () => {
         const id = box.dataset.detailId;
@@ -352,12 +480,12 @@ class ChineseLearningApp {
     modal.querySelector('#modal-word-meaning').textContent = word.meaning;
     modal.querySelector('#modal-word-level').textContent = word.level;
     modal.querySelector('#modal-word-type').textContent = word.type || 'Từ vựng';
+    modal.querySelector('#modal-word-category').textContent = word.category || 'Chủ đề chung';
 
     modal.querySelector('#modal-ex-hanzi').textContent = word.example.hanzi;
     modal.querySelector('#modal-ex-pinyin').textContent = word.example.pinyin;
     modal.querySelector('#modal-ex-meaning').textContent = word.example.meaning;
 
-    // Listen buttons
     const btnSpeakWord = modal.querySelector('#modal-btn-speak-word');
     btnSpeakWord.onclick = () => speechEngine.speak(word.hanzi);
 
@@ -368,8 +496,8 @@ class ChineseLearningApp {
   }
 
   // --- FLASHCARD DECK MODE ---
-  initFlashcardDeck() {
-    this.flashcardList = this.getFilteredWords();
+  initFlashcardDeck(customWords = null) {
+    this.flashcardList = customWords || this.getFilteredWords();
     this.flashcardIndex = 0;
     this.isCardFlipped = false;
     this.renderFlashcard();
@@ -390,7 +518,6 @@ class ChineseLearningApp {
     }
 
     const word = this.flashcardList[this.flashcardIndex];
-    const isFav = this.favorites.has(word.id);
 
     container.innerHTML = `
       <div class="flashcard-wrapper">
@@ -402,7 +529,7 @@ class ChineseLearningApp {
         <div class="flashcard ${this.isCardFlipped ? 'flipped' : ''}" id="flashcard-card">
           <!-- Front Face -->
           <div class="card-face card-front">
-            <span class="fc-level-badge badge ${word.level === 'HSK 1' ? 'badge-hsk1' : 'badge-hsk2'}">${word.level}</span>
+            <span class="fc-level-badge badge ${exerciseManager.getBadgeClass(word.level)}">${word.level}</span>
             <div class="fc-hanzi chinese-text">${word.hanzi}</div>
             <div class="fc-hint">Nhấp vào thẻ để lật xem phiên âm & nghĩa</div>
             <button class="btn btn-icon btn-sm btn-listen" id="btn-fc-speak-front">
@@ -417,7 +544,7 @@ class ChineseLearningApp {
           <div class="card-face card-back">
             <div class="fc-pinyin">${word.pinyin}</div>
             <div class="fc-meaning">${word.meaning}</div>
-            <div class="fc-type badge badge-accent">${word.type}</div>
+            <div class="fc-type badge badge-accent">${word.category || word.type}</div>
             <div class="fc-example">
               <div class="chinese-text">${word.example.hanzi}</div>
               <small>${word.example.pinyin}</small>
@@ -440,7 +567,6 @@ class ChineseLearningApp {
       </div>
     `;
 
-    // Speak front word on click
     const speakBtn = container.querySelector('#btn-fc-speak-front');
     if (speakBtn) {
       speakBtn.onclick = (e) => {
@@ -492,8 +618,9 @@ class ChineseLearningApp {
     });
   }
 
-  // --- PRACTICE MODULE SELECTOR ---
-  bindPracticeSelector() {
+  // --- PRACTICE CONTROLS & LEVEL-AWARE ENGINE ---
+  bindPracticeControls() {
+    // 1. Practice Type Selector
     const navItems = document.querySelectorAll('.practice-nav-item');
     navItems.forEach(item => {
       item.addEventListener('click', () => {
@@ -501,51 +628,263 @@ class ChineseLearningApp {
         navItems.forEach(i => i.classList.remove('active'));
         item.classList.add('active');
         this.currentPracticeType = type;
-        this.loadPracticeModule(type);
+        this.loadPracticeModule(type, this.practiceLevel);
       });
     });
+
+    // 2. Practice Level Selector (HSK 1 - 6)
+    const levelPillsContainer = document.getElementById('practice-level-pills');
+    if (levelPillsContainer) {
+      levelPillsContainer.querySelectorAll('.practice-level-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          speechEngine.playClick();
+          levelPillsContainer.querySelectorAll('.practice-level-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          this.practiceLevel = pill.dataset.level;
+          this.loadPracticeModule(this.currentPracticeType, this.practiceLevel);
+        });
+      });
+    }
   }
 
-  loadPracticeModule(type) {
+  loadPracticeModule(type, level = 'ALL') {
     const container = document.getElementById('practice-exercise-container');
     if (!container) return;
 
-    // Highlight menu
     document.querySelectorAll('.practice-nav-item').forEach(item => {
       item.classList.toggle('active', item.dataset.type === type);
     });
 
     switch (type) {
       case 'vocab-quiz':
-        exerciseManager.initVocabQuiz(container, this.words);
+        exerciseManager.initVocabQuiz(container, this.words, level);
         break;
       case 'image-tf':
-        exerciseManager.initImageTrueFalse(container);
+        exerciseManager.initImageTrueFalse(container, level);
         break;
       case 'reading-comp':
-        exerciseManager.initReadingComprehension(container);
+        exerciseManager.initReadingComprehension(container, level);
         break;
       case 'cloze-test':
-        exerciseManager.initClozeExercise(container);
+        exerciseManager.initClozeExercise(container, level);
         break;
       case 'pinyin-to-hanzi':
-        exerciseManager.initPinyinToHanzi(container);
+        exerciseManager.initPinyinToHanzi(container, level);
         break;
       case 'sentence-order':
-        exerciseManager.initSentenceOrdering(container);
+        exerciseManager.initSentenceOrdering(container, level);
         break;
       case 'translation':
-        exerciseManager.initTranslation(container);
+        exerciseManager.initTranslation(container, level);
         break;
       case 'dialogue-turn':
-        exerciseManager.initTwoTurnDialogue(container);
+        exerciseManager.initTwoTurnDialogue(container, level);
         break;
       default:
-        exerciseManager.initVocabQuiz(container, this.words);
+        exerciseManager.initVocabQuiz(container, this.words, level);
     }
   }
 
-  // --- COMPREHENSIVE MOCK TEST MODE ---
+  // --- BỘ TỪ VỰNG HSK 1 - 6 (DECKS MANAGER) ---
+  bindDecksManager() {
+    const modal = document.getElementById('create-deck-modal');
+    const openBtn = document.getElementById('btn-open-create-deck-modal');
+    const closeBtn = document.getElementById('btn-close-create-deck-modal');
+    const form = document.getElementById('create-deck-form');
+    const levelSelect = document.getElementById('deck-select-level');
+    const selectAllBtn = document.getElementById('btn-deck-select-all');
+
+    if (openBtn && modal) {
+      openBtn.addEventListener('click', () => {
+        this.renderDeckWordSelector(levelSelect ? levelSelect.value : 'HSK 1');
+        modal.classList.remove('hidden');
+      });
+    }
+
+    if (closeBtn && modal) {
+      closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.add('hidden');
+      });
+    }
+
+    if (levelSelect) {
+      levelSelect.addEventListener('change', (e) => {
+        this.renderDeckWordSelector(e.target.value);
+      });
+    }
+
+    if (selectAllBtn) {
+      selectAllBtn.addEventListener('click', () => {
+        const checkboxes = document.querySelectorAll('#deck-words-selector-container input[type="checkbox"]');
+        const allChecked = Array.from(checkboxes).every(c => c.checked);
+        checkboxes.forEach(c => c.checked = !allChecked);
+        selectAllBtn.textContent = allChecked ? 'Chọn tất cả từ cấp độ này' : 'Bỏ chọn tất cả';
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = document.getElementById('deck-input-title').value.trim();
+        const level = document.getElementById('deck-select-level').value;
+        const icon = document.getElementById('deck-input-icon').value.trim() || '📚';
+        const desc = document.getElementById('deck-input-desc').value.trim();
+
+        const selectedWordIds = [];
+        document.querySelectorAll('#deck-words-selector-container input[type="checkbox"]:checked').forEach(c => {
+          selectedWordIds.push(c.value);
+        });
+
+        if (!title) {
+          alert('Vui lòng nhập tên bộ từ vựng!');
+          return;
+        }
+
+        if (selectedWordIds.length === 0) {
+          alert('Vui lòng chọn ít nhất 1 từ vựng vào bộ!');
+          return;
+        }
+
+        const newDeck = {
+          id: 'deck-custom-' + Date.now(),
+          title,
+          level,
+          icon,
+          description: desc || `Bộ từ vựng cấp độ ${level}`,
+          wordIds: selectedWordIds,
+          isCustom: true
+        };
+
+        this.decks.unshift(newDeck);
+        this.saveDecks();
+        this.renderDecks();
+        this.updateStats();
+
+        speechEngine.playSuccess();
+        alert(`Đã tạo thành công bộ từ vựng: "${title}" gồm ${selectedWordIds.length} từ!`);
+        modal.classList.add('hidden');
+        form.reset();
+      });
+    }
+  }
+
+  renderDeckWordSelector(selectedLevel) {
+    const container = document.getElementById('deck-words-selector-container');
+    if (!container) return;
+
+    const wordsOfLevel = this.words.filter(w => w.level === selectedLevel);
+    if (wordsOfLevel.length === 0) {
+      container.innerHTML = `<div style="grid-column: 1/-1; color: var(--text-muted);">Chưa có từ vựng thuộc ${selectedLevel} để chọn.</div>`;
+      return;
+    }
+
+    container.innerHTML = wordsOfLevel.map(w => `
+      <label class="deck-word-item">
+        <input type="checkbox" value="${w.id}" checked>
+        <strong class="chinese-text">${w.hanzi}</strong>
+        <small>${w.pinyin}</small>
+      </label>
+    `).join('');
+  }
+
+  renderDecks() {
+    const container = document.getElementById('decks-grid-container');
+    if (!container) return;
+
+    if (this.decks.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state" style="grid-column: 1/-1;">
+          <h3>Chưa có bộ từ vựng nào</h3>
+          <p>Nhấp nút "+ Tạo bộ từ vựng mới" ở trên để tạo ngay bộ từ của bạn!</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = this.decks.map(deck => {
+      const badgeClass = exerciseManager.getBadgeClass(deck.level);
+      const wordCount = deck.wordIds ? deck.wordIds.length : 0;
+
+      return `
+        <div class="deck-card animate-card" data-deck-id="${deck.id}">
+          <div class="deck-card-top">
+            <div class="deck-icon-bubble">${deck.icon || '📦'}</div>
+            <div style="display: flex; gap: 6px;">
+              <span class="badge ${badgeClass}">${deck.level}</span>
+              ${deck.isCustom ? `<span class="badge badge-accent">Tự tạo</span>` : ''}
+            </div>
+          </div>
+
+          <div>
+            <h3 class="deck-title">${deck.title}</h3>
+            <p class="deck-description">${deck.description}</p>
+          </div>
+
+          <div class="deck-meta-bar">
+            <span>📊 Số lượng: ${wordCount} từ vựng</span>
+            <span>⭐ ${deck.level}</span>
+          </div>
+
+          <div class="deck-card-actions">
+            <button class="btn btn-sm btn-primary btn-deck-study" data-deck-id="${deck.id}">
+              <span>🗂️ Thẻ Flashcards</span>
+            </button>
+            <button class="btn btn-sm btn-outline btn-deck-quiz" data-deck-id="${deck.id}">
+              <span>🎲 Trắc nghiệm</span>
+            </button>
+            ${deck.isCustom ? `
+              <button class="btn btn-sm btn-danger btn-deck-delete" data-deck-id="${deck.id}" title="Xóa bộ từ này">
+                <span>🗑️</span>
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Attach Deck Action Listeners
+    container.querySelectorAll('.btn-deck-study').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const deckId = btn.dataset.deckId;
+        const deck = this.decks.find(d => d.id === deckId);
+        if (deck) {
+          const deckWords = this.words.filter(w => deck.wordIds.includes(w.id));
+          this.switchTab('vocab');
+          document.getElementById('btn-view-flashcard').click();
+          this.initFlashcardDeck(deckWords);
+        }
+      });
+    });
+
+    container.querySelectorAll('.btn-deck-quiz').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const deckId = btn.dataset.deckId;
+        const deck = this.decks.find(d => d.id === deckId);
+        if (deck) {
+          const deckWords = this.words.filter(w => deck.wordIds.includes(w.id));
+          this.switchTab('practice');
+          this.currentPracticeType = 'vocab-quiz';
+          const pContainer = document.getElementById('practice-exercise-container');
+          exerciseManager.initVocabQuiz(pContainer, deckWords, deck.level);
+        }
+      });
+    });
+
+    container.querySelectorAll('.btn-deck-delete').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const deckId = btn.dataset.deckId;
+        if (confirm('Bạn có chắc chắn muốn xóa bộ từ vựng tự tạo này?')) {
+          this.decks = this.decks.filter(d => d.id !== deckId);
+          this.saveDecks();
+          this.renderDecks();
+          this.updateStats();
+        }
+      });
+    });
+  }
+
+  // --- MOCK TEST MODE (HSK 1 - 6 COMPREHENSIVE) ---
   initTestTab() {
     const container = document.getElementById('test-arena-container');
     if (!container) return;
@@ -554,7 +893,7 @@ class ChineseLearningApp {
       container.innerHTML = `
         <div class="test-intro-card">
           <div class="test-icon">📝</div>
-          <h2>Bài Thi Kiểm Tra Năng Lực Tiếng Trung HSK 1 - HSK 2</h2>
+          <h2>Bài Thi Kiểm Tra Năng Lực Tiếng Trung HSK 1 - HSK 6</h2>
           <p class="test-description">
             Bài kiểm tra tổng hợp gồm <strong>15 câu hỏi đa dạng</strong>: Từ vựng, ngữ pháp, đọc hiểu, phân biệt chữ Hán, và dịch câu. Thời gian làm bài là <strong>15 phút</strong>.
           </p>
@@ -584,11 +923,15 @@ class ChineseLearningApp {
           </div>
 
           <div class="test-level-select">
-            <label>Chọn cấp độ bài kiểm tra:</label>
+            <label>Chọn cấp độ bài thi:</label>
             <div class="select-group">
-              <button class="btn btn-outline active test-level-btn" data-level="ALL">Tổng hợp HSK 1 & 2</button>
-              <button class="btn btn-outline test-level-btn" data-level="HSK 1">Chuyên HSK 1</button>
-              <button class="btn btn-outline test-level-btn" data-level="HSK 2">Chuyên HSK 2</button>
+              <button class="btn btn-outline active test-level-btn" data-level="ALL">Tổng hợp HSK 1-6</button>
+              <button class="btn btn-outline test-level-btn" data-level="HSK 1">HSK 1</button>
+              <button class="btn btn-outline test-level-btn" data-level="HSK 2">HSK 2</button>
+              <button class="btn btn-outline test-level-btn" data-level="HSK 3">HSK 3</button>
+              <button class="btn btn-outline test-level-btn" data-level="HSK 4">HSK 4</button>
+              <button class="btn btn-outline test-level-btn" data-level="HSK 5">HSK 5</button>
+              <button class="btn btn-outline test-level-btn" data-level="HSK 6">HSK 6</button>
             </div>
           </div>
 
@@ -615,7 +958,7 @@ class ChineseLearningApp {
 
   startTest(level) {
     this.testState.active = true;
-    this.testState.timeLeft = 900; // 15 mins (900s)
+    this.testState.timeLeft = 900;
     this.testState.userAnswers = {};
     this.testState.currentQIndex = 0;
     this.testState.questions = this.buildTestQuestionBank(level);
@@ -625,13 +968,12 @@ class ChineseLearningApp {
   }
 
   buildTestQuestionBank(level) {
-    // Curate 15 mixed questions
     const pool = [];
-
-    // Filter words according to level
     let filteredVocab = this.words;
-    if (level === 'HSK 1') filteredVocab = this.words.filter(w => w.level === 'HSK 1');
-    else if (level === 'HSK 2') filteredVocab = this.words.filter(w => w.level === 'HSK 2');
+    if (level !== 'ALL') {
+      filteredVocab = this.words.filter(w => w.level === level);
+    }
+    if (filteredVocab.length < 5) filteredVocab = this.words;
 
     // 1. Vocabulary questions (5 questions)
     const randomWords = [...filteredVocab].sort(() => 0.5 - Math.random()).slice(0, 5);
@@ -640,7 +982,7 @@ class ChineseLearningApp {
       const opts = [word, ...distractors].sort(() => 0.5 - Math.random());
       pool.push({
         type: 'vocab',
-        title: `Phần 1: Từ vựng (${idx + 1})`,
+        title: `Phần 1: Từ vựng (${idx + 1}) - ${word.level}`,
         prompt: `Chữ Hán <strong>"${word.hanzi}"</strong> (${word.pinyin}) có nghĩa tiếng Việt là gì?`,
         options: opts.map(o => o.meaning),
         correctIndex: opts.findIndex(o => o.id === word.id),
@@ -649,10 +991,15 @@ class ChineseLearningApp {
     });
 
     // 2. Reading comprehension (3 questions)
-    READING_COMPREHENSION_EXERCISES.slice(0, 3).forEach((rc, idx) => {
+    let rcPool = READING_COMPREHENSION_EXERCISES;
+    if (level !== 'ALL') {
+      const match = rcPool.filter(r => r.level === level);
+      if (match.length > 0) rcPool = match;
+    }
+    rcPool.slice(0, 3).forEach((rc, idx) => {
       pool.push({
         type: 'reading',
-        title: `Phần 2: Đọc hiểu (${idx + 1})`,
+        title: `Phần 2: Đọc hiểu (${idx + 1}) - ${rc.level}`,
         prompt: `Đoạn văn: <em>"${rc.passage}"</em><br><br>Câu hỏi: <strong>${rc.question}</strong> (${rc.questionMeaning})`,
         options: rc.options.map(o => o.text),
         correctIndex: rc.answerIndex,
@@ -661,10 +1008,15 @@ class ChineseLearningApp {
     });
 
     // 3. Translation & Grammar (4 questions)
-    TRANSLATION_EXERCISES.slice(0, 4).forEach((tr, idx) => {
+    let trPool = TRANSLATION_EXERCISES;
+    if (level !== 'ALL') {
+      const match = trPool.filter(t => t.level === level);
+      if (match.length > 0) trPool = match;
+    }
+    trPool.slice(0, 4).forEach((tr, idx) => {
       pool.push({
         type: 'translation',
-        title: `Phần 3: Dịch & Ngữ pháp (${idx + 1})`,
+        title: `Phần 3: Dịch & Ngữ pháp (${idx + 1}) - ${tr.level}`,
         prompt: `Chọn câu tiếng Trung dịch đúng câu sau:<br><strong>"${tr.vietnamese}"</strong>`,
         options: tr.options.map(o => o.text),
         correctIndex: tr.options.findIndex(o => o.isCorrect),
@@ -673,7 +1025,12 @@ class ChineseLearningApp {
     });
 
     // 4. Sentence ordering check (3 questions)
-    SENTENCE_ORDERING_EXERCISES.slice(0, 3).forEach((so, idx) => {
+    let soPool = SENTENCE_ORDERING_EXERCISES;
+    if (level !== 'ALL') {
+      const match = soPool.filter(s => s.level === level);
+      if (match.length > 0) soPool = match;
+    }
+    soPool.slice(0, 3).forEach((so, idx) => {
       const scrambledJoined = so.scrambled.join(' / ');
       const options = [
         so.correctSentence,
@@ -683,7 +1040,7 @@ class ChineseLearningApp {
 
       pool.push({
         type: 'ordering',
-        title: `Phần 4: Sắp xếp câu (${idx + 1})`,
+        title: `Phần 4: Sắp xếp câu (${idx + 1}) - ${so.level}`,
         prompt: `Cho các từ sau: [${scrambledJoined}]. Hãy chọn câu được sắp xếp đúng ngữ pháp mang nghĩa: <em>"${so.vietnamese}"</em>`,
         options: options,
         correctIndex: options.indexOf(so.correctSentence),
@@ -773,7 +1130,6 @@ class ChineseLearningApp {
       </div>
     `;
 
-    // Palette clicks
     container.querySelectorAll('.palette-chip').forEach(btn => {
       btn.addEventListener('click', () => {
         speechEngine.playClick();
@@ -782,7 +1138,6 @@ class ChineseLearningApp {
       });
     });
 
-    // Radio option select
     container.querySelectorAll('input[name="test-opt"]').forEach(input => {
       input.addEventListener('change', () => {
         speechEngine.playClick();
@@ -791,7 +1146,6 @@ class ChineseLearningApp {
       });
     });
 
-    // Next / Prev buttons
     container.querySelector('#btn-test-prev').addEventListener('click', () => {
       if (this.testState.currentQIndex > 0) {
         speechEngine.playClick();
@@ -812,7 +1166,6 @@ class ChineseLearningApp {
       }
     });
 
-    // Early submit
     container.querySelector('#btn-submit-test-early').addEventListener('click', () => {
       const answeredCount = Object.keys(userAnswers).length;
       if (confirm(`Bạn đã làm ${answeredCount}/${questions.length} câu. Bạn có muốn nộp bài ngay?`)) {
@@ -909,6 +1262,7 @@ class ChineseLearningApp {
       const pinyin = document.getElementById('input-pinyin').value.trim();
       const meaning = document.getElementById('input-meaning').value.trim();
       const level = document.getElementById('select-level').value;
+      const category = document.getElementById('select-category').value;
       const type = document.getElementById('input-type').value.trim() || 'Từ vựng';
       const exHanzi = document.getElementById('input-ex-hanzi').value.trim();
       const exPinyin = document.getElementById('input-ex-pinyin').value.trim();
@@ -925,6 +1279,7 @@ class ChineseLearningApp {
         pinyin,
         meaning,
         level,
+        category,
         type,
         example: {
           hanzi: exHanzi || `${hanzi}。`,
@@ -939,39 +1294,43 @@ class ChineseLearningApp {
       this.updateStats();
 
       speechEngine.playSuccess();
-      alert(`Đã thêm thành công từ vựng: ${hanzi} (${pinyin})!`);
+      alert(`Đã thêm thành công từ vựng: ${hanzi} (${pinyin}) [${level}] thuộc chủ đề "${category}"!`);
       form.reset();
     });
 
-    // Reset default vocabulary
     const btnResetDefaults = document.getElementById('btn-reset-defaults');
     if (btnResetDefaults) {
       btnResetDefaults.addEventListener('click', () => {
-        if (confirm('Khôi phục danh sách từ vựng gốc (HSK 1 & HSK 2 mẫu)? Các từ bạn tự thêm sẽ được đưa về mặc định.')) {
+        if (confirm('Khôi phục toàn bộ kho từ vựng mẫu HSK 1 - 6 và các bộ từ vựng chuẩn?')) {
           this.words = [...DEFAULT_HSK_WORDS];
+          this.decks = [...DEFAULT_DECKS];
           this.saveWords();
+          this.saveDecks();
           this.renderVocabList();
+          this.renderDecks();
           this.updateStats();
-          alert('Đã khôi phục bộ từ vựng mẫu thành công!');
+          alert('Đã khôi phục dữ liệu HSK 1 - 6 chuẩn thành công!');
         }
       });
     }
 
-    // Export JSON
     const btnExport = document.getElementById('btn-export-vocab');
     if (btnExport) {
       btnExport.addEventListener('click', () => {
-        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.words, null, 2));
+        const payload = {
+          words: this.words,
+          decks: this.decks
+        };
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(payload, null, 2));
         const downloadAnchor = document.createElement('a');
         downloadAnchor.setAttribute('href', dataStr);
-        downloadAnchor.setAttribute('download', 'chinese_vocabulary_backup.json');
+        downloadAnchor.setAttribute('download', 'chinese_learning_backup_hsk1_6.json');
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
         downloadAnchor.remove();
       });
     }
 
-    // Import JSON
     const inputImport = document.getElementById('input-import-vocab');
     if (inputImport) {
       inputImport.addEventListener('change', (e) => {
@@ -983,13 +1342,21 @@ class ChineseLearningApp {
             const imported = JSON.parse(evt.target.result);
             if (Array.isArray(imported)) {
               this.words = imported;
-              this.saveWords();
-              this.renderVocabList();
-              this.updateStats();
-              alert(`Nhập thành công ${imported.length} từ vựng từ tệp!`);
+            } else if (imported.words && Array.isArray(imported.words)) {
+              this.words = imported.words;
+              if (imported.decks && Array.isArray(imported.decks)) {
+                this.decks = imported.decks;
+                this.saveDecks();
+              }
             } else {
               alert('Định dạng tệp không hợp lệ!');
+              return;
             }
+            this.saveWords();
+            this.renderVocabList();
+            this.renderDecks();
+            this.updateStats();
+            alert(`Nhập thành công dữ liệu từ vựng từ tệp!`);
           } catch (err) {
             alert('Không thể đọc tệp JSON: ' + err.message);
           }
